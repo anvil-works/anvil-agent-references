@@ -6,7 +6,7 @@
 # Generated files: client/anvil/__init__.pyi, server/anvil/__init__.pyi
 
 from typing import Any, Callable, TypeVar, overload, Iterator, Mapping, Literal, TypedDict
-from typing_extensions import override
+from typing_extensions import deprecated, override
 
 from . import property_utils
 
@@ -21,6 +21,10 @@ MarginPropertyValue = (
     | tuple[SpacingLength, SpacingLength, SpacingLength, SpacingLength]
 )
 PaddingPropertyValue = MarginPropertyValue
+_ClassesValue = str | list[str] | Mapping[str, bool] | None
+_StyleScalar = str | int | float
+_StylePropertyValue = _StyleScalar | list[_StyleScalar]
+_StyleValue = str | Mapping[str, _StylePropertyValue] | None
 
 class SpacingPropertyValue(TypedDict, total=False):
     margin: MarginPropertyValue
@@ -322,6 +326,65 @@ def handle(component_name: str, event_name: str, /) -> Callable[[_F], _F]:
     """When applied to a form method as a decorator, sets the decorated method
     as an event handler for the specified component event."""
     ...
+
+
+# ============================================================================
+# HTML Styling Helpers (client-only)
+# ============================================================================
+
+class Classes:
+    """A live class-list helper for an HtmlComponent's root element.
+
+    [Anvil Docs](https://anvil.works/docs/client/customisation/custom-components/html-components#styling-the-root-element-from-python)"""
+
+    def __init__(self, value: _ClassesValue = None, /) -> None: ...
+    def __str__(self) -> str: ...
+    def __iter__(self) -> Iterator[str]: ...
+    def __len__(self) -> int: ...
+    def __contains__(self, value: str) -> bool: ...
+    def __getitem__(self, value: str) -> bool: ...
+    def __setitem__(self, value: str, enabled: bool) -> None: ...
+    def __delitem__(self, value: str) -> None: ...
+    def add(self, *values: _ClassesValue) -> None:
+        """Add one or more class names. Strings are split on whitespace; duplicate classes are ignored."""
+        ...
+    def remove(self, *values: _ClassesValue) -> None:
+        """Remove one or more class names. Missing classes are ignored."""
+        ...
+    def clear(self) -> None:
+        """Remove all class names."""
+        ...
+
+
+class Style:
+    """A live inline-style helper for an HtmlComponent's root element.
+
+    [Anvil Docs](https://anvil.works/docs/client/customisation/custom-components/html-components#styling-the-root-element-from-python)"""
+
+    def __init__(self, value: _StyleValue = None, /) -> None: ...
+    def __str__(self) -> str: ...
+    def __iter__(self) -> Iterator[str]: ...
+    def __len__(self) -> int: ...
+    def __contains__(self, property: str) -> bool: ...
+    def __getitem__(self, property: str) -> str: ...
+    def __setitem__(self, property: str, value: _StylePropertyValue) -> None: ...
+    def __delitem__(self, property: str) -> None: ...
+    def keys(self) -> list[str]:
+        """Return the CSS property names in this style object."""
+        ...
+    def values(self) -> list[str]:
+        """Return the CSS property values in this style object."""
+        ...
+    def items(self) -> list[tuple[str, str]]:
+        """Return (property, value) pairs for this style object."""
+        ...
+    @overload
+    def get(self, property: str, default: str = "") -> str: ...
+    @overload
+    def get(self, property: str, default: _T) -> str | _T: ...
+    def clear(self) -> None:
+        """Remove all CSS properties."""
+        ...
 
 
 # ============================================================================
@@ -2174,7 +2237,7 @@ class RepeatingPanel(Container):
     def spacing_below(self, value: Literal["none", "small", "medium", "large"]) -> None: ...
 
     @override
-    def get_components(self) -> list[Container]:
+    def get_components(self) -> list[Component]:
         """Get all repeated template instances.
 
         [Anvil Docs](https://anvil.works/docs/client/components/repeatingpanel)"""
@@ -2184,6 +2247,32 @@ class RepeatingPanel(Container):
 # ============================================================================
 # Media/Visualization Components
 # ============================================================================
+
+class HtmlComponent(Container):
+    """A container that renders custom HTML.
+
+    [Anvil Docs](https://anvil.works/docs/client/customisation/custom-components/html-components)"""
+
+    @property
+    def visible(self) -> bool: ...
+    @visible.setter
+    def visible(self, value: bool) -> None: ...
+
+    @property
+    def html(self) -> str: ...
+    @html.setter
+    def html(self, value: str) -> None: ...
+
+    @property
+    def classes(self) -> Classes: ...
+    @classes.setter
+    def classes(self, value: _ClassesValue | Classes) -> None: ...
+
+    @property
+    def style(self) -> Style: ...
+    @style.setter
+    def style(self, value: _StyleValue | Style) -> None: ...
+
 
 class HtmlTemplate(Container):
     """A container that renders HTML.
@@ -2229,48 +2318,7 @@ class HtmlTemplate(Container):
         ...
 
 
-class HtmlPanel(Container):
-    """A panel that renders HTML content.
-
-    [Anvil Docs](https://anvil.works/docs/client/components/htmlpanel)"""
-
-    @property
-    def visible(self) -> bool: ...
-    @visible.setter
-    def visible(self, value: bool) -> None: ...
-    @property
-    def tooltip(self) -> str: ...
-    @tooltip.setter
-    def tooltip(self, value: str) -> None: ...
-    @property
-    def role(self) -> str | None: ...
-    @role.setter
-    def role(self, value: str | None) -> None: ...
-
-    @property
-    def html(self) -> str: ...
-    @html.setter
-    def html(self, value: str) -> None: ...
-
-
-    @property
-    def background(self) -> str: ...
-    @background.setter
-    def background(self, value: str) -> None: ...
-    @property
-    def border(self) -> str: ...
-    @border.setter
-    def border(self, value: str) -> None: ...
-    @property
-    def foreground(self) -> str: ...
-    @foreground.setter
-    def foreground(self, value: str) -> None: ...
-
-    def call_js(self, fn_name: str, *args: Any) -> Any:
-        """Call a JavaScript function defined in the HTML.
-
-        [Anvil Docs](https://anvil.works/docs/client/javascript)"""
-        ...
+HtmlPanel = deprecated("HtmlPanel is deprecated. Use HtmlTemplate instead.")(HtmlTemplate)
 
 
 class Canvas(Component):

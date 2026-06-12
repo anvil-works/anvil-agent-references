@@ -6,7 +6,7 @@
 # Generated files: client/anvil/__init__.pyi, server/anvil/__init__.pyi
 
 from typing import Any, Callable, TypeVar, overload, Iterator, Mapping, Literal, TypedDict
-from typing_extensions import override
+from typing_extensions import deprecated, override
 
 
 _T = TypeVar("_T")
@@ -20,6 +20,10 @@ MarginPropertyValue = (
     | tuple[SpacingLength, SpacingLength, SpacingLength, SpacingLength]
 )
 PaddingPropertyValue = MarginPropertyValue
+_ClassesValue = str | list[str] | Mapping[str, bool] | None
+_StyleScalar = str | int | float
+_StylePropertyValue = _StyleScalar | list[_StyleScalar]
+_StyleValue = str | Mapping[str, _StylePropertyValue] | None
 
 class SpacingPropertyValue(TypedDict, total=False):
     margin: MarginPropertyValue
