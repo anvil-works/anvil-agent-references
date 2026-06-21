@@ -10,6 +10,6 @@ docs package, and let the publishing workflow mirror the generated output here.
 Generated from:
 
 - Source repository: `anvil-works/anvil`
-- Source commit: `d8843479a27102b4815ca85e753e18457394ac4f`
+- Source commit: `abedb9063d813eb46cea2c0456e76f0edbd2c272`
 - Generation command: `node doc/anvil-api-stubs/generate-stubs.mjs`
 
