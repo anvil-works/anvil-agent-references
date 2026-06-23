@@ -22,7 +22,7 @@ Use `form-code` for form definitions.
 
 - Make client code changes under `client_code/`; do not edit `.anvil/`.
 - Prefer relative imports for app-local references unless the app uses another pattern.
-- Use the agent reference stubs under `stubs/client/` for Anvil API references.
+- Use the Anvil client API stubs available to this agent for Anvil API references.
 
 ## Workflow
 

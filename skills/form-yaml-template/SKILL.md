@@ -38,7 +38,7 @@ A form should have exactly one template file: either HTML or YAML, never both. T
 1. Read the form Python file and YAML file together.
 2. Make the requested change in YAML; keep Python and YAML consistent.
 3. Validate: `anvil --json validate client_code/<path>.yaml`
-4. Type references: `reference/types/form-yaml.d.ts`
+4. Type references: use the form YAML type reference available to this agent.
 
 Do not hand-edit YAML when the user has not explicitly asked to stay on YAML.
 

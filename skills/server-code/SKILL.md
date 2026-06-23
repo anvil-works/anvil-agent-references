@@ -18,7 +18,7 @@ Server code lives under `server_code/`:
 
 - Make server code changes under `server_code/`; do not edit `.anvil/`.
 - Keep imports and package structure consistent with the app.
-- Use the agent reference stubs under `stubs/server/` for Anvil API references.
+- Use the Anvil server API stubs available to this agent for Anvil API references.
 - For protected `@anvil.server.callable` functions, prefer declarative decorator arguments such as `require_user=` when existing server modules in this app already use that style for the same kind of access control.
 
 ## Workflow

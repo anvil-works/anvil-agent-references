@@ -18,7 +18,7 @@ Use frontmatter only for:
 - `layout_metadata`: designer metadata for a layout form.
 - `item_type`: data-table item type metadata.
 
-For exact field shapes, consult the agent reference type file `reference/types/form-yaml.d.ts`.
+For exact field shapes, consult the form YAML type reference available to this agent.
 
 ## What Belongs In HTML
 

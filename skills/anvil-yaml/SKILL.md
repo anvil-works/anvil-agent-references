@@ -1,6 +1,6 @@
 ---
 name: anvil-yaml
-description: Update Anvil app manifest files in `anvil.yaml`, including services, app metadata, and `db_schema`, using the generated type reference and `anvil --json validate`.
+description: Update Anvil app manifest files in `anvil.yaml`, including services, app metadata, and `db_schema`, using the Anvil YAML type reference available to this agent and `anvil --json validate`.
 ---
 
 # Anvil YAML
@@ -9,7 +9,7 @@ Use this workflow when changing app structure or metadata in `anvil.yaml`.
 
 ## Workflow
 
-1. Read `anvil.yaml` and the agent reference type file `reference/types/anvil-yaml.d.ts`.
+1. Read `anvil.yaml` and the Anvil YAML type reference available to this agent.
 2. Make the smallest manifest change that satisfies the task.
 3. Validate with `anvil --json validate anvil.yaml`.
 4. Treat machine-readable validation errors as authoritative.

@@ -74,7 +74,7 @@ Use form Python for:
 
 ## M3 Apps
 
-- For apps that depend on M3, consult the agent reference docs under `docs/m3/` before guessing component properties or patterns.
+- For apps that depend on M3, consult the M3 docs available to this agent before guessing component properties or patterns.
 - Prefer M3 components over native Anvil components.
 
 ## Testing

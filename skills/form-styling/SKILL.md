@@ -22,8 +22,8 @@ the supported API.
 ## Styling Terms
 
 - **Role**: an Anvil component role set with a component property such as `role` / `prop:role`.
-- **Component property**: a documented Anvil component property, confirmed in the agent reference stubs under `stubs/client/anvil/` or dependency docs.
-- **Documented dependency API or hook**: styling guidance from agent reference docs under `docs/m3/`, `.anvil/deps/<package>/docs/`, or the dependency's component files.
+- **Component property**: a documented Anvil component property, confirmed in the Anvil client API stubs available to this agent or dependency docs.
+- **Documented dependency API or hook**: styling guidance from M3 docs available to this agent, `.anvil/deps/<package>/docs/`, or the dependency's component files.
 - **Generated component internals**: DOM/CSS classes emitted by an Anvil component implementation rather than authored in the app template. Do not write selectors against these.
 - **Theme-parameter-driven app**: an app whose `theme/assets/theme.css` already uses `%color:<COLOR NAME>%` tokens and whose colors are defined in `theme/parameters.yaml`.
 
@@ -35,7 +35,7 @@ the supported API.
 - Prefer CSS custom properties in `theme/assets/theme.css` for new app-local styling tokens.
 - Use component properties, roles, or documented dependency APIs for Anvil component styling.
 - Define new reusable component variants with `prop:role` and `.anvil-role-<role-name>` selectors.
-- Use the agent reference stubs under `stubs/client/anvil/` to confirm component style properties before adding or changing them.
+- Use the Anvil client API stubs available to this agent to confirm component style properties before adding or changing them.
 
 `theme.css` may use `%color:<COLOR NAME>%` tokens in a theme-parameter-driven app. Color definitions are available in
 `theme/parameters.yaml` at `color_scheme.colors`. If the app is not already
@@ -61,7 +61,7 @@ template values.
 ## Anvil Components
 
 - Preserve existing app conventions for roles, spacing, and nested component structure.
-- When the app depends on M3, consult the agent reference docs under `docs/m3/` and dependency files before guessing component styling, layout behavior, properties, or CSS hooks.
+- When the app depends on M3, consult the M3 docs available to this agent and dependency files before guessing component styling, layout behavior, properties, or CSS hooks.
 - Style the role wrapper directly when the component's root is the visual surface.
 - If the component renders a native control inside a wrapper, scope through the role and target the native element, for example `.anvil-role-primary-action > button` for Button.
 - If the component root is the native control, put the role selector on that element, for example `input.anvil-role-compact-field` or `textarea.anvil-role-notes`.

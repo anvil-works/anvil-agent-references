@@ -76,7 +76,7 @@ Do not treat these as interchangeable. Use blocks to fill an existing layout, sl
 | `anvil:dom-node` | Exposes a plain HTML element in Python as `self.dom_nodes["name"]` | `anvil:dom-node="submit_btn"` |
 | `anvil:on-dom:` | Native DOM event handler on a plain HTML element; handler receives the browser event object | `anvil:on-dom:click="self.handle_dom_click"` |
 
-For Anvil component `prop:` attributes, consult the agent reference stubs under `stubs/client/` to confirm valid property names and value shapes. Do not infer property names from labels or examples.
+For Anvil component `prop:` attributes, consult the Anvil client API stubs available to this agent to confirm valid property names and value shapes. Do not infer property names from labels or examples.
 
 Form-valued properties also use package-qualified specs. For a `RepeatingPanel`, set `prop:item_template` to a package-qualified form name such as `CustomerApp.ArticleRow` or `ContentKit.ArticleRow`.
 

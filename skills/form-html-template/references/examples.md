@@ -90,7 +90,7 @@ Use `container:` attributes for properties that the parent container applies to 
 </anvil-form>
 ```
 
-Check the agent reference stubs under `stubs/client/` for component properties such as `role`, `text`, and `placeholder`. Check existing app templates or component docs before using container-specific layout properties.
+Check the Anvil client API stubs available to this agent for component properties such as `role`, `text`, and `placeholder`. Check existing app templates or component docs before using container-specific layout properties.
 
 ## Components From A Dependency
 
@@ -122,7 +122,7 @@ When an app depends on M3 or another component package, use the dependency packa
 </anvil-form>
 ```
 
-Inspect `anvil.yaml`, agent reference docs under `docs/m3/`, or dependency files before choosing component paths or properties. Do not write legacy `form:<dep_id>:...` specs.
+Inspect `anvil.yaml`, the M3 docs available to this agent, or dependency files before choosing component paths or properties. Do not write legacy `form:<dep_id>:...` specs.
 
 ## RepeatingPanel Item Template
 
