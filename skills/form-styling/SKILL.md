@@ -13,6 +13,7 @@ The main distinction is between raw HTML elements and Anvil components:
 
 - Style raw HTML elements with CSS classes/selectors in `theme/assets/theme.css`.
 - Style Anvil components with component properties, roles, and documented component APIs.
+- For dynamic styling on plain HTML, name the element with `anvil:name` and use the resulting `HtmlComponent.classes` / `HtmlComponent.style` helpers from Python.
 - Treat roles as the semantic styling API for reusable Anvil component variants. Role appearance usually belongs in `theme/assets/theme.css` as `.anvil-role-<role-name>`.
 
 Keep these editing surfaces separate. Do not add `anvil:dom-node` just to style an element,
@@ -26,11 +27,13 @@ the supported API.
 - **Documented dependency API or hook**: styling guidance from M3 docs available to this agent, `.anvil/deps/<package>/docs/`, or the dependency's component files.
 - **Generated component internals**: DOM/CSS classes emitted by an Anvil component implementation rather than authored in the app template. Do not write selectors against these.
 - **Theme-parameter-driven app**: an app whose `theme/assets/theme.css` already uses `%color:<COLOR NAME>%` tokens and whose colors are defined in `theme/parameters.yaml`.
+- **HtmlComponent classes/style helpers**: live Python objects on named plain HTML elements, used as `self.<name>.classes` and `self.<name>.style` for runtime root-element styling.
 
 ## Where Styles Go
 
 - Put reusable CSS in `theme/assets/theme.css`.
 - Use stable, domain-specific class names for raw HTML elements and wrapper markup in form templates.
+- For Python-driven class or inline-style state on raw HTML, use `anvil:name` in the template and `self.<name>.classes` / `self.<name>.style` in form code.
 - Use `theme/parameters.yaml` color tokens only in a theme-parameter-driven app.
 - Prefer CSS custom properties in `theme/assets/theme.css` for new app-local styling tokens.
 - Use component properties, roles, or documented dependency APIs for Anvil component styling.
@@ -57,6 +60,9 @@ template values.
 - Prefer classes over broad element selectors.
 - Use app-specific class names that describe the domain or UI role.
 - Keep durable visual styling in CSS, not Python.
+- For dynamic state, use named HTML elements and their `classes` helper: `self.banner.classes["is-error"] = has_error`.
+- Use `style` for small dynamic inline values that are truly stateful, for example `self.banner.style["opacity"] = 0.5`.
+- Do not use `self.dom_nodes[...]` just to mutate `className`, `classList`, or `style`; reserve direct DOM access for browser DOM APIs that need the JavaScript bridge and are not exposed by Anvil component properties or helpers.
 
 ## Anvil Components
 

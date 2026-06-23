@@ -26,9 +26,24 @@ Omit `<anvil-form>` when the form body is ordinary HTML with embedded Anvil comp
 
 ```html
 <section class="hero">
-  <h1 anvil:dom-node="heading">Welcome</h1>
+  <h1>Welcome</h1>
   <anvil-component type="Button" name="primary_button" prop:text="Continue"></anvil-component>
 </section>
+```
+
+Use `anvil:name` when Python should refer to a plain HTML element as a component:
+
+```html
+<section anvil:name="banner" class="status-banner">Saving...</section>
+```
+
+```python
+self.banner.classes.add("is-loading")
+self.banner.classes["is-error"] = has_error
+self.banner.classes["active highlighted"] = should_highlight
+self.banner.style["marginTop"] = 4
+self.banner.style["opacity"] = 0.5
+self.banner.style.clear()
 ```
 
 ## Form Using An Existing Layout
@@ -175,21 +190,19 @@ def ok_button_click(self, **event_args):
 
 ## Plain HTML DOM Access
 
-Use `anvil:dom-node` and `anvil:on-dom:` for plain HTML elements that should stay plain HTML and need direct DOM access or a browser event object.
+Use `anvil:dom-node` and `anvil:on-dom:` for plain HTML elements that need the JavaScript bridge for browser DOM APIs or a browser event object. For class and style changes, prefer `anvil:name` and the named `HtmlComponent`'s `classes` / `style` helpers.
 
 ```html
-<div class="toolbar">
-  <button anvil:dom-node="count_btn" anvil:on-dom:click="self.count_click">Clicked 0 times</button>
-  <span anvil:dom-node="status_text">Ready</span>
+<div class="drop-target" anvil:dom-node="drop_zone" anvil:on-dom:dragover="self.drop_zone_dragover">
+  Drop files here
 </div>
 ```
 
 ```python
-def count_click(self, event):
+def drop_zone_dragover(self, event):
     event.preventDefault()
-    self.click_count = getattr(self, "click_count", 0) + 1
-    self.dom_nodes["count_btn"].innerText = f"Clicked {self.click_count} times"
-    self.dom_nodes["status_text"].innerText = "Updated from a native DOM event"
+    event.dataTransfer.dropEffect = "copy"
+    self.dom_nodes["drop_zone"].scrollIntoView()
 ```
 
 ## Layout-Defining Form
@@ -206,7 +219,7 @@ events:
 ---
 <div class="app-shell">
   <header>
-    <h1 anvil:dom-node="title_heading">Dashboard</h1>
+    <h1 anvil:name="title_heading">Dashboard</h1>
     <anvil-slot name="header_actions"></anvil-slot>
   </header>
   <main>
@@ -231,7 +244,7 @@ properties:
 ---
 <article class="info-card">
   <header>
-    <h2 anvil:dom-node="title_heading">Card title</h2>
+    <h2 anvil:name="title_heading">Card title</h2>
     <anvil-dropzone name="actions"></anvil-dropzone>
   </header>
   <section class="info-card-body">

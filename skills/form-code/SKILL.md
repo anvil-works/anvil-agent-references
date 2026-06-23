@@ -41,6 +41,7 @@ class Form1(Form1Template):
 Legacy forms may call `self.init_components(**properties)` instead. For ordinary form initialization, this is largely equivalent to `super().__init__(**properties)`. Leave an existing `self.init_components(**properties)` call in place unless the task requires updating the form to the newer pattern.
 
 Named component instances from the template are available on the form instance.
+Plain HTML elements named with `anvil:name` are named `HtmlComponent` instances. For runtime class or inline-style changes, prefer their live `classes` and `style` helpers, such as `self.banner.classes.add("is-loading")` or `self.banner.style["marginTop"] = 4`, rather than `self.dom_nodes[...]`.
 
 ## Form Python Changes
 
@@ -51,6 +52,7 @@ Use form Python for:
 - Form lifecycle events such as `show`.
 - Validation methods and submit/save handlers.
 - Runtime updates to component properties, `RepeatingPanel.items`, `self.item`, or other dynamic state.
+- Runtime updates to named plain-HTML `HtmlComponent.classes` and `HtmlComponent.style` for dynamic styling.
 
 ## Rules
 
@@ -58,6 +60,7 @@ Use form Python for:
 - Read the matching template when a change affects component names, slots, or bindings.
 - Keep component names, Python references, event handlers, DOM node names, slots, and template markup consistent.
 - Prefer Python `@anvil.handle(<component-name>, <event-name>)` for Anvil component event handlers.
+- Use `self.dom_nodes[...]` only when the task needs the JavaScript bridge for browser DOM APIs that Anvil component properties and helpers do not expose.
 - Prefer relative imports for app-local form and module references unless the app uses another pattern.
 
 ## Workflow

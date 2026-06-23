@@ -22,7 +22,8 @@ For form Python, use `form-code`. For visual changes, use `form-styling`. A form
 3. Prefer declarative HTML for static layout. Use Python for behavior, validation, event handlers, and dynamic state.
 4. Check the Anvil client API stubs available to this agent before adding or changing Anvil component `prop:` attributes.
 5. Use `form-styling` for visual changes: component properties, roles, CSS classes, and theme CSS.
-6. Before finishing, re-check component names, event handlers, DOM node references, slot names, frontmatter boundaries, and explicit closing tags for non-void elements.
+6. For dynamic styling on plain HTML, prefer `anvil:name` and the named `HtmlComponent`'s `classes` / `style` helpers over direct DOM manipulation.
+7. Before finishing, re-check component names, event handlers, DOM node references, slot names, frontmatter boundaries, and explicit closing tags for non-void elements.
 
 ## References
 
@@ -33,7 +34,7 @@ For form Python, use `form-code`. For visual changes, use `form-styling`. A form
 
 - Prefer Python `@anvil.handle` for new `anvil-component`.
 - If an existing template wires component events in HTML, use `on:<event>="self.method_name"`.
-- Use `anvil:on-dom:<event>="self.method_name"` with `anvil:dom-node` for native DOM events on plain HTML.
+- Use `anvil:on-dom:<event>="self.method_name"` with `anvil:dom-node` only for native DOM events on plain HTML that need the browser event object.
 - For ordinary buttons, inputs, links, and form controls, prefer `<anvil-component>` equivalents over raw DOM nodes, unless guided by the user.
 
 See [syntax examples](references/syntax.md#bindings-and-events) for `@anvil.handle`, `on:*`, and `anvil:on-dom:*`.

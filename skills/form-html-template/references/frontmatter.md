@@ -50,7 +50,7 @@ events:
 ---
 <section class="dialog-shell">
   <header>
-    <h2 anvil:dom-node="title_heading">Customer details</h2>
+    <h2 anvil:name="title_heading">Customer details</h2>
     <anvil-slot name="actions"></anvil-slot>
   </header>
   <main>
@@ -117,7 +117,7 @@ properties:
 ---
 <article class="info-card">
   <header>
-    <h2 anvil:dom-node="title_heading">Card title</h2>
+    <h2 anvil:name="title_heading">Card title</h2>
     <anvil-dropzone name="actions"></anvil-dropzone>
   </header>
   <section class="info-card-body">

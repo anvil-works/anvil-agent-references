@@ -84,9 +84,38 @@ Form-valued properties also use package-qualified specs. For a `RepeatingPanel`,
 
 Use plain HTML when the element should remain ordinary HTML. Use an Anvil component when the element should participate in Anvil component APIs, properties, roles, layout properties, or component events.
 
-- Use `anvil:dom-node` when Python needs direct DOM access through `self.dom_nodes`.
-- Use `anvil:on-dom:*` when Python needs the browser DOM event object.
-- Use `anvil:name` when a plain HTML element needs Anvil metadata such as properties, bindings, layout properties, or an Anvil lifecycle event.
+- Use ordinary `class` and `style` attributes for static HTML styling.
+- Use `anvil:name` when Python needs a plain HTML element as a named `HtmlComponent`, including dynamic styling through `self.<name>.classes` or `self.<name>.style`.
+- Use `anvil:dom-node` only when Python needs the JavaScript bridge for browser DOM APIs that are not exposed by Anvil component properties or helper objects.
+- Use `anvil:on-dom:*` only when Python needs the browser DOM event object.
+
+## HTML Classes And Style Helpers
+
+Plain HTML named with `anvil:name` becomes a named `HtmlComponent` on the form instance. Its `classes` and `style` properties are live helper objects for the element's root class list and inline style. Prefer these helpers over `self.dom_nodes[...]` for class and style changes.
+
+```html
+<section anvil:name="banner" class="status-banner">Saving...</section>
+```
+
+```python
+self.banner.classes.add("is-loading")
+self.banner.classes.remove("is-loading")
+self.banner.classes["is-error"] = has_error
+self.banner.classes["active highlighted"] = should_highlight
+self.banner.style["marginTop"] = 4
+self.banner.style["opacity"] = 0.5
+self.banner.style.clear()
+```
+
+`classes` accepts a string, a list of strings, a dictionary of class names to booleans, or an `anvil.Classes` object. Strings are split on whitespace and duplicate classes are ignored. Subscript assignment also accepts whitespace-separated class groups, so `self.banner.classes["active highlighted"] = condition` toggles both classes together.
+
+`style` accepts a CSS string, a dictionary of CSS property names to values, or an `anvil.Style` object. Property names may use CSS spelling, camelCase, or underscores; numeric values get `px` automatically except for unitless CSS properties and custom properties such as `--gap`.
+
+Prefer this order for plain HTML styling:
+
+1. Static or durable styling: template `class` plus CSS in `theme/assets/theme.css`.
+2. Dynamic root styling: `anvil:name` plus `self.<name>.classes` / `self.<name>.style`.
+3. Direct DOM access: `anvil:dom-node` / `self.dom_nodes[...]` only for browser DOM APIs or native DOM event objects that need the JavaScript bridge.
 
 ## Bindings And Events
 
@@ -117,16 +146,17 @@ def button_1_click(self, **event_args):
     pass
 ```
 
-Use DOM events for plain HTML only when the handler needs the browser event object:
+Use DOM events for plain HTML only when the handler needs the browser event object or JavaScript-bridge DOM APIs:
 
 ```html
-<button anvil:dom-node="native_save" anvil:on-dom:click="self.native_save_click">Save</button>
+<div anvil:dom-node="drop_zone" anvil:on-dom:dragover="self.drop_zone_dragover">Drop files here</div>
 ```
 
 ```python
-def native_save_click(self, event):
+def drop_zone_dragover(self, event):
     event.preventDefault()
-    self.dom_nodes["native_save"].innerText = "Saved"
+    event.dataTransfer.dropEffect = "copy"
+    self.dom_nodes["drop_zone"].scrollIntoView()
 ```
 
 Top-level form events can use an empty component name with `@anvil.handle`:
