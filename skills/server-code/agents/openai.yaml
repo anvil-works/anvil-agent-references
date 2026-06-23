@@ -1,0 +1,4 @@
+interface:
+  display_name: "Server Code"
+  short_description: "Edit Anvil server code"
+  default_prompt: "Use $server-code to edit Anvil server code and check changed Python files."

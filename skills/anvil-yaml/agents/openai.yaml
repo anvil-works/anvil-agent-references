@@ -1,0 +1,4 @@
+interface:
+  display_name: "Anvil YAML"
+  short_description: "Update Anvil app manifest YAML"
+  default_prompt: "Use $anvil-yaml to update an Anvil app manifest with type-reference and validation checks."

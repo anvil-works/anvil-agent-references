@@ -1,0 +1,4 @@
+interface:
+  display_name: "Forms YAML Template"
+  short_description: "Convert legacy Anvil form YAML"
+  default_prompt: "Use $form-yaml-template to convert legacy Anvil form YAML to validated HTML, or edit YAML only when explicitly requested."

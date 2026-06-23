@@ -1,0 +1,4 @@
+interface:
+  display_name: "Forms Code"
+  short_description: "Edit Anvil form Python"
+  default_prompt: "Use $form-code to edit Anvil form Python and keep the form class, handlers, and template names in sync."

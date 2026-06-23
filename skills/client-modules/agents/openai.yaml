@@ -1,0 +1,4 @@
+interface:
+  display_name: "Client Modules"
+  short_description: "Edit Anvil client modules"
+  default_prompt: "Use $client-modules to edit an Anvil client module and keep app-local imports consistent."

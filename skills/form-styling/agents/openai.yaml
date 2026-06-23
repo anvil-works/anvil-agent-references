@@ -1,0 +1,4 @@
+interface:
+  display_name: "Forms Styling"
+  short_description: "Style Anvil form UI"
+  default_prompt: "Use $form-styling to style Anvil form UI using component APIs, roles, or theme CSS as appropriate."

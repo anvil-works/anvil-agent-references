@@ -1,0 +1,4 @@
+interface:
+  display_name: "Forms HTML Template"
+  short_description: "Edit Anvil HTML form templates"
+  default_prompt: "Use $form-html-template to edit an Anvil HTML form template and keep components, slots, and handlers in sync."
