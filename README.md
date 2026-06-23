@@ -1,22 +1,13 @@
 # Anvil Agent References
 
-This repository is generated from [anvil-works/anvil](https://github.com/anvil-works/anvil).
+This repository contains reference material for AI agents and developer tooling working with Anvil apps.
 
-The files in this repository are generated Anvil reference material for agents
-and tooling. Do not edit this repository directly. To change these files, update
-the source files in `anvil-works/anvil`, regenerate the docs package, and let the
-publishing workflow mirror the generated output here.
+It includes:
 
-Mirrored directories:
+- `stubs/`: Python type stubs for Anvil client and server APIs.
+- `skills/`: public agent workflows for common Anvil development tasks.
+- `reference/`: structured reference files for Anvil-specific project formats.
+- `docs/`: agent-oriented docs for understanding and editing Anvil apps.
 
-- `stubs/`: generated Anvil API stubs from `anvil-works/anvil:doc/anvil-api-stubs/source/`.
-- `skills/`: selected public agent workflows from `anvil-works/anvil:platform/agents/agent-host/user_config_template/skills/`.
-- `reference/`: generated agent reference material from `anvil-works/anvil:platform/agents/agent-host/user_config_template/reference/`.
-- `docs/`: agent-facing docs from `anvil-works/anvil:platform/agents/agent-host/user_config_template/docs/`.
-
-Generated from:
-
-- Source repository: `anvil-works/anvil`
-- Source commit: `03e53a1a8b2600cb5068eadb4c007bd9dfbf59b3`
-- Generation command: `node doc/anvil-api-stubs/generate-stubs.mjs`
+This repository is generated from the main Anvil source repository. Do not edit these files directly; changes should be made in the source repository and published here by the release workflow.
 
