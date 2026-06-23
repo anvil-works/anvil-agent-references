@@ -5,7 +5,9 @@
 # Type stubs for anvil.tables module
 # Generated files: client/anvil/tables/__init__.pyi, server/anvil/tables/__init__.pyi
 
-from typing import Any, Generic, TypeVar, Iterator, Callable, overload
+from typing import Any, Generic, TypeVar, Iterator, Callable, Iterable, Mapping, overload
+
+from anvil import Media
 
 _T = TypeVar("_T", bound="Row")
 _F = TypeVar("_F", bound="Callable[..., Any]")
@@ -27,6 +29,8 @@ class Row:
     ) -> None: ...
     def __getitem__(self, key: str, /) -> Any: ...
     def __setitem__(self, key: str, value: Any, /) -> None: ...
+    def __contains__(self, key: str, /) -> bool: ...
+    def __iter__(self) -> Iterator[tuple[str, Any]]: ...
     def update(self, **kwargs: Any) -> None:
         """Update multiple columns of this row at once.
 
@@ -45,15 +49,21 @@ class Row:
     def save(self) -> None:
         """Save buffered changes to this row.
 
+        Only available with Accelerated Data Tables; not available with legacy Data Tables.
+
         [Anvil Docs](https://anvil.works/docs/data-tables/data-tables-in-code)"""
         ...
     def reset(self) -> None:
         """Reset buffered changes to this row.
 
+        Only available with Accelerated Data Tables; not available with legacy Data Tables.
+
         [Anvil Docs](https://anvil.works/docs/data-tables/data-tables-in-code)"""
         ...
     def buffer_changes(self, buffered: bool | None = None) -> Any:
         """Context manager for buffered mode.
+
+        Only available with Accelerated Data Tables; not available with legacy Data Tables.
 
         [Anvil Docs](https://anvil.works/docs/data-tables/data-tables-in-code)"""
         ...
@@ -61,30 +71,49 @@ class Row:
     def buffered_changes(self) -> dict[str, Any] | None:
         """Pending buffered changes for this row.
 
+        Only available with Accelerated Data Tables; not available with legacy Data Tables.
+
         [Anvil Docs](https://anvil.works/docs/data-tables/data-tables-in-code)"""
         ...
     def refresh(self, fetch: Any = None) -> None:
         """Refresh this row from the database.
+
+        Only available with Accelerated Data Tables; not available with legacy Data Tables.
 
         [Anvil Docs](https://anvil.works/docs/data-tables/data-tables-in-code)"""
         ...
     def fetch(self, fetch: Any) -> None:
         """Fetch specific columns for this row.
 
+        Only available with Accelerated Data Tables; not available with legacy Data Tables.
+
+        [Anvil Docs](https://anvil.works/docs/data-tables/data-tables-in-code)"""
+        ...
+    def get(self, key: str, default: Any = None) -> Any:
+        """Get a column value, returning default if this row has no such column.
+
+        Only available with Accelerated Data Tables; not available with legacy Data Tables.
+
         [Anvil Docs](https://anvil.works/docs/data-tables/data-tables-in-code)"""
         ...
     def values(self) -> Iterator[Any]:
         """Iterator of column values.
+
+        Only available with Accelerated Data Tables; not available with legacy Data Tables.
 
         [Anvil Docs](https://anvil.works/docs/data-tables/data-tables-in-code)"""
         ...
     def keys(self) -> Iterator[str]:
         """Iterator of column names.
 
+        Only available with Accelerated Data Tables; not available with legacy Data Tables.
+
         [Anvil Docs](https://anvil.works/docs/data-tables/data-tables-in-code)"""
         ...
     def items(self) -> Iterator[tuple[str, Any]]:
         """Iterator of (name, value) pairs.
+
+        Only available with Accelerated Data Tables; not available with legacy Data Tables.
 
         [Anvil Docs](https://anvil.works/docs/data-tables/data-tables-in-code)"""
         ...
@@ -101,19 +130,42 @@ class SearchIterator(Generic[_T], Iterator[_T]):
     @overload
     def __getitem__(self, index: slice) -> list[_T]: ...
     def __getitem__(self, index: int | slice) -> _T | list[_T]: ...
+    def refresh(self) -> None:
+        """Clear cached results for this iterator.
+
+        Only available with Accelerated Data Tables; not available with legacy Data Tables.
+
+        [Anvil Docs](https://anvil.works/docs/data-tables/accelerated-tables)"""
+        ...
+    def to_csv(self, escape_for_excel: bool = False) -> Media:
+        """Get the search results in CSV format.
+
+        [Anvil Docs](https://anvil.works/docs/data-tables/export-csv)"""
+        ...
+    def delete_all_rows(self) -> None:
+        """Delete all rows matching this search.
+
+        Only available with Accelerated Data Tables; not available with legacy Data Tables.
+
+        [Anvil Docs](https://anvil.works/docs/data-tables/data-tables-in-code)"""
+        ...
 
 class Table(Generic[_T]):
     """Base class for tables.
 
     [Anvil Docs](https://anvil.works/docs/data-tables/data-tables-in-code)"""
     Row: type[_T]
-    def get(self, **kwargs: Any) -> _T | None:
+    def __contains__(self, row: Row, /) -> bool: ...
+    def get(self, *args: Any, **kwargs: Any) -> _T | None:
         """Get a single row matching the given criteria.
 
         [Anvil Docs](https://anvil.works/docs/data-tables/data-tables-in-code)"""
         ...
-    def get_by_id(self, row_id: str, /) -> _T | None:
+    def get_by_id(self, row_id: str, /, fetch: Any = None) -> _T | None:
         """Get a row by its unique ID.
+
+        The fetch argument is only available with Accelerated Data Tables; it is
+        not available with legacy Data Tables.
 
         [Anvil Docs](https://anvil.works/docs/data-tables/data-tables-in-code)"""
         ...
@@ -127,6 +179,18 @@ class Table(Generic[_T]):
 
         [Anvil Docs](https://anvil.works/docs/data-tables/data-tables-in-code)"""
         ...
+    def add_rows(self, rows: Iterable[Mapping[str, Any]], /) -> list[_T]:
+        """Add multiple rows to this table.
+
+        Only available with Accelerated Data Tables; not available with legacy Data Tables.
+
+        [Anvil Docs](https://anvil.works/docs/data-tables/accelerated-tables)"""
+        ...
+    def has_row(self, row: Row, /) -> bool:
+        """Return whether this table or view contains the given row.
+
+        [Anvil Docs](https://anvil.works/docs/data-tables/data-tables-in-code)"""
+        ...
     def list_columns(self) -> list[dict[str, Any]]:
         """List all columns in this table.
 
@@ -137,17 +201,29 @@ class Table(Generic[_T]):
 
         [Anvil Docs](https://anvil.works/docs/data-tables/data-tables-in-code)"""
         ...
-    def client_readable(self, **kwargs: Any) -> "Table[_T]":
+    def restrict_columns(self, col_spec: Any, /) -> "Table[_T]":
+        """Return a view restricted to the given columns.
+
+        Only available with Accelerated Data Tables; not available with legacy Data Tables.
+
+        [Anvil Docs](https://anvil.works/docs/data-tables/accelerated-tables#column-restricted-views)"""
+        ...
+    def to_csv(self, escape_for_excel: bool = False) -> Media:
+        """Get the table in CSV format.
+
+        [Anvil Docs](https://anvil.works/docs/data-tables/export-csv)"""
+        ...
+    def client_readable(self, *args: Any, **kwargs: Any) -> "Table[_T]":
         """Return a view of this table that clients can read.
 
         [Anvil Docs](https://anvil.works/docs/data-tables/data-security)"""
         ...
-    def client_writable(self, **kwargs: Any) -> "Table[_T]":
+    def client_writable(self, *args: Any, **kwargs: Any) -> "Table[_T]":
         """Return a view of this table that clients can write to.
 
         [Anvil Docs](https://anvil.works/docs/data-tables/data-security)"""
         ...
-    def client_writable_cascade(self, **kwargs: Any) -> "Table[_T]":
+    def client_writable_cascade(self, *args: Any, **kwargs: Any) -> "Table[_T]":
         """Return a view of this table that clients can write to, with cascading permissions.
 
         [Anvil Docs](https://anvil.works/docs/data-tables/data-security)"""
@@ -292,6 +368,8 @@ def in_transaction(function: _F | None = None, *, relaxed: bool = False) -> _F |
 def get_table_by_id(table_id: str) -> Table[Row]:
     """Get a table by id. Can pass a row id in, and the table the row belongs to will be returned.
 
+    Only available with Accelerated Data Tables; not available with legacy Data Tables.
+
     [Anvil Docs](https://anvil.works/docs/data-tables/accelerated-tables)"""
     ...
 
@@ -315,5 +393,6 @@ class _AppTables:
     [Anvil Docs](https://anvil.works/docs/data-tables)"""
     def __getattr__(self, name: str) -> Table[Row]: ...
     def __getitem__(self, name: str) -> Table[Row]: ...
+    def __iter__(self) -> Iterator[str]: ...
 
 app_tables: _AppTables
