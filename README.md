@@ -17,6 +17,6 @@ Mirrored directories:
 Generated from:
 
 - Source repository: `anvil-works/anvil`
-- Source commit: `6cd4c652c9b9c2502b0371602ac9c2b73ca9d502`
+- Source commit: `03e53a1a8b2600cb5068eadb4c007bd9dfbf59b3`
 - Generation command: `node doc/anvil-api-stubs/generate-stubs.mjs`
 
