@@ -337,6 +337,41 @@ The item template form can bind against `self.item`:
 </anvil-form>
 ```
 
+Interactive repeated rows should keep their event wiring in the item template
+form. Prefer an Anvil component when ordinary Anvil click semantics are enough:
+
+```html
+<anvil-form container="ColumnPanel">
+  <anvil-component type="Label" name="title_label" bind:text="self.item['title']"></anvil-component>
+  <anvil-component type="Button" name="open_button" prop:text="Open"></anvil-component>
+</anvil-form>
+```
+
+```python
+@anvil.handle("open_button", "click")
+def open_button_click(self, **event_args):
+    self.parent.raise_event("x-open-article", item=self.item)
+```
+
+Use native DOM event wiring for a fixed plain-HTML control only when the markup
+should remain ordinary HTML or the handler needs the browser event object:
+
+```html
+<article class="article-row">
+  <h3 anvil:name="title_heading">Article</h3>
+  <p anvil:name="summary_text">Summary</p>
+  <button type="button" class="article-row__open" anvil:on-dom:click="self.open_button_click">
+    Open
+  </button>
+</article>
+```
+
+```python
+def open_button_click(self, event):
+    event.preventDefault()
+    self.parent.raise_event("x-open-article", item=self.item)
+```
+
 ## Layout Properties And Bindings
 
 Use `prop:` and `bind:` on `<anvil-form layout="...">` when the current form needs to set properties on the layout it is using.
@@ -361,8 +396,9 @@ def ok_button_click(self, **event_args):
 
 ## Plain HTML DOM Access
 
-Use `anvil:dom-node` for fixed native HTML or browser DOM APIs. Add
-`anvil:on-dom:` when a native DOM event handler needs the browser event object.
+Use `anvil:dom-node` when Python needs direct access to fixed native HTML or
+browser DOM APIs. Use `anvil:on-dom:` when a native HTML element should keep
+native DOM event semantics or the handler needs the browser event object.
 This is not a rendering pattern for app data: do not update repeated rows,
 cards, details, or search results by assigning `innerHTML`, `outerHTML`,
 `insertAdjacentHTML`, or HTML strings. Use `RepeatingPanel` item templates,

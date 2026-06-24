@@ -72,7 +72,7 @@ Do not treat these as interchangeable. Use blocks to fill an existing layout, sl
 | `on:` | Anvil component or form event handler; prefer Python `@anvil.handle` for new component handlers | `on:click="self.save_click"` |
 | `on:layout:` | Event handler for an event raised by the layout form | `on:layout:submit="self.submit_dialog"` |
 | `container:` | Layout property for a child in its parent container | `container:width="200"` |
-| `anvil:name` | Gives a plain HTML element an Anvil component name | `anvil:name="hero"` |
+| `anvil:name` | Exposes a plain HTML element in Python as a named `HtmlComponent` for access, classes, and style helpers; not DOM event wiring | `anvil:name="hero"` |
 | `anvil:dom-node` | Exposes a plain HTML element in Python as `self.dom_nodes["name"]` | `anvil:dom-node="submit_btn"` |
 | `anvil:on-dom:` | Native DOM event handler on a plain HTML element; handler receives the browser event object | `anvil:on-dom:click="self.handle_dom_click"` |
 
@@ -85,13 +85,14 @@ Form-valued properties also use package-qualified specs. For a `RepeatingPanel`,
 Use plain HTML when the element should remain ordinary HTML. Use an Anvil component when the element should participate in Anvil component APIs, properties, roles, layout properties, or component events.
 
 - Use ordinary `class` and `style` attributes for static HTML styling.
-- Use `anvil:name` when Python needs a plain HTML element as a named `HtmlComponent`, including dynamic styling through `self.<name>.classes` or `self.<name>.style`.
+- Use `anvil:name` when Python needs a plain HTML element exposed as a named `HtmlComponent`, including dynamic styling through `self.<name>.classes` or `self.<name>.style`.
 - Use `anvil:dom-node` only when Python needs the JavaScript bridge for browser DOM APIs that are not exposed by Anvil component properties or helper objects.
-- Use `anvil:on-dom:*` only when Python needs the browser DOM event object.
+- Use `anvil:on-dom:*` when a plain HTML element should keep native DOM event semantics or the handler needs the browser event object. Use browser `addEventListener` on a DOM node for imperative runtime wiring.
+- Do not use `anvil:name` or `set_event_handler(...)` for browser DOM events such as `click`, `change`, or `input`. `HtmlComponent` only has Anvil `show` / `hide` events. For an Anvil component event, use an Anvil component such as `Button` or `Link`. For a native plain-HTML DOM event, use `anvil:on-dom:*` or browser `addEventListener`.
 
 ## HTML Classes And Style Helpers
 
-Plain HTML named with `anvil:name` becomes a named `HtmlComponent` on the form instance. Its `classes` and `style` properties are live helper objects for the element's root class list and inline style. Prefer these helpers over `self.dom_nodes[...]` for class and style changes.
+A plain HTML element named with `anvil:name` becomes a named `HtmlComponent` on the form instance. Its `classes` and `style` properties are live helper objects for the element's root class list and inline style. Prefer these helpers over `self.dom_nodes[...]` for class and style changes.
 
 ```html
 <section anvil:name="banner" class="status-banner">Saving...</section>
@@ -115,7 +116,7 @@ Prefer this order for plain HTML styling:
 
 1. Static or durable styling: template `class` plus CSS in `theme/assets/theme.css`.
 2. Dynamic root styling: `anvil:name` plus `self.<name>.classes` / `self.<name>.style`.
-3. Direct DOM access: `anvil:dom-node` / `self.dom_nodes[...]` only for browser DOM APIs or native DOM event objects that need the JavaScript bridge.
+3. Direct DOM access: `anvil:dom-node` / `self.dom_nodes[...]` only for browser DOM APIs that are not exposed by Anvil component properties or helper objects.
 
 ## Bindings And Events
 
@@ -135,6 +136,37 @@ def button_1_click(self, **event_args):
     pass
 ```
 
+For a plain HTML DOM event, wire a native DOM event. The handler receives the
+browser event object:
+
+```html
+<button class="primary-action" anvil:on-dom:click="self.save_button_click">
+  Save
+</button>
+```
+
+```python
+def save_button_click(self, event):
+    event.preventDefault()
+    self.save()
+```
+
+For imperative runtime DOM wiring, add a DOM node and use the browser event API.
+Wrap Python callbacks so exceptions are reported through Anvil:
+
+```html
+<button class="primary-action" anvil:dom-node="save_button">Save</button>
+```
+
+```python
+import anvil.js
+
+self.dom_nodes["save_button"].addEventListener(
+    "click",
+    anvil.js.report_exceptions(self.save_button_click),
+)
+```
+
 If an existing template already wires component events in HTML, preserve that style unless the task calls for changing event wiring:
 
 ```html
@@ -146,7 +178,7 @@ def button_1_click(self, **event_args):
     pass
 ```
 
-Use DOM events for plain HTML only when the handler needs the browser event object or JavaScript-bridge DOM APIs:
+Use DOM events for plain HTML when the element should remain native HTML, the handler needs the browser event object, or the handler needs JavaScript-bridge DOM APIs:
 
 ```html
 <div anvil:dom-node="drop_zone" anvil:on-dom:dragover="self.drop_zone_dragover">Drop files here</div>
@@ -167,16 +199,9 @@ def form_show(self, **event_args):
     pass
 ```
 
-Plain HTML named with `anvil:name` can wire Anvil events with `anvil:on:`:
-
-```html
-<div anvil:name="raw_div" anvil:on:show="self.on_show">Content</div>
-```
-
-```python
-def on_show(self, **event_args):
-    pass
-```
+Plain HTML `anvil:on:*` is HtmlComponent event binding, not native DOM event
+wiring. Treat it as a narrow `show` / `hide` edge case; do not use it for
+browser DOM events such as `click`, `change`, or `input`.
 
 ## Property Values
 

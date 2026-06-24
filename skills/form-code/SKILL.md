@@ -41,7 +41,8 @@ class Form1(Form1Template):
 Legacy forms may call `self.init_components(**properties)` instead. For ordinary form initialization, this is largely equivalent to `super().__init__(**properties)`. Leave an existing `self.init_components(**properties)` call in place unless the task requires updating the form to the newer pattern.
 
 Named component instances from the template are available on the form instance.
-Plain HTML elements named with `anvil:name` are named `HtmlComponent` instances. For runtime class or inline-style changes, prefer their live `classes` and `style` helpers, such as `self.banner.classes["is-loading"] = loading` or `self.banner.style["marginTop"] = 4`, rather than `self.dom_nodes[...]`. Check the Anvil client API stubs for the full helper API before using less common methods.
+Plain HTML elements named with `anvil:name` are exposed in Python as named `HtmlComponent` instances. For runtime class or inline-style changes, prefer their live `classes` and `style` helpers, such as `self.banner.classes["is-loading"] = loading` or `self.banner.style["marginTop"] = 4`, rather than `self.dom_nodes[...]`. Check the Anvil client API stubs for the full helper API before using less common methods.
+Do not use `set_event_handler(...)` for browser DOM events such as `click`, `change`, or `input` on one of those `HtmlComponent` instances. `HtmlComponent` only has Anvil `show` / `hide` events, so plain HTML DOM events need either declarative `anvil:on-dom:*` or browser `addEventListener` on a DOM node.
 
 ## Form Python Changes
 
@@ -54,6 +55,11 @@ Use form Python for:
 - Runtime updates to component properties, `RepeatingPanel.items`, `self.item`, or other dynamic state.
 - Runtime updates to named plain-HTML `HtmlComponent.classes` and `HtmlComponent.style` for dynamic styling.
 - Runtime updates to fixed native HTML through `self.dom_nodes[...]` when the template owns those elements.
+
+Match handler signatures to the event source:
+
+- Anvil component events: `def handler(self, **event_args)`.
+- Native DOM events from `anvil:on-dom:*` or browser `addEventListener`: `def handler(self, event)`.
 
 Do not render generated or repeated app data by rebuilding HTML strings. Avoid
 `.innerHTML`, `.outerHTML`, `insertAdjacentHTML`, DOM loops, or helper functions
