@@ -42,6 +42,7 @@ See [syntax examples](references/syntax.md#bindings-and-events) for `@anvil.hand
 ## Rules
 
 - **No HTML `<form>` tags** around Anvil components. Use `<anvil-form>` / layout structure; native `<form>` tags interfere with Anvil event wiring.
+- **Inline local `HtmlTemplate` markup when the mapping is obvious.** If an HTML form template contains `<anvil-form container="HtmlTemplate" prop:html="...">` and `prop:html` is local markup, move that markup into the body when the slot mapping is obvious. Ask if unsure. See `references/examples.md`.
 - **Frontmatter is optional.** Omit it unless the form needs custom component flags, custom properties, custom events, toolbox metadata, layout metadata, or item type metadata. Do not add empty frontmatter.
 - When frontmatter is needed, use only the fields listed in `references/frontmatter.md`.
 - Use explicit closing tags for non-void HTML elements.

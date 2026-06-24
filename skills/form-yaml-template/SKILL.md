@@ -16,6 +16,7 @@ A form should have exactly one template file: either HTML or YAML, never both. T
 1. Identify the YAML template path under `client_code/`:
    - `client_code/**/<Form>/form_template.yaml`
    - `client_code/**/<Form>.yaml`
+   - Before converting, check whether the YAML root is `container.type: HtmlTemplate` and note `container.properties.html`.
 2. Check for the sibling HTML template:
    - `client_code/**/<Form>/form_template.html`
    - `client_code/**/<Form>.html`
@@ -30,8 +31,15 @@ A form should have exactly one template file: either HTML or YAML, never both. T
    - Use `-f` / `--force` only when the user explicitly wants existing HTML overwritten.
    - Use `--keep-source` only when the user explicitly wants YAML retained after conversion.
    - Use `--json` for structured output (source path, output path, whether the YAML was removed).
-5. Validate the generated HTML path: `anvil --json validate <path-to-html>`.
-6. Continue layout edits with `form-html-template`.
+5. Read the generated HTML before editing it. Treat converter output as a starting point, not the final representation.
+6. If the source YAML used `container.type: HtmlTemplate` with inline `html`, inline that HTML into the template body when it is clearly just local markup:
+   - Inline markup may be empty, a single slot wrapper such as `<div anvil-slot="default"></div>`, or a larger local HTML fragment.
+   - Replace legacy `anvil-slot` placeholders with the converted components for those slots when the mapping is obvious.
+   - Do not change frontmatter as part of this cleanup.
+   - Do not do this for theme asset references such as `html: '@theme:standard-page.html'`; those are real HtmlTemplate usage.
+   - If it is not obvious whether the HTML should be inlined, ask the user before rewriting it.
+7. Validate the generated HTML path after any normalization: `anvil --json validate <path-to-html>`.
+8. Continue layout edits with `form-html-template`.
 
 ## Stay On YAML (explicit user request only)
 

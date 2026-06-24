@@ -31,6 +31,37 @@ Omit `<anvil-form>` when the form body is ordinary HTML with embedded Anvil comp
 </section>
 ```
 
+When converting legacy YAML, inline local `HtmlTemplate` markup instead of preserving it as a wrapper. For source YAML like this:
+
+```yaml
+custom_component: true
+container:
+  type: HtmlTemplate
+  properties:
+    html: |-
+      <div class="combo">
+        <div anvil-slot="default"></div>
+      </div>
+components:
+  - type: DropDown
+    name: picker
+    layout_properties: {slot: default}
+    event_bindings: {change: picker_change}
+```
+
+Prefer this HTML shape:
+
+```html
+---
+custom_component: true
+---
+<div class="combo">
+  <anvil-component type="DropDown" name="picker" on:change="self.picker_change"></anvil-component>
+</div>
+```
+
+Do not change the converted frontmatter as part of this cleanup. If the old `html` is a theme reference such as `@theme:standard-page.html`, or it is not clear whether local markup should be inlined, ask before rewriting it.
+
 Use `anvil:name` when Python should refer to a plain HTML element as a component:
 
 ```html
@@ -40,9 +71,9 @@ Use `anvil:name` when Python should refer to a plain HTML element as a component
 ```python
 self.banner.classes.add("is-loading")
 self.banner.classes["is-error"] = has_error
-self.banner.classes["active highlighted"] = should_highlight
+self.banner.classes.update({"active highlighted": should_highlight})
 self.banner.style["marginTop"] = 4
-self.banner.style["opacity"] = 0.5
+self.banner.style.update({"opacity": 0.5})
 self.banner.style.clear()
 ```
 
