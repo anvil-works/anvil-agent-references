@@ -69,7 +69,7 @@ to update.
 - Prefer Python `@anvil.handle(<component-name>, <event-name>)` for Anvil component event handlers.
 - Use `self.dom_nodes[...]` only when the task needs the JavaScript bridge for browser DOM APIs that Anvil component properties and helpers do not expose.
 - Prefer relative imports for app-local form and module references unless the app uses another pattern.
-- Before adding stdlib imports or external package imports, check `$CODEX_HOME/reference/python/skulpt-client-runtime.md` for client-side runtime availability.
+- Before adding unfamiliar stdlib imports or external package imports, check `$CODEX_HOME/reference/python/skulpt-client-runtime.md` for client-side runtime caveats.
 
 ## Workflow
 
