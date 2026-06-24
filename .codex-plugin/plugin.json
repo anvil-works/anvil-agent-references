@@ -1,0 +1,6 @@
+{
+  "name": "anvil",
+  "version": "1.0.0",
+  "description": "Anvil app editing workflows and reference material for AI agents.",
+  "skills": "./skills/"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "anvil",
+  "description": "Anvil app editing workflows and reference material for Claude Code.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Anvil"
+  }
+}
