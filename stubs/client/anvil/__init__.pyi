@@ -24,6 +24,7 @@ PaddingPropertyValue = MarginPropertyValue
 _ClassesValue = str | list[str] | Mapping[str, bool] | None
 _StyleScalar = str | int | float
 _StylePropertyValue = _StyleScalar | list[_StyleScalar]
+_StyleUpdatePropertyValue = _StylePropertyValue | None
 _StyleValue = str | Mapping[str, _StylePropertyValue] | None
 
 class SpacingPropertyValue(TypedDict, total=False):
@@ -351,6 +352,10 @@ class Classes:
     def remove(self, *values: _ClassesValue) -> None:
         """Remove one or more class names. Missing classes are ignored."""
         ...
+    @overload
+    def update(self, /, **kwargs: bool) -> None: ...
+    @overload
+    def update(self, updates: Mapping[str, bool], /, **kwargs: bool) -> None: ...
     def clear(self) -> None:
         """Remove all class names."""
         ...
@@ -382,6 +387,15 @@ class Style:
     def get(self, property: str, default: str = "") -> str: ...
     @overload
     def get(self, property: str, default: _T) -> str | _T: ...
+    @overload
+    def update(self, /, **kwargs: _StyleUpdatePropertyValue) -> None: ...
+    @overload
+    def update(
+        self,
+        updates: Mapping[str, _StyleUpdatePropertyValue],
+        /,
+        **kwargs: _StyleUpdatePropertyValue,
+    ) -> None: ...
     def clear(self) -> None:
         """Remove all CSS properties."""
         ...

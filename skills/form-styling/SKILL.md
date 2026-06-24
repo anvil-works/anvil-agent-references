@@ -62,6 +62,7 @@ template values.
 - Keep durable visual styling in CSS, not Python.
 - For dynamic state, use named HTML elements and their `classes` helper: `self.banner.classes["is-error"] = has_error`.
 - Use `style` for small dynamic inline values that are truly stateful, for example `self.banner.style["opacity"] = 0.5`.
+- Use `classes.update({...})` or `style.update({...})` when applying several related changes together; check the Anvil client API stubs for the full helper API.
 - Do not use `self.dom_nodes[...]` just to mutate `className`, `classList`, or `style`; reserve direct DOM access for browser DOM APIs that need the JavaScript bridge and are not exposed by Anvil component properties or helpers.
 
 ## Anvil Components

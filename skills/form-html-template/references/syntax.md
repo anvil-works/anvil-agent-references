@@ -101,15 +101,15 @@ Plain HTML named with `anvil:name` becomes a named `HtmlComponent` on the form i
 self.banner.classes.add("is-loading")
 self.banner.classes.remove("is-loading")
 self.banner.classes["is-error"] = has_error
-self.banner.classes["active highlighted"] = should_highlight
+self.banner.classes.update({"active highlighted": should_highlight})
 self.banner.style["marginTop"] = 4
-self.banner.style["opacity"] = 0.5
+self.banner.style.update({"opacity": 0.5}, color="red")
 self.banner.style.clear()
 ```
 
-`classes` accepts a string, a list of strings, a dictionary of class names to booleans, or an `anvil.Classes` object. Strings are split on whitespace and duplicate classes are ignored. Subscript assignment also accepts whitespace-separated class groups, so `self.banner.classes["active highlighted"] = condition` toggles both classes together.
+`classes` accepts a string, a list of strings, a dictionary of class names to booleans, or an `anvil.Classes` object. Strings are split on whitespace and duplicate classes are ignored. Subscript assignment also accepts whitespace-separated class groups, so `self.banner.classes["active highlighted"] = condition` toggles both classes together. Use `classes.update({...}, **kwargs)` for grouped changes; dictionary entries are needed for class names with hyphens or spaces, and keyword arguments are convenient for valid Python identifiers.
 
-`style` accepts a CSS string, a dictionary of CSS property names to values, or an `anvil.Style` object. Property names may use CSS spelling, camelCase, or underscores; numeric values get `px` automatically except for unitless CSS properties and custom properties such as `--gap`.
+`style` accepts a CSS string, a dictionary of CSS property names to values, or an `anvil.Style` object. Property names may use CSS spelling, camelCase, or underscores; numeric values get `px` automatically except for unitless CSS properties and custom properties such as `--gap`. Use `style.update({...}, **kwargs)` for grouped runtime changes; `None` or empty values remove properties. Check the Anvil client API stubs for the full helper API when using methods beyond item assignment, `add`, `remove`, `clear`, and `update`.
 
 Prefer this order for plain HTML styling:
 

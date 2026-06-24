@@ -23,6 +23,7 @@ PaddingPropertyValue = MarginPropertyValue
 _ClassesValue = str | list[str] | Mapping[str, bool] | None
 _StyleScalar = str | int | float
 _StylePropertyValue = _StyleScalar | list[_StyleScalar]
+_StyleUpdatePropertyValue = _StylePropertyValue | None
 _StyleValue = str | Mapping[str, _StylePropertyValue] | None
 
 class SpacingPropertyValue(TypedDict, total=False):

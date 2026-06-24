@@ -41,7 +41,7 @@ class Form1(Form1Template):
 Legacy forms may call `self.init_components(**properties)` instead. For ordinary form initialization, this is largely equivalent to `super().__init__(**properties)`. Leave an existing `self.init_components(**properties)` call in place unless the task requires updating the form to the newer pattern.
 
 Named component instances from the template are available on the form instance.
-Plain HTML elements named with `anvil:name` are named `HtmlComponent` instances. For runtime class or inline-style changes, prefer their live `classes` and `style` helpers, such as `self.banner.classes.add("is-loading")` or `self.banner.style["marginTop"] = 4`, rather than `self.dom_nodes[...]`.
+Plain HTML elements named with `anvil:name` are named `HtmlComponent` instances. For runtime class or inline-style changes, prefer their live `classes` and `style` helpers, such as `self.banner.classes["is-loading"] = loading` or `self.banner.style["marginTop"] = 4`, rather than `self.dom_nodes[...]`. Check the Anvil client API stubs for the full helper API before using less common methods.
 
 ## Form Python Changes
 
