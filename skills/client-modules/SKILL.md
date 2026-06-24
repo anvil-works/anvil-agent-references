@@ -23,6 +23,7 @@ Use `form-code` for form definitions.
 - Make client code changes under `client_code/`; do not edit `.anvil/`.
 - Prefer relative imports for app-local references unless the app uses another pattern.
 - Use the Anvil client API stubs available to this agent for Anvil API references.
+- Before adding stdlib imports or external package imports, check `$CODEX_HOME/reference/python/skulpt-client-runtime.md` for client-side runtime availability.
 
 ## Workflow
 
@@ -33,7 +34,7 @@ Use `form-code` for form definitions.
 
 ## Notes
 
-- Client-side Python uses Skulpt; some stdlib modules are limited and external libraries are not available.
+- Client-side Python uses Skulpt; some stdlib modules are limited and external libraries are not generally available.
 - JavaScript APIs are available through the Python-JavaScript bridge, for example `from anvil.js.window import document`.
 - Do not use Python `await` syntax for JavaScript Promises in client code. JavaScript functions that return Promises do not need `await` or `anvil.js.await_promise()`. Use `anvil.js.await_promise(promise)` only for rare Promise-valued property/access cases. For example, Web Animations `Animation.ready` and `Animation.finished` are Promise-valued properties; use `anvil.js.await_promise(animation.finished)` only when client code must wait for them.
 

@@ -20,7 +20,7 @@ For form Python, use `form-code`. For visual changes, use `form-styling`. A form
 1. Inspect the form Python file, matching HTML template, nearby forms, theme assets, and dependencies that define components or layouts used by the form.
 2. Keep component names, Python references, event handlers, DOM node names, slots, and template markup consistent.
 3. Prefer declarative HTML for static layout. Use Python for behavior, validation, event handlers, and dynamic state.
-4. For repeated rows, cards, list items, search results, order lines, notifications, and similar UI, use a `RepeatingPanel` with an item template form and set `<panel>.items` from Python. Do not build ordinary repeated app data with raw DOM loops, `innerHTML`, `createElement`, cloned DOM nodes, or ad hoc HTML strings.
+4. For repeated rows, cards, list items, search results, order lines, notifications, and similar UI, use a `RepeatingPanel` with an item template form and set `<panel>.items` from Python. In the item template, prefer Data Bindings such as `bind:text="self.item['name']"` or `writeback:text="self.item['name']"` over Python assignments that copy row fields into component properties. Do not build ordinary repeated app data with raw DOM loops, `innerHTML`, `createElement`, cloned DOM nodes, or ad hoc HTML strings.
 5. Check the Anvil client API stubs available to this agent before adding or changing Anvil component `prop:` attributes.
 6. Use `form-styling` for visual changes: component properties, roles, CSS classes, and theme CSS.
 7. For dynamic styling on plain HTML, prefer `anvil:name` and the named `HtmlComponent`'s `classes` / `style` helpers over direct DOM manipulation.

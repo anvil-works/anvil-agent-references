@@ -45,5 +45,5 @@ anvil --json validate server_code/<Package>/__init__.py
 ## Notes
 
 - Server Python is typically 3.10.
-- External libraries can be added in `server_code/requirements.txt`.
+- External server Python libraries can be added in `server_code/requirements.txt`.
 - Server code can import client modules only when existing server code in this app already does so; otherwise keep shared server logic under `server_code/`.

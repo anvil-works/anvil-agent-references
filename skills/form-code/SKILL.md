@@ -54,6 +54,13 @@ Use form Python for:
 - Runtime updates to component properties, `RepeatingPanel.items`, `self.item`, or other dynamic state.
 - Runtime updates to named plain-HTML `HtmlComponent.classes` and `HtmlComponent.style` for dynamic styling.
 
+For `RepeatingPanel` item template forms, prefer Data Bindings in the template
+for row/model fields instead of Python assignments such as
+`self.title_label.text = self.item["title"]`. Use form Python to set
+`<panel>.items`, handle events, perform validation, and call
+`self.refresh_data_bindings()` after mutating `self.item` when bound values need
+to update.
+
 ## Rules
 
 - Make form changes under `client_code/`; do not edit `.anvil/`.
@@ -62,6 +69,7 @@ Use form Python for:
 - Prefer Python `@anvil.handle(<component-name>, <event-name>)` for Anvil component event handlers.
 - Use `self.dom_nodes[...]` only when the task needs the JavaScript bridge for browser DOM APIs that Anvil component properties and helpers do not expose.
 - Prefer relative imports for app-local form and module references unless the app uses another pattern.
+- Before adding stdlib imports or external package imports, check `$CODEX_HOME/reference/python/skulpt-client-runtime.md` for client-side runtime availability.
 
 ## Workflow
 
