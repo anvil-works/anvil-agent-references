@@ -32,12 +32,14 @@ A form should have exactly one template file: either HTML or YAML, never both. T
    - Use `--keep-source` only when the user explicitly wants YAML retained after conversion.
    - Use `--json` for structured output (source path, output path, whether the YAML was removed).
 5. Read the generated HTML before editing it. Treat converter output as a starting point, not the final representation.
-6. If the source YAML used `container.type: HtmlTemplate` with inline `html`, inline that HTML into the template body when it is clearly just local markup:
-   - Inline markup may be empty, a single slot wrapper such as `<div anvil-slot="default"></div>`, or a larger local HTML fragment.
-   - Replace legacy `anvil-slot` placeholders with the converted components for those slots when the mapping is obvious.
+6. Complete the required post-conversion normalization checkpoint before any styling or layout edits:
+   - Inspect the generated HTML for `<anvil-form container="HtmlTemplate" prop:html="...">`.
+   - If `prop:html` is local markup, such as empty markup, a single slot wrapper like `<div anvil-slot="default"></div>`, or a small inline fragment, inline that markup into the template body by default.
+   - Replace legacy `anvil-slot` placeholders with the converted components for those slots when the mapping is obvious. Remove `container:slot` attributes that only targeted the inlined wrapper.
    - Do not change frontmatter as part of this cleanup.
-   - Do not do this for theme asset references such as `html: '@theme:standard-page.html'`; those are real HtmlTemplate usage.
-   - If it is not obvious whether the HTML should be inlined, ask the user before rewriting it.
+   - Keep `container="HtmlTemplate"` for theme asset references such as `html: '@theme:standard-page.html'`; those are real HtmlTemplate usage.
+   - Ask the user only when inlining is not obviously behavior-preserving, such as multiple ambiguous slots, scripts, behavior-sensitive wrapper structure, or Python/CSS dependencies on the exact wrapper shape.
+   - If you do not inline local markup, state the reason before continuing.
 7. Validate the generated HTML path after any normalization: `anvil --json validate <path-to-html>`.
 8. Continue layout edits with `form-html-template`.
 
