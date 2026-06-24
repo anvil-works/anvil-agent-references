@@ -174,6 +174,8 @@ Inspect `anvil.yaml`, the M3 docs available to this agent, or dependency files b
 
 Use a `RepeatingPanel` when one item template form should render once per item. Set `prop:item_template` to the package-qualified form spec for the row/card form, then set `items` from Python.
 
+Use this for repeated rows, cards, list items, search results, order lines, notifications, and similar app data. Prefer this over DOM-generated lists built with loops, `innerHTML`, `createElement`, cloned DOM nodes, or ad hoc HTML strings.
+
 ```html
 <anvil-form layout="CustomerApp.DashboardLayout">
   <anvil-block slot="body">

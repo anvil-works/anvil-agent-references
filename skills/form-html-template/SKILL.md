@@ -20,10 +20,11 @@ For form Python, use `form-code`. For visual changes, use `form-styling`. A form
 1. Inspect the form Python file, matching HTML template, nearby forms, theme assets, and dependencies that define components or layouts used by the form.
 2. Keep component names, Python references, event handlers, DOM node names, slots, and template markup consistent.
 3. Prefer declarative HTML for static layout. Use Python for behavior, validation, event handlers, and dynamic state.
-4. Check the Anvil client API stubs available to this agent before adding or changing Anvil component `prop:` attributes.
-5. Use `form-styling` for visual changes: component properties, roles, CSS classes, and theme CSS.
-6. For dynamic styling on plain HTML, prefer `anvil:name` and the named `HtmlComponent`'s `classes` / `style` helpers over direct DOM manipulation.
-7. Before finishing, re-check component names, event handlers, DOM node references, slot names, frontmatter boundaries, and explicit closing tags for non-void elements.
+4. For repeated rows, cards, list items, search results, order lines, notifications, and similar UI, use a `RepeatingPanel` with an item template form and set `<panel>.items` from Python. Do not build ordinary repeated app data with raw DOM loops, `innerHTML`, `createElement`, cloned DOM nodes, or ad hoc HTML strings.
+5. Check the Anvil client API stubs available to this agent before adding or changing Anvil component `prop:` attributes.
+6. Use `form-styling` for visual changes: component properties, roles, CSS classes, and theme CSS.
+7. For dynamic styling on plain HTML, prefer `anvil:name` and the named `HtmlComponent`'s `classes` / `style` helpers over direct DOM manipulation.
+8. Before finishing, re-check component names, event handlers, DOM node references, slot names, frontmatter boundaries, and explicit closing tags for non-void elements.
 
 ## References
 
@@ -36,6 +37,7 @@ For form Python, use `form-code`. For visual changes, use `form-styling`. A form
 - If an existing template wires component events in HTML, use `on:<event>="self.method_name"`.
 - Use `anvil:on-dom:<event>="self.method_name"` with `anvil:dom-node` only for native DOM events on plain HTML that need the browser event object.
 - For ordinary buttons, inputs, links, and form controls, prefer `<anvil-component>` equivalents over raw DOM nodes, unless guided by the user.
+- For repeated interactive elements, put the components and `@anvil.handle` handlers in the `RepeatingPanel` item template form instead of wiring events on DOM-generated rows.
 
 See [syntax examples](references/syntax.md#bindings-and-events) for `@anvil.handle`, `on:*`, and `anvil:on-dom:*`.
 
