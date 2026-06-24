@@ -12,8 +12,8 @@ Use frontmatter only for:
 
 - `custom_component`: marks the form as a custom component.
 - `custom_component_container`: marks a custom component as accepting child components; valid only with `custom_component: true`.
-- `properties`: custom properties exposed by the form or custom component.
-- `events`: custom events exposed by the form or custom component.
+- `properties`: custom properties exposed by a custom component or layout-defining form.
+- `events`: custom events exposed by a custom component or layout-defining form.
 - `toolbox_item`: how a custom component appears in the designer toolbox.
 - `layout_metadata`: designer metadata for a layout form.
 - `item_type`: data-table item type metadata.
@@ -59,9 +59,12 @@ events:
 </section>
 ```
 
-## Form Using A Layout With Properties And Events
+## Layout-Defining Form Using A Layout
 
-This form uses an existing layout and exposes its own custom API. The layout selection and blocks are body layout, so they stay in HTML.
+This form uses an existing layout and defines slots that other forms can fill.
+Its custom properties and events are valid because it is still a
+layout-defining form. The layout selection, blocks, and slots are body layout, so
+they stay in HTML.
 
 ```html
 ---
@@ -81,11 +84,15 @@ events:
 </anvil-form>
 ```
 
-The `layout` value must be a package-qualified form spec such as `CustomerApp.Layouts.Dialog`, not legacy `form:...` syntax.
+The `layout` value must be a package-qualified form spec such as `CustomerApp.Layouts.Dialog`, not legacy `form:...` syntax. A plain form that only uses `layout=` does not get custom properties or events from frontmatter; use `custom_component: true` if callers need a named custom API.
 
 ## Custom Component
 
-Use `custom_component: true` when the form should be available as a component to other forms.
+Use `custom_component: true` when a reusable Form needs a custom component API,
+such as custom properties/events for parent Forms, Toolbox metadata, or
+container behavior. This frontmatter exposes component metadata only; put the
+visible layout in the HTML body. For the full reusable Form pattern, including
+the advanced plain-HTML internals case, see `examples.md#reusable-form-component`.
 
 ```html
 ---
@@ -105,7 +112,7 @@ events:
 
 ## Custom Component Container
 
-Use `custom_component_container: true` only when callers should be able to insert child components into this component. Put each insertion point in the HTML body with `<anvil-dropzone>`.
+Use `custom_component_container: true` only with `custom_component: true`, when callers should be able to insert child components into this custom component. Put each insertion point in the HTML body with `<anvil-dropzone>`.
 
 ```html
 ---

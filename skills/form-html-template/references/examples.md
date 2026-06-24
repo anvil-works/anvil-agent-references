@@ -170,11 +170,149 @@ When an app depends on M3 or another component package, use the dependency packa
 
 Inspect `anvil.yaml`, the M3 docs available to this agent, or dependency files before choosing component paths or properties. Do not write legacy `form:<dep_id>:...` specs.
 
+## Reusable Form Component
+
+Forms are components. Use small Forms for reusable cards, widgets, stage nodes,
+detail panels, and similar composite UI. Put new reusable component Forms in a
+`Components` package by default, unless the app already has another component
+package convention. In the checkout this package is represented as
+`client_code/Components/`; in Anvil references it is a package, not a generic
+directory.
+
+Use the app's package name from `anvil.yaml` in package-qualified form specs:
+
+```html
+<anvil-form container="LinearPanel">
+  <anvil-component
+    type="CustomerApp.Components.StatusCard"
+    name="build_status"
+    bind:item="self.build_status"></anvil-component>
+</anvil-form>
+```
+
+The same `item` value can be passed from Python:
+
+```python
+from ..Components.StatusCard import StatusCard
+
+def add_status_item(self, status):
+    self.status_panel.add_component(StatusCard(item=status))
+```
+
+When the reusable Form needs a named API, define custom properties in the
+component Form's frontmatter. The parent binds to the custom component's
+properties; the component's Python property setters update its own internal UI.
+For item-driven reusable Forms, prefer Data Bindings against `self.item[...]`.
+For custom-property-driven components like this one, update the component's
+fixed internal UI from the setters. Named `anvil:dom-node` elements are
+appropriate when the component owns fixed native HTML. Data Bindings do not
+automatically refresh when arbitrary custom attributes change unless the setter
+explicitly calls `self.refresh_data_bindings()`.
+
+```html
+---
+custom_component: true
+properties:
+  - name: title
+    type: string
+  - name: status
+    type: string
+events:
+  - name: open
+    parameters:
+      - name: status
+---
+<article class="status-card">
+  <h3 anvil:dom-node="title_text"></h3>
+  <p anvil:dom-node="status_text"></p>
+  <anvil-component
+    type="Link"
+    name="open_link"
+    prop:text="Open"
+    on:click="self.open_link_click"></anvil-component>
+</article>
+```
+
+```python
+def __init__(self, **properties):
+    self._title = ""
+    self._status = ""
+    super().__init__(**properties)
+
+@property
+def title(self):
+    return self._title
+
+@title.setter
+def title(self, value):
+    self._title = "" if value is None else str(value)
+    self.dom_nodes["title_text"].textContent = self._title
+
+@property
+def status(self):
+    return self._status
+
+@status.setter
+def status(self, value):
+    self._status = "" if value is None else str(value)
+    self.dom_nodes["status_text"].textContent = self._status
+
+def open_link_click(self, **event_args):
+    self.raise_event("open", status=self.status)
+```
+
+Do not extend this fixed native HTML pattern into generated collections or HTML
+string rendering. Repeated app data belongs in `RepeatingPanel` item templates.
+
+Then set those properties from the parent template or parent Python:
+
+```html
+<anvil-component
+  type="CustomerApp.Components.StatusCard"
+  name="build_status"
+  prop:title="Build"
+  prop:status="Passing"
+  on:open="self.build_status_open"></anvil-component>
+```
+
+```python
+from ..Components.StatusCard import StatusCard
+
+def add_status(self, status):
+    self.status_panel.add_component(
+        StatusCard(title=status["name"], status=status["state"])
+    )
+```
+
+For one Form per item in a repeated collection, use a `RepeatingPanel` item
+template instead.
+
 ## RepeatingPanel Item Template
 
 Use a `RepeatingPanel` when one item template form should render once per item. Set `prop:item_template` to the package-qualified form spec for the row/card form, then set `items` from Python.
 
-Use this for repeated rows, cards, list items, search results, order lines, notifications, and similar app data. Prefer this over DOM-generated lists built with loops, `innerHTML`, `createElement`, cloned DOM nodes, or ad hoc HTML strings.
+Use this for repeated rows, cards, list items, search results, order lines, notifications, and similar app data. Prefer this over DOM-generated lists built with loops, `innerHTML`, `outerHTML`, `insertAdjacentHTML`, `createElement`, cloned DOM nodes, or ad hoc HTML string render functions.
+
+Do not generate repeated app data as HTML strings:
+
+```html
+<section anvil:dom-node="articles"></section>
+```
+
+```python
+def show_articles(self, articles):
+    cards = []
+    for article in articles:
+        cards.append(
+            f"<article class='article-card'>"
+            f"<h3>{article['title']}</h3>"
+            f"<p>{article['summary']}</p>"
+            f"</article>"
+        )
+    self.dom_nodes["articles"].innerHTML = "".join(cards)
+```
+
+Instead, put the repeated structure in an item template form:
 
 ```html
 <anvil-form layout="CustomerApp.DashboardLayout">
@@ -223,7 +361,14 @@ def ok_button_click(self, **event_args):
 
 ## Plain HTML DOM Access
 
-Use `anvil:dom-node` and `anvil:on-dom:` for plain HTML elements that need the JavaScript bridge for browser DOM APIs or a browser event object. For class and style changes, prefer `anvil:name` and the named `HtmlComponent`'s `classes` / `style` helpers.
+Use `anvil:dom-node` for fixed native HTML or browser DOM APIs. Add
+`anvil:on-dom:` when a native DOM event handler needs the browser event object.
+This is not a rendering pattern for app data: do not update repeated rows,
+cards, details, or search results by assigning `innerHTML`, `outerHTML`,
+`insertAdjacentHTML`, or HTML strings. Use `RepeatingPanel` item templates,
+Anvil components, Data Bindings, and component properties instead.
+
+For class and style changes, prefer `anvil:name` and the named `HtmlComponent`'s `classes` / `style` helpers.
 
 ```html
 <div class="drop-target" anvil:dom-node="drop_zone" anvil:on-dom:dragover="self.drop_zone_dragover">

@@ -53,6 +53,21 @@ Use form Python for:
 - Validation methods and submit/save handlers.
 - Runtime updates to component properties, `RepeatingPanel.items`, `self.item`, or other dynamic state.
 - Runtime updates to named plain-HTML `HtmlComponent.classes` and `HtmlComponent.style` for dynamic styling.
+- Runtime updates to fixed native HTML through `self.dom_nodes[...]` when the template owns those elements.
+
+Do not render generated or repeated app data by rebuilding HTML strings. Avoid
+`.innerHTML`, `.outerHTML`, `insertAdjacentHTML`, DOM loops, or helper functions
+that return HTML for repeated rows, cards, details, search results, or similar
+data-driven UI. Use Anvil components, `RepeatingPanel.items`, item template
+forms, Data Bindings, component properties, and named `HtmlComponent.classes` /
+`style` helpers instead.
+
+For reusable dynamic UI chunks that are not a homogeneous list, create small
+Forms in a `Components` package and import those Form classes where needed.
+Add instances with `add_component()` instead of appending HTML strings. Pass
+data through `item=` or configured custom properties, rather than manually
+syncing many child component fields from parent code. Custom properties require
+`custom_component: true` or a layout-defining form; otherwise prefer `item=`.
 
 For `RepeatingPanel` item template forms, prefer Data Bindings in the template
 for row/model fields instead of Python assignments such as
@@ -67,7 +82,7 @@ to update.
 - Read the matching template when a change affects component names, slots, or bindings.
 - Keep component names, Python references, event handlers, DOM node names, slots, and template markup consistent.
 - Prefer Python `@anvil.handle(<component-name>, <event-name>)` for Anvil component event handlers.
-- Use `self.dom_nodes[...]` only when the task needs the JavaScript bridge for browser DOM APIs that Anvil component properties and helpers do not expose.
+- Use `self.dom_nodes[...]` for fixed native HTML owned by the template, native DOM event work, or browser DOM APIs that Anvil component properties and helpers do not expose. Do not use it as a rendering surface for generated app data.
 - Prefer relative imports for app-local form and module references unless the app uses another pattern.
 - Before adding unfamiliar stdlib imports or external package imports, check `$CODEX_HOME/reference/python/skulpt-client-runtime.md` for client-side runtime caveats.
 
