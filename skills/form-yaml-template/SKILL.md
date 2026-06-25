@@ -1,15 +1,15 @@
 ---
 name: form-yaml-template
-description: Convert legacy Anvil form template YAML to HTML with `anvil convert-template <path-to-template>` only for template/layout work after confirming no sibling HTML exists. The command removes the source YAML after successful conversion by default. Hand-edit YAML only when the user explicitly asks to stay on YAML.
+description: Convert legacy Anvil form template YAML to HTML with `anvil convert-template` only for template/layout work after confirming no sibling HTML exists. The command removes the source YAML after successful conversion by default. Hand-edit YAML only when the user explicitly asks to stay on YAML.
 ---
 
 # Forms YAML Template
 
 Use this workflow when an app-editing task affects layout or template structure in a form that still has a legacy YAML template (`form_template.yaml` or `<Form>.yaml`).
 
-The default conversion is destructive: `anvil convert-template` validates the YAML, writes the generated HTML, then removes the source YAML after successful conversion. Do not run it for code-only changes, and do not run it when a sibling HTML template already exists unless the user explicitly asks to regenerate that HTML. Staying on YAML requires explicit user intent (for example "keep this as YAML" or "edit the designer YAML").
+The default conversion is destructive: `anvil convert-template` validates the YAML, writes the generated HTML, then removes the source YAML after successful conversion. Do not run it for code-only changes, and do not run it when a sibling HTML template already exists unless the user explicitly asks to regenerate that HTML. Do not use `--keep-source`; staying on YAML requires explicit user intent and should follow the YAML workflow below instead.
 
-A form should have exactly one template file: either HTML or YAML, never both. The server prefers HTML when both exist. Before converting, check whether the sibling HTML template already exists. If it exists, validate and use that HTML template instead of converting the YAML. Remove the YAML only after the HTML validates, unless the user explicitly wants to keep YAML.
+A form should have exactly one template file: either HTML or YAML, never both. The server prefers HTML when both exist. Before converting, check whether the sibling HTML template already exists. If it exists, validate and use that HTML template instead of converting the YAML; only remove the redundant YAML after the existing HTML validates, unless the user explicitly wants to keep YAML.
 
 ## Convert To HTML (default)
 
@@ -23,13 +23,13 @@ A form should have exactly one template file: either HTML or YAML, never both. T
 3. If sibling HTML exists, validate it with `anvil --json validate <path-to-html>` and continue layout edits with `form-html-template`.
    - Do not run conversion over existing HTML unless the user explicitly asks to regenerate it from YAML.
    - Remove the YAML only after validating the HTML, unless the user explicitly wants YAML kept.
-4. If no sibling HTML exists and the task requires template/layout work, run `anvil convert-template <path-to-template>`.
+4. If no sibling HTML exists and the task requires template/layout work, run `anvil convert-template` on the YAML template path.
    - Example: `anvil convert-template client_code/Form1/form_template.yaml`
    - Example: `anvil convert-template client_code/Package/Form1/form_template.yaml`
    - Writes the sibling `.html` file and removes the source YAML after successful conversion.
    - Use `-o <path>` / `--output <path>` to choose the HTML output path.
    - Use `-f` / `--force` only when the user explicitly wants existing HTML overwritten.
-   - Use `--keep-source` only when the user explicitly wants YAML retained after conversion.
+   - Do not use `--keep-source`.
    - Use `--json` for structured output (source path, output path, whether the YAML was removed).
 5. Read the generated HTML before editing it. Treat converter output as a starting point, not the final representation.
 6. Complete the required post-conversion normalization checkpoint before any styling or layout edits:

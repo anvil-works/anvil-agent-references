@@ -30,8 +30,9 @@ For form Python, use `form-code`. For visual changes, use `form-styling`. A form
 
 ## References
 
-- Layout and syntax: `references/syntax.md` and `references/examples.md`.
+- Syntax and core rules: `references/syntax.md`.
 - Frontmatter: `references/frontmatter.md` for custom component flags, custom properties, custom events, toolbox metadata, layout metadata, and item type metadata.
+- Examples: read only the needed section from the contents in `references/examples.md`, such as simple forms, layout forms, dependency components, reusable form components, RepeatingPanel item templates, layout properties, plain HTML DOM access, or custom component containers.
 
 ## Events
 

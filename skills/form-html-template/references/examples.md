@@ -2,6 +2,21 @@
 
 Use these as compact patterns when creating or editing an HTML form template. Prefer package-form `form_template.html` for a new form; these patterns also apply to a module-form `<Form>.html` file.
 
+## Contents
+
+- [Simple Container Form](#simple-container-form)
+- [Plain HTML Body](#plain-html-body)
+- [Form Using An Existing Layout](#form-using-an-existing-layout)
+- [Form That Uses And Defines Layout Slots](#form-that-uses-and-defines-layout-slots)
+- [Container Layout Properties](#container-layout-properties)
+- [Components From A Dependency](#components-from-a-dependency)
+- [Reusable Form Component](#reusable-form-component)
+- [RepeatingPanel Item Template](#repeatingpanel-item-template)
+- [Layout Properties And Bindings](#layout-properties-and-bindings)
+- [Plain HTML DOM Access](#plain-html-dom-access)
+- [Layout-Defining Form](#layout-defining-form)
+- [Custom Component Container](#custom-component-container)
+
 ## Simple Container Form
 
 Use a container form when the form owns its own layout.
