@@ -373,8 +373,19 @@ def name_box_lost_focus(self, **event_args):
 ```
 
 Use the `lost_focus` handler only when blur should also commit or refresh.
+For events that must use the current input value before writeback has updated
+`self.item`, commit the value to the item before refreshing sibling bindings:
 
-Anti-pattern: do not replace writeback with manual mirror code like this:
+```python
+@handle("name_box", "change")
+def name_box_change(self, **event_args):
+    self.item["name"] = self.name_box.text
+    self.refresh_data_bindings()
+```
+
+Avoid manually mirroring the item into sibling components by hand. Keep the
+item as the source of truth and let `refresh_data_bindings()` update bound
+siblings:
 
 ```python
 @handle("name_box", "change")

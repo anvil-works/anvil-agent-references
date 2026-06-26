@@ -12,6 +12,10 @@ If this reference links to a specific example in a full-skill reference file, yo
 | Anvil component event in a normal form module | `<anvil-component ... name="save_button">` | `@handle("save_button", "click")` and `def save_button_click(self, **event_args):` |
 | Existing component event in markup | `<anvil-component ... on:click="self.save_click">` | `def save_click(self, **event_args):` |
 
+For newly added Anvil component events, prefer Python `@handle(...)` wiring and
+keep the component markup simple. Use `on:<event>` only when preserving or
+extending an existing markup-wired component event.
+
 Avoid these common mistakes:
 
 - Do not use `anvil:on-click`, `anvil:on:click`, or `anvil:on-click="self.handler"` for native DOM events.
