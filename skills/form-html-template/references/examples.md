@@ -411,9 +411,11 @@ def ok_button_click(self, **event_args):
 
 ## Plain HTML DOM Access
 
-Use `anvil:dom-node` when Python needs direct access to fixed native HTML or
-browser DOM APIs. Use `anvil:on-dom:` when a native HTML element should keep
-native DOM event semantics or the handler needs the browser event object.
+Use `anvil:dom-node` when Python needs direct browser DOM access to fixed
+native HTML. Use `anvil:on-dom:` when a native HTML element should keep native
+DOM event semantics or the handler needs the browser event object. If the
+handler does not use `self.dom_nodes[...]`, omit hand-written `anvil:dom-node`
+from declarative `anvil:on-dom:*` wiring.
 This is not a rendering pattern for app data: do not update repeated rows,
 cards, details, or search results by assigning `innerHTML`, `outerHTML`,
 `insertAdjacentHTML`, or HTML strings. Use `RepeatingPanel` item templates,
@@ -483,3 +485,25 @@ properties:
 ```
 
 Dropzones for custom component containers only work in the top-level `HtmlComponent` container; do not nest them inside other Anvil container components.
+
+When a caller form uses the custom component as its container, named components
+placed into a dropzone belong to the caller form:
+
+```html
+<anvil-form container="CustomerApp.Components.InfoCard">
+  <anvil-component
+      type="Button"
+      name="save_button"
+      prop:text="Save"
+      container:dropzone="actions"></anvil-component>
+</anvil-form>
+```
+
+```python
+@anvil.handle("save_button", "click")
+def save_button_click(self, **event_args):
+    pass
+```
+
+Put this handler in the caller form's Python, not in the `InfoCard` custom
+component container. For the default dropzone, omit `container:dropzone`.

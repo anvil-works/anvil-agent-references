@@ -23,7 +23,7 @@ Use `form-code` for form definitions.
 - Make client code changes under `client_code/`; do not edit `.anvil/`.
 - Prefer relative imports for app-local references unless the app uses another pattern.
 - Use the Anvil client API stubs available to this agent for Anvil API references.
-- Before adding unfamiliar stdlib imports or external package imports, check `$CODEX_HOME/reference/python/skulpt-client-runtime.md` for client-side runtime caveats.
+- Before adding unfamiliar stdlib imports or external package imports, check the Anvil client Python runtime reference available to this agent for client-side runtime caveats.
 
 ## Workflow
 

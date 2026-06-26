@@ -25,8 +25,9 @@ For form Python, use `form-code`. For visual changes, use `form-styling`. A form
 6. Use `custom_component: true` when a reusable Form needs custom properties/events exposed to parent Forms.
 7. Check the Anvil client API stubs available to this agent before adding or changing Anvil component `prop:` attributes.
 8. Use `form-styling` for visual changes: component properties, roles, CSS classes, and theme CSS.
-9. For fixed native HTML owned by the template, including buttons, inputs, links, and semantic markup, use `anvil:dom-node` when Python needs direct element access; for dynamic styling, use `anvil:name` so the plain HTML element is exposed as a named `HtmlComponent` with `classes` / `style` helpers.
-10. Before finishing, re-check component names, event handlers, DOM node references, slot names, frontmatter boundaries, and explicit closing tags for non-void elements.
+9. For fixed native HTML owned by the template, including buttons, inputs, links, and semantic markup, omit hand-written `anvil:dom-node` for normal `anvil:on-dom:*` wiring; the runtime manages plain HTML nodes as needed. Write `anvil:dom-node="name"` only when Python needs direct browser DOM access through `self.dom_nodes["name"]`; for dynamic styling, use `anvil:name` so the plain HTML element is exposed as a named `HtmlComponent` with `classes` / `style` helpers.
+10. For behavior changes, inspect enough of `anvil.yaml` to identify `startup_form` or `startup`; if the changed form is not directly startup-reachable and no nearby navigation path is evident, mention that in the handoff.
+11. Before finishing, re-check component names, event handlers, DOM node references, slot names, frontmatter boundaries, and explicit closing tags for non-void elements.
 
 ## References
 
@@ -37,12 +38,20 @@ For form Python, use `form-code`. For visual changes, use `form-styling`. A form
 ## Events
 
 - Choose between native HTML and `<anvil-component>` deliberately for buttons, inputs, links, and form controls.
+- Before adding or changing event wiring, look for a nearby working example that uses the same source: native HTML element, Anvil component, layout event, or imperative DOM node.
 - For new Anvil component event handlers, prefer Python `@anvil.handle("<name>", "<event>")`; the handler accepts `**event_args`.
 - If an existing template wires component events in HTML, use `on:<event>="self.method_name"`.
-- For plain HTML DOM events, prefer `anvil:on-dom:<event>="self.method_name"`; the handler accepts the browser `event`. Use browser `addEventListener` on a DOM node for imperative runtime wiring.
+- For plain HTML DOM events, prefer `anvil:on-dom:<event>="self.method_name"`; the handler accepts the browser `event`. Do not add an explicit `anvil:dom-node` just for declarative DOM event wiring. Use browser `addEventListener` on a DOM node for imperative runtime wiring.
 - Use `anvil:name` for named `HtmlComponent` access, `classes`, and `style` helpers, not browser DOM events; `HtmlComponent` only has Anvil `show` / `hide` events.
 - Wrap browser `addEventListener` callbacks with `anvil.js.report_exceptions`.
 - For repeated interactive elements, put the event target and handler in the `RepeatingPanel` item template form.
+
+Common event mistakes to avoid:
+
+- Do not write `anvil:on-click="self.handler"`; it is not the plain HTML click syntax.
+- Do not use `anvil:on:click` or `anvil:on-click` for native DOM events. Use `anvil:on-dom:click="self.handler"` on a plain HTML element.
+- Do not give a DOM event handler the component-event signature `def handler(self, **event_args):`; use `def handler(self, event):`.
+- Do not give an Anvil component handler the DOM-event signature `def handler(self, event):`; use `**event_args`.
 
 | Need | Template | Python handler |
 | --- | --- | --- |
