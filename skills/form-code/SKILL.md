@@ -55,7 +55,7 @@ catch missing runtime APIs such as a misspelled helper name.
 Use form Python for:
 
 - `__init__` setup and calls to `super().__init__(**properties)` or legacy `self.init_components(**properties)`.
-- Anvil component event handlers, preferably declared with `@anvil.handle(<component-name>, <event-name>)`.
+- Anvil component event handlers, preferably declared with `@handle(...)`.
 - Form lifecycle events such as `show`.
 - Validation methods and submit/save handlers.
 - Runtime updates to component properties, `RepeatingPanel.items`, `self.item`, or other dynamic state.
@@ -67,7 +67,9 @@ Match handler signatures to the event source:
 - Anvil component events: `def handler(self, **event_args)`.
 - Native DOM events from `anvil:on-dom:*` or browser `addEventListener`: `def handler(self, event)`.
 
-When adding or changing handlers, inspect the matching template and any nearby working example before choosing the signature. If the handler also needs new template wiring, use `form-html-template` for the markup syntax. For plain HTML DOM events, the template should use `anvil:on-dom:<event>` or a DOM node plus `addEventListener`; for Anvil component events, prefer Python `@anvil.handle(...)` or preserve existing `on:<event>` markup.
+When adding or changing handlers, inspect the matching template and any nearby working example before choosing the signature. If the handler also needs new template wiring, use `form-html-template` for the markup syntax. For plain HTML DOM events, the template should use `anvil:on-dom:<event>` or a DOM node plus `addEventListener`; for Anvil component events, prefer `@handle(...)` or preserve existing `on:<event>` markup only when matching nearby app style.
+
+Decorator gotcha: use `@handle(...)` when the module has `from anvil import *`. Use `@anvil.handle(...)` when the module has `import anvil` (or add the `anvil` import as required). `anvil --json validate` will not catch missing imports.
 
 Do not render generated or repeated app data by rebuilding HTML strings. Avoid
 `.innerHTML`, `.outerHTML`, `insertAdjacentHTML`, DOM loops, or helper functions
@@ -85,17 +87,19 @@ syncing many child component fields from parent code. Custom properties require
 
 For `RepeatingPanel` item template forms, prefer Data Bindings in the template
 for row/model fields instead of Python assignments such as
-`self.title_label.text = self.item["title"]`. Use form Python to set
+`self.title_label.text = self.item["title"]`. For editable item fields, prefer
+Anvil inputs with `writeback:` over manually copying input text into
+`self.item` and mirroring sibling labels. Use form Python to set
 `<panel>.items`, handle events, perform validation, and call
-`self.refresh_data_bindings()` after mutating `self.item` when bound values need
-to update.
+`self.refresh_data_bindings()` after writeback or other `self.item` mutation
+when bound values need to update.
 
 ## Rules
 
 - Make form changes under `client_code/`; do not edit `.anvil/`.
 - Read the matching template when a change affects component names, slots, or bindings.
 - Keep component names, Python references, event handlers, DOM node names, slots, and template markup consistent.
-- Prefer Python `@anvil.handle(<component-name>, <event-name>)` for Anvil component event handlers.
+- Prefer `@handle(...)` for Anvil component event handlers.
 - Use `self.dom_nodes[...]` for fixed native HTML owned by the template, native DOM event work, or browser DOM APIs that Anvil component properties and helpers do not expose. Do not use it as a rendering surface for generated app data.
 - Prefer relative imports for app-local form and module references unless the app uses another pattern.
 - Treat any unconfirmed `anvil.*` symbol as a guess; confirm it from the client stubs before writing it.
@@ -127,6 +131,6 @@ Check only the Python files you changed:
 anvil --json validate client_code/<Form>/__init__.py
 ```
 
-This checks Python syntax, template import, form class name, and inheritance. It does not prove that runtime Anvil API names exist, and it does not prove that `__init__` initializes generated components, so confirm `anvil.*` symbols from the stubs and confirm a `super().__init__(**properties)` or legacy `self.init_components(**properties)` call when creating or changing a form class.
+This checks Python syntax, template import, form class name, and inheritance. It does not prove that runtime Anvil API names exist, and it does not prove that `__init__` initializes generated components. Confirm `anvil.*` symbols from the stubs and confirm a `super().__init__(**properties)` or legacy `self.init_components(**properties)` call when creating or changing a form class.
 
 Suggest testing the changed form workflow in the IDE.

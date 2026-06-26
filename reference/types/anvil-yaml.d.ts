@@ -51,7 +51,7 @@ export type AgentSchemaIndexType = "b_tree" | "trigram" | "full_text";
 export interface AgentSchemaColumnBase {
     name: string;
     admin_ui: { width?: number; order?: number };
-    client_hidden?: boolean;
+    client_hidden?: boolean | null;
 }
 
 export interface AgentBasicSchemaColumn extends AgentSchemaColumnBase {

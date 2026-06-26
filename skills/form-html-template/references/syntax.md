@@ -69,7 +69,7 @@ Do not treat these as interchangeable. Use blocks to fill an existing layout, sl
 | `prop:` | Component, container, or layout property | `prop:text="Hello"` |
 | `bind:` | One-way data binding | `bind:text="self.item['name']"` |
 | `writeback:` | Two-way binding | `writeback:text="self.item['name']"` |
-| `on:` | Anvil component or form event handler; prefer Python `@anvil.handle` for new component handlers | `on:click="self.save_click"` |
+| `on:` | Anvil component or form event handler; prefer Python `@handle` for new component handlers | `on:click="self.save_click"` |
 | `on:layout:` | Event handler for an event raised by the layout form | `on:layout:submit="self.submit_dialog"` |
 | `container:` | Layout property for a child in its parent container | `container:width="200"` |
 | `anvil:name` | Exposes a plain HTML element in Python as a named `HtmlComponent` for access, classes, and style helpers; not DOM event wiring | `anvil:name="hero"` |
@@ -124,16 +124,18 @@ Binding expressions are Python expressions evaluated at runtime. Prefer simple `
 
 `bind:` is one-way. `writeback:` is two-way. If both appear for the same property, source order decides which binding wins.
 
-`writeback:` mutates the bound target, but it does not refresh other Data Bindings. If another component should immediately reflect the edited value, update it directly or call `self.refresh_data_bindings()` after the writeback-triggering event.
+Use `bind:text="self.item['name']"` for display-only item fields. For editable item fields, prefer Anvil inputs with `writeback:text="self.item['name']"` over manually copying input text into `self.item` and mirroring sibling labels.
 
-For new Anvil component handlers, prefer Python `@anvil.handle(...)` and keep the component markup simple:
+`writeback:` mutates the bound target, but it does not refresh sibling Data Bindings. See `examples.md` for editable item fields that need immediate UI refresh.
+
+For new Anvil component handlers, keep the component markup simple and use `@handle(...)`.
 
 ```html
 <anvil-component type="Button" name="button_1" prop:text="Count: 0"></anvil-component>
 ```
 
 ```python
-@anvil.handle("button_1", "click")
+@handle("button_1", "click")
 def button_1_click(self, **event_args):
     pass
 ```
@@ -193,10 +195,10 @@ def drop_zone_dragover(self, event):
     self.dom_nodes["drop_zone"].scrollIntoView()
 ```
 
-Top-level form events can use an empty component name with `@anvil.handle`:
+Top-level form events can use an empty component name with `@handle`:
 
 ```python
-@anvil.handle("", "show")
+@handle("", "show")
 def form_show(self, **event_args):
     pass
 ```

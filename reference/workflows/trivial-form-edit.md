@@ -7,7 +7,7 @@ Use this reference for existing forms when the task only adds or changes simple 
 | Source | Template | Python handler |
 | --- | --- | --- |
 | Native DOM event | `<button anvil:on-dom:click="self.save_click">` | `def save_click(self, event):` |
-| Anvil component event | `<anvil-component ... name="save_button">` | `@anvil.handle("save_button", "click")` and `def save_button_click(self, **event_args):` |
+| Anvil component event in a normal form module | `<anvil-component ... name="save_button">` | `@handle("save_button", "click")` and `def save_button_click(self, **event_args):` |
 | Existing component event in markup | `<anvil-component ... on:click="self.save_click">` | `def save_click(self, **event_args):` |
 
 Avoid these common mistakes:
@@ -19,8 +19,8 @@ Avoid these common mistakes:
 ## Bindings And Repeated Items
 
 - In RepeatingPanel item templates, keep interactive elements and their handlers in the item template form.
-- Prefer Data Bindings for item fields, for example `bind:text="self.item['name']"` on a Label, over assigning label text in Python.
-- `writeback:` mutates the bound target, but it does not refresh other Data Bindings. After writeback or other bound-item mutation, update affected components directly or call `self.refresh_data_bindings()` if the UI should immediately reflect the changed value.
+- Prefer Data Bindings for item fields: use `bind:text="self.item['name']"` for display-only fields and `writeback:text="self.item['name']"` for editable inputs.
+- `writeback:` mutates the bound target, but it does not refresh sibling Data Bindings. If adding a writeback input plus refresh handler, use the editable item-field example in `form-html-template/references/examples.md#repeatingpanel-item-template`.
 
 ## Minimal Checks
 

@@ -30,7 +30,7 @@ Use a container form when the form owns its own layout.
 ```
 
 ```python
-@anvil.handle("add_button", "click")
+@handle("add_button", "click")
 def add_button_click(self, **event_args):
     pass
 ```
@@ -352,6 +352,45 @@ The item template form can bind against `self.item`:
 </anvil-form>
 ```
 
+For editable item fields, use writeback for the input and refresh bindings from
+the component event when sibling bound UI should update immediately:
+
+```html
+<anvil-form container="ColumnPanel">
+  <anvil-component type="Label" name="name_label" bind:text="self.item['name']"></anvil-component>
+  <anvil-component type="TextBox" name="name_box" writeback:text="self.item['name']"></anvil-component>
+</anvil-form>
+```
+
+```python
+@handle("name_box", "pressed_enter")
+def name_box_pressed_enter(self, **event_args):
+    self.refresh_data_bindings()
+
+@handle("name_box", "lost_focus")
+def name_box_lost_focus(self, **event_args):
+    self.refresh_data_bindings()
+```
+
+Use the `lost_focus` handler only when blur should also commit or refresh.
+
+Anti-pattern: do not replace writeback with manual mirror code like this:
+
+```python
+@handle("name_box", "change")
+def name_box_change(self, **event_args):
+    self.item["name"] = self.name_box.text
+    self.name_label.text = self.item["name"]
+```
+
+For code that should run whenever bindings refresh, use the form-level event:
+
+```python
+@handle("", "refreshing_data_bindings")
+def form_refreshing_data_bindings(self, **event_args):
+    pass
+```
+
 Interactive repeated rows should keep their event wiring in the item template
 form. Prefer an Anvil component when ordinary Anvil click semantics are enough:
 
@@ -363,7 +402,7 @@ form. Prefer an Anvil component when ordinary Anvil click semantics are enough:
 ```
 
 ```python
-@anvil.handle("open_button", "click")
+@handle("open_button", "click")
 def open_button_click(self, **event_args):
     self.parent.raise_event("x-open-article", item=self.item)
 ```
@@ -404,7 +443,7 @@ Use `prop:` and `bind:` on `<anvil-form layout="...">` when the current form nee
 ```
 
 ```python
-@anvil.handle("ok_button", "click")
+@handle("ok_button", "click")
 def ok_button_click(self, **event_args):
     pass
 ```
@@ -500,7 +539,7 @@ placed into a dropzone belong to the caller form:
 ```
 
 ```python
-@anvil.handle("save_button", "click")
+@handle("save_button", "click")
 def save_button_click(self, **event_args):
     pass
 ```

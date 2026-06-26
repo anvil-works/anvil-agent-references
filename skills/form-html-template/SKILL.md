@@ -39,7 +39,7 @@ For form Python, use `form-code`. For visual changes, use `form-styling`. A form
 
 - Choose between native HTML and `<anvil-component>` deliberately for buttons, inputs, links, and form controls.
 - Before adding or changing event wiring, look for a nearby working example that uses the same source: native HTML element, Anvil component, layout event, or imperative DOM node.
-- For new Anvil component event handlers, prefer Python `@anvil.handle("<name>", "<event>")`; the handler accepts `**event_args`.
+- For new Anvil component event handlers, keep component markup simple and use `@handle(...)`. The handler accepts `**event_args`.
 - If an existing template wires component events in HTML, use `on:<event>="self.method_name"`.
 - For plain HTML DOM events, prefer `anvil:on-dom:<event>="self.method_name"`; the handler accepts the browser `event`. Do not add an explicit `anvil:dom-node` just for declarative DOM event wiring. Use browser `addEventListener` on a DOM node for imperative runtime wiring.
 - Use `anvil:name` for named `HtmlComponent` access, `classes`, and `style` helpers, not browser DOM events; `HtmlComponent` only has Anvil `show` / `hide` events.
@@ -55,13 +55,13 @@ Common event mistakes to avoid:
 
 | Need | Template | Python handler |
 | --- | --- | --- |
-| Anvil component event | `<anvil-component ... name="save_button">` | `@anvil.handle("save_button", "click")` and `def save_button_click(self, **event_args):` |
+| Anvil component event | `<anvil-component ... name="save_button">` | `@handle("save_button", "click")` and `def save_button_click(self, **event_args):` |
 | Existing component event in markup | `<anvil-component ... on:click="self.save_click">` | `def save_click(self, **event_args):` |
 | Plain HTML DOM event | `<button anvil:on-dom:click="self.save_click">` | `def save_click(self, event):` |
 | Imperative browser DOM event | `<button anvil:dom-node="save_button">` | `self.dom_nodes["save_button"].addEventListener("click", anvil.js.report_exceptions(self.save_click))` |
 | Plain HTML exposed as `HtmlComponent` | `<section anvil:name="banner">` | `self.banner.classes[...]` / `self.banner.style[...]` |
 
-See [syntax examples](references/syntax.md#bindings-and-events) for `@anvil.handle`, `on:*`, and `anvil:on-dom:*`.
+See [syntax examples](references/syntax.md#bindings-and-events) for `@handle`, `on:*`, and `anvil:on-dom:*`.
 
 ## Rules
 
