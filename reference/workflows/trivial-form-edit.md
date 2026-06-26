@@ -2,6 +2,8 @@
 
 Use this reference for existing forms when the task only adds or changes simple event wiring, Python handlers, fixed button/input behavior, or item-template bindings. If the task expands beyond this, stop and use the relevant full skill.
 
+If this reference links to a specific example in a full-skill reference file, you may read that linked example without escalating to the full skill.
+
 ## Event Wiring
 
 | Source | Template | Python handler |
