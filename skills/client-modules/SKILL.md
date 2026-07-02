@@ -21,6 +21,7 @@ Use `form-code` for form definitions.
 ## Rules
 
 - Make client code changes under `client_code/`; do not edit `.anvil/`.
+- Never create `client_code/__init__.py`; `client_code/` is an Anvil code root, not a Python package.
 - Prefer relative imports for app-local references unless the app uses another pattern.
 - Use the Anvil client API stubs available to this agent for Anvil API references.
 - Before adding unfamiliar stdlib imports or external package imports, check the Anvil client Python runtime reference available to this agent for client-side runtime caveats.
