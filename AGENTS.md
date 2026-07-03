@@ -13,8 +13,15 @@ When a skill refers to host-provided Anvil resources, use the resources from thi
 - Anvil type references: `reference/types/` - generated `.d.ts` reference material for `anvil.yaml` and form templates.
 - Anvil docs: `docs/` - agent-oriented Anvil docs, including dependency docs when present.
 - Anvil skills: `skills/` - public workflows for common Anvil app-editing tasks.
+- Skulpt client runtime: `reference/python/skulpt-client-runtime.md` - supported client stdlib modules and common unavailable imports.
 
 Skill-local `references/...` paths are resolved relative to the active skill directory.
+
+## Client pitfalls (generic)
+
+- **Skulpt stdlib:** client Python is not full CPython. Read `reference/python/skulpt-client-runtime.md` before adding stdlib imports such as `html`.
+- **Relative import depth:** `Components/<Row>/` item templates need `from ... import` to reach app-root client modules; top-level forms use `from .. import`.
+- **Modal forms:** `alert(form_instance, ...)` with `self.raise_event("x-close-alert", value=...)` to close from inside the form. See `form-code` skill.
 
 ## Validation
 

@@ -29,7 +29,20 @@ These are the supported top-level stdlib imports in Anvil client code:
 - `urllib`
 - `uuid`
 
-Top-level module availability does not imply full CPython parity for every submodule or API. For example, Skulpt provides `collections`, but not `collections.abc`;
+Top-level module availability does not imply full CPython parity for every submodule or API. For example, Skulpt provides `collections`, but not `collections.abc`.
+
+## Common unavailable modules
+
+These stdlib modules are **not** available in client code. Importing them fails at runtime; `anvil --json validate` will not catch the error.
+
+| Module | Typical mistake | Prefer instead |
+|--------|-----------------|--------------|
+| `html` | `html.escape(...)` for user text | Inline replacements, server-side formatting, or `re` for simple cases |
+| `pathlib` | File paths on the client | Browser APIs via `anvil.js`, or server callables |
+| `os` / `shutil` | Filesystem access | Server callables |
+| `importlib` | Dynamic imports | Static imports or server callables |
+
+Before adding any stdlib import not listed in the supported list above, read this file. If the module is absent from the list, assume it is unavailable unless you have verified it in the app checkout.
 
 When client code needs unsupported stdlib behavior, prefer one of these approaches:
 

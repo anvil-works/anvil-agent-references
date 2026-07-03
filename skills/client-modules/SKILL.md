@@ -23,8 +23,9 @@ Use `form-code` for form definitions.
 - Make client code changes under `client_code/`; do not edit `.anvil/`.
 - Never create `client_code/__init__.py`; `client_code/` is an Anvil code root, not a Python package.
 - Prefer relative imports for app-local references unless the app uses another pattern.
+- **Import depth:** count package levels from the module file to the app root (`client_code/` maps to the app package in `anvil.yaml`). Top-level forms use one parent (`from .. import shared_module`). Modules nested under `client_code/Components/<Row>/` need **two** parents to reach app-root modules (`from ... import shared_module`). Using `from .. import` in a row template resolves to the `Components` package, not the app root — a common runtime `AttributeError` when the row loads inside a `RepeatingPanel`.
 - Use the Anvil client API stubs available to this agent for Anvil API references.
-- Before adding unfamiliar stdlib imports or external package imports, check the Anvil client Python runtime reference available to this agent for client-side runtime caveats.
+- Before adding unfamiliar stdlib imports or external package imports, read `reference/python/skulpt-client-runtime.md` for client-side runtime caveats.
 
 ## Workflow
 

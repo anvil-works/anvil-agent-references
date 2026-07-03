@@ -102,8 +102,47 @@ when bound values need to update.
 - Prefer `@handle(...)` for Anvil component event handlers.
 - Use `self.dom_nodes[...]` for fixed native HTML owned by the template, native DOM event work, or browser DOM APIs that Anvil component properties and helpers do not expose. Do not use it as a rendering surface for generated app data.
 - Prefer relative imports for app-local form and module references unless the app uses another pattern.
+- **Import depth:** top-level forms under `client_code/<Form>/` import app-root modules with one parent (`from .. import helpers`). `RepeatingPanel` item templates under `client_code/Components/<Row>/` need **two** parents (`from ... import helpers`). One parent in a row template resolves to `Components`, not the app root.
 - Treat any unconfirmed `anvil.*` symbol as a guess; confirm it from the client stubs before writing it.
-- Before adding unfamiliar stdlib imports or external package imports, check the Anvil client Python runtime reference available to this agent for client-side runtime caveats.
+- Before adding unfamiliar stdlib imports or external package imports, read `reference/python/skulpt-client-runtime.md`. Modules such as `html` are not available in client code.
+
+## App-local import depth
+
+Anvil maps `client_code/` to the app package (`package_name` in `anvil.yaml`). Relative imports climb the Python package tree, not the folder you see in the IDE path.
+
+| Module location | Import app-root module `helpers.py` |
+|-----------------|-------------------------------------|
+| `client_code/ContactList/__init__.py` | `from .. import helpers` |
+| `client_code/Components/ActivityRow/__init__.py` | `from ... import helpers` |
+
+Row templates are referenced in HTML as `<Package>.Components.ActivityRow`. Python resolves imports from the row module's package path. When a new `Components/*Row` calls shared client helpers, start with `from ... import` — not `from .. import`.
+
+After adding row templates that import app-root modules, smoke-test the parent form that sets `RepeatingPanel.items`.
+
+## Modal alerts with custom form content
+
+Use `alert()` to show a form instance as modal content instead of navigating with `open_form()`.
+
+```python
+from ..ContactDetail import ContactDetail
+
+result = alert(
+    ContactDetail(modal=True),
+    title='New Contact',
+    large=True,
+    buttons=[],
+    role='detail-alert',
+)
+```
+
+Patterns:
+
+- Pass `buttons=[]` when the form provides its own Save/Cancel actions.
+- Close the alert from inside the content form: `self.raise_event("x-close-alert", value="saved")`.
+- `alert()` returns the `value` passed to `x-close-alert`, or `None` if dismissed.
+- Forms that use a layout may show sidebar chrome inside the modal; hide layout chrome with alert `role` CSS, or use a form without a layout for modal-only flows.
+
+Prefer `open_form()` for full-page edit flows with related records; use `alert()` for short create/edit dialogs when the app UX calls for it.
 
 ## Workflow
 
