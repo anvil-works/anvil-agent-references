@@ -6,7 +6,7 @@
 # Generated files: client/anvil/__init__.pyi, server/anvil/__init__.pyi
 
 from typing import Any, Callable, TypeVar, overload, Iterator, Mapping, Literal, TypedDict
-from typing_extensions import deprecated, override
+from typing_extensions import Unpack, deprecated, override
 
 from . import property_utils
 
@@ -30,6 +30,60 @@ _StyleValue = str | Mapping[str, _StylePropertyValue] | None
 class SpacingPropertyValue(TypedDict, total=False):
     margin: MarginPropertyValue
     padding: PaddingPropertyValue
+
+
+_LayoutLength = str | int | float | None
+
+
+class _IndexLayoutKwargs(TypedDict, total=False):
+    index: int | None
+
+
+class _ColumnPanelLayoutKwargs(_IndexLayoutKwargs, total=False):
+    full_width_row: bool
+    row_background: str | None
+    grid_position: str
+
+
+class _FlowPanelLayoutKwargs(_IndexLayoutKwargs, total=False):
+    width: _LayoutLength
+    expand: bool
+
+
+class _GridPanelLayoutKwargs(TypedDict, total=False):
+    row: str
+    col_xs: int
+    width_xs: int
+    col_sm: int
+    width_sm: int
+    col_md: int
+    width_md: int
+    col_lg: int
+    width_lg: int
+
+
+class _XYPanelLayoutKwargs(TypedDict, total=False):
+    x: _LayoutLength
+    y: _LayoutLength
+    width: _LayoutLength
+
+
+class _DataGridLayoutKwargs(_IndexLayoutKwargs, total=False):
+    pinned: bool
+    slot: Literal["footer"] | None
+
+
+class _DataRowPanelLayoutKwargs(TypedDict, total=False):
+    column: str | None
+
+
+class _HtmlComponentLayoutKwargs(_IndexLayoutKwargs, total=False):
+    dropzone: str | None
+
+
+class _SlottedLayoutKwargs(_IndexLayoutKwargs, total=False):
+    slot: str
+    width: _LayoutLength
 
 # ============================================================================
 # Media Classes
@@ -504,33 +558,66 @@ _LinkEvents = Literal["show", "hide", "click"]
 
 # Text input events
 _TextBoxEvents = Literal["show", "hide", "change", "pressed_enter", "lost_focus", "focus"]
-_TextAreaEvents = Literal["show", "hide", "change", "pressed_enter", "lost_focus", "focus"]
+_TextAreaEvents = Literal["show", "hide", "change", "lost_focus", "focus"]
 
 # Selection component events
 _CheckBoxEvents = Literal["show", "hide", "change"]
-_RadioButtonEvents = Literal["show", "hide", "change", "clicked"]
+_RadioButtonEvents = Literal["show", "hide", "clicked"]
 _DropDownEvents = Literal["show", "hide", "change"]
 _DatePickerEvents = Literal["show", "hide", "change"]
-_FileLoaderEvents = Literal["show", "hide", "change"]
+_FileLoaderEvents = Literal["show", "hide", "change", "lost_focus", "focus"]
 
 # Timer events
 _TimerEvents = Literal["show", "hide", "tick"]
 
 # Mouse-enabled component events
-_CanvasEvents = Literal["show", "hide", "mouse_down", "mouse_up", "mouse_move", "mouse_enter", "mouse_leave"]
+_CanvasEvents = Literal["show", "hide", "reset", "mouse_down", "mouse_up", "mouse_move", "mouse_enter", "mouse_leave"]
 _ImageEvents = Literal["show", "hide", "mouse_down", "mouse_up", "mouse_move", "mouse_enter", "mouse_leave"]
 
 # Plot events
-_PlotEvents = Literal["show", "hide", "click", "double_click", "hover", "unhover", "select", "deselect"]
+_PlotEvents = Literal["show", "hide", "click", "double_click", "afterplot", "hover", "unhover", "select"]
 
 # GoogleMap events
-_GoogleMapEvents = Literal["show", "hide", "bounds_changed", "click", "zoom_changed"]
+_GoogleMapEvents = Literal[
+    "show",
+    "hide",
+    "bounds_changed",
+    "center_changed",
+    "click",
+    "dbl_click",
+    "drag",
+    "dragend",
+    "dragstart",
+    "heading_changed",
+    "idle",
+    "maptypeid_changed",
+    "mousemove",
+    "mouseout",
+    "mouseover",
+    "projection_changed",
+    "rightclick",
+    "tilesloaded",
+    "tilt_changed",
+    "zoom_changed",
+    "data_addfeature",
+    "data_click",
+    "data_dbl_click",
+    "data_mousedown",
+    "data_mouseout",
+    "data_mouseover",
+    "data_mouseup",
+    "data_removefeature",
+    "data_removeproperty",
+    "data_rightclick",
+    "data_setgeometry",
+    "data_setproperty",
+]
 
 # YouTubeVideo events
 _YouTubeVideoEvents = Literal["show", "hide", "state_change"]
 
 # DataGrid events
-_DataGridEvents = Literal["show", "hide", "pagination_click"]
+_DataGridEvents = Literal["show", "hide"]
 
 # ============================================================================
 # Component Base Classes
@@ -826,6 +913,10 @@ class Image(Component):
     @source.setter
     def source(self, value: str | Media) -> None: ...
     @property
+    def alt_text(self) -> str: ...
+    @alt_text.setter
+    def alt_text(self, value: str) -> None: ...
+    @property
     def display_mode(self) -> str: ...
     @display_mode.setter
     def display_mode(self, value: str) -> None: ...
@@ -934,9 +1025,17 @@ class RichText(Component):
     @content.setter
     def content(self, value: str) -> None: ...
     @property
+    def text(self) -> str: ...
+    @text.setter
+    def text(self, value: str) -> None: ...
+    @property
     def format(self) -> str: ...
     @format.setter
     def format(self, value: str) -> None: ...
+    @property
+    def enable_slots(self) -> bool: ...
+    @enable_slots.setter
+    def enable_slots(self, value: bool) -> None: ...
     @property
     def data(self) -> dict[str, Any]: ...
     @data.setter
@@ -947,6 +1046,26 @@ class RichText(Component):
     def align(self) -> str: ...
     @align.setter
     def align(self, value: str) -> None: ...
+    @property
+    def font_size(self) -> int | None: ...
+    @font_size.setter
+    def font_size(self, value: int | None) -> None: ...
+    @property
+    def font(self) -> str: ...
+    @font.setter
+    def font(self, value: str) -> None: ...
+    @property
+    def bold(self) -> bool: ...
+    @bold.setter
+    def bold(self, value: bool) -> None: ...
+    @property
+    def italic(self) -> bool: ...
+    @italic.setter
+    def italic(self, value: bool) -> None: ...
+    @property
+    def underline(self) -> bool: ...
+    @underline.setter
+    def underline(self, value: bool) -> None: ...
     @property
     def background(self) -> str: ...
     @background.setter
@@ -971,6 +1090,11 @@ class RichText(Component):
     def spacing_below(self) -> Literal["none", "small", "medium", "large"]: ...
     @spacing_below.setter
     def spacing_below(self, value: Literal["none", "small", "medium", "large"]) -> None: ...
+
+    @overload
+    def add_component(self, component: Component, /, **layout_props: Unpack[_SlottedLayoutKwargs]) -> None: ...
+    @overload
+    def add_component(self, component: Component, /, **layout_props: Any) -> None: ...
 # ============================================================================
 # Input Components
 # ============================================================================
@@ -1318,6 +1442,10 @@ class CheckBox(Component):
     def checked(self) -> bool: ...
     @checked.setter
     def checked(self, value: bool) -> None: ...
+    @property
+    def allow_indeterminate(self) -> bool: ...
+    @allow_indeterminate.setter
+    def allow_indeterminate(self, value: bool) -> None: ...
     @property
     def text(self) -> str: ...
     @text.setter
@@ -1734,6 +1862,10 @@ class FileLoader(Component):
     @show_state.setter
     def show_state(self, value: bool) -> None: ...
     @property
+    def file_types(self) -> str: ...
+    @file_types.setter
+    def file_types(self, value: str) -> None: ...
+    @property
     def text(self) -> str: ...
     @text.setter
     def text(self, value: str) -> None: ...
@@ -1773,6 +1905,14 @@ class FileLoader(Component):
     def align(self) -> str: ...
     @align.setter
     def align(self, value: str) -> None: ...
+    @property
+    def icon(self) -> str: ...
+    @icon.setter
+    def icon(self, value: str) -> None: ...
+    @property
+    def icon_align(self) -> str: ...
+    @icon_align.setter
+    def icon_align(self, value: str) -> None: ...
 
 
     @property
@@ -1865,6 +2005,11 @@ class ColumnPanel(Container):
     @spacing.setter
     def spacing(self, value: SpacingPropertyValue) -> None: ...
 
+    @overload
+    def add_component(self, component: Component, /, **layout_props: Unpack[_ColumnPanelLayoutKwargs]) -> None: ...
+    @overload
+    def add_component(self, component: Component, /, **layout_props: Any) -> None: ...
+
 class FlowPanel(Container):
     """A container that arranges components in a flowing layout.
 
@@ -1922,6 +2067,11 @@ class FlowPanel(Container):
     @gap.setter
     def gap(self, value: str) -> None: ...
 
+    @overload
+    def add_component(self, component: Component, /, **layout_props: Unpack[_FlowPanelLayoutKwargs]) -> None: ...
+    @overload
+    def add_component(self, component: Component, /, **layout_props: Any) -> None: ...
+
 class LinearPanel(Container):
     """A container that arranges components in a linear layout.
 
@@ -1966,6 +2116,11 @@ class LinearPanel(Container):
     def spacing(self) -> SpacingPropertyValue: ...
     @spacing.setter
     def spacing(self, value: SpacingPropertyValue) -> None: ...
+
+    @overload
+    def add_component(self, component: Component, /, **layout_props: Unpack[_IndexLayoutKwargs]) -> None: ...
+    @overload
+    def add_component(self, component: Component, /, **layout_props: Any) -> None: ...
 
 class GridPanel(Container):
     """A container that arranges components in a grid.
@@ -2012,6 +2167,11 @@ class GridPanel(Container):
     @spacing_below.setter
     def spacing_below(self, value: Literal["none", "small", "medium", "large"]) -> None: ...
 
+    @overload
+    def add_component(self, component: Component, /, **layout_props: Unpack[_GridPanelLayoutKwargs]) -> None: ...
+    @overload
+    def add_component(self, component: Component, /, **layout_props: Any) -> None: ...
+
 class XYPanel(Container):
     """A container that positions components at absolute coordinates.
 
@@ -2046,6 +2206,10 @@ class XYPanel(Container):
     def height(self) -> str: ...
     @height.setter
     def height(self, value: str) -> None: ...
+    @property
+    def width(self) -> str: ...
+    @width.setter
+    def width(self, value: str) -> None: ...
 
 
     @property
@@ -2064,6 +2228,11 @@ class XYPanel(Container):
     def spacing_below(self) -> Literal["none", "small", "medium", "large"]: ...
     @spacing_below.setter
     def spacing_below(self, value: Literal["none", "small", "medium", "large"]) -> None: ...
+
+    @overload
+    def add_component(self, component: Component, /, **layout_props: Unpack[_XYPanelLayoutKwargs]) -> None: ...
+    @overload
+    def add_component(self, component: Component, /, **layout_props: Any) -> None: ...
 
 class DataGrid(Container):
     """A data grid component for displaying tabular data.
@@ -2139,6 +2308,11 @@ class DataGrid(Container):
     @override
     def raise_event(self, event_name: _DataGridEvents | str, /, **event_args: Any) -> None: ...
 
+    @overload
+    def add_component(self, component: Component, /, **layout_props: Unpack[_DataGridLayoutKwargs]) -> None: ...
+    @overload
+    def add_component(self, component: Component, /, **layout_props: Any) -> None: ...
+
 
 class DataRowPanel(Container):
     """A row within a DataGrid.
@@ -2163,6 +2337,10 @@ class DataRowPanel(Container):
     @item.setter
     def item(self, value: dict[str, Any]) -> None: ...
     @property
+    def auto_display_data(self) -> bool: ...
+    @auto_display_data.setter
+    def auto_display_data(self, value: bool) -> None: ...
+    @property
     def background(self) -> str: ...
     @background.setter
     def background(self, value: str) -> None: ...
@@ -2181,6 +2359,26 @@ class DataRowPanel(Container):
     @align.setter
     def align(self, value: str) -> None: ...
     @property
+    def font_size(self) -> int | None: ...
+    @font_size.setter
+    def font_size(self, value: int | None) -> None: ...
+    @property
+    def font(self) -> str: ...
+    @font.setter
+    def font(self, value: str) -> None: ...
+    @property
+    def bold(self) -> bool: ...
+    @bold.setter
+    def bold(self, value: bool) -> None: ...
+    @property
+    def italic(self) -> bool: ...
+    @italic.setter
+    def italic(self, value: bool) -> None: ...
+    @property
+    def underline(self) -> bool: ...
+    @underline.setter
+    def underline(self, value: bool) -> None: ...
+    @property
     def margin(self) -> MarginPropertyValue: ...
     @margin.setter
     def margin(self, value: MarginPropertyValue) -> None: ...
@@ -2192,6 +2390,11 @@ class DataRowPanel(Container):
     def spacing_below(self) -> Literal["none", "small", "medium", "large"]: ...
     @spacing_below.setter
     def spacing_below(self, value: Literal["none", "small", "medium", "large"]) -> None: ...
+
+    @overload
+    def add_component(self, component: Component, /, **layout_props: Unpack[_DataRowPanelLayoutKwargs]) -> None: ...
+    @overload
+    def add_component(self, component: Component, /, **layout_props: Any) -> None: ...
 
 class RepeatingPanel(Container):
     """A panel that repeats a template for each item in a list.
@@ -2283,6 +2486,11 @@ class HtmlComponent(Container):
     @style.setter
     def style(self, value: _StyleValue | Style) -> None: ...
 
+    @overload
+    def add_component(self, component: Component, /, **layout_props: Unpack[_HtmlComponentLayoutKwargs]) -> None: ...
+    @overload
+    def add_component(self, component: Component, /, **layout_props: Any) -> None: ...
+
 
 class HtmlTemplate(Container):
     """A container that renders HTML.
@@ -2320,6 +2528,11 @@ class HtmlTemplate(Container):
     def foreground(self) -> str: ...
     @foreground.setter
     def foreground(self, value: str) -> None: ...
+
+    @overload
+    def add_component(self, component: Component, /, **layout_props: Unpack[_SlottedLayoutKwargs]) -> None: ...
+    @overload
+    def add_component(self, component: Component, /, **layout_props: Any) -> None: ...
 
     def call_js(self, fn_name: str, *args: Any) -> Any:
         """Call a JavaScript function defined in the HTML.
@@ -2436,6 +2649,10 @@ class Plot(Component):
     def figure(self) -> dict[str, Any]: ...
     @figure.setter
     def figure(self, value: dict[str, Any]) -> None: ...
+    @property
+    def interactive(self) -> bool: ...
+    @interactive.setter
+    def interactive(self, value: bool) -> None: ...
 
 
     @property
@@ -2769,6 +2986,114 @@ class GoogleMap(Component):
     def markers(self) -> list[_MapMarker]: ...
     @markers.setter
     def markers(self, value: list[_MapMarker]) -> None: ...
+    @property
+    def map_data(self) -> Any: ...
+    @map_data.setter
+    def map_data(self, value: Any) -> None: ...
+    @property
+    def background_color(self) -> str: ...
+    @background_color.setter
+    def background_color(self, value: str) -> None: ...
+    @property
+    def clickable_icons(self) -> bool: ...
+    @clickable_icons.setter
+    def clickable_icons(self, value: bool) -> None: ...
+    @property
+    def disable_default_ui(self) -> bool: ...
+    @disable_default_ui.setter
+    def disable_default_ui(self, value: bool) -> None: ...
+    @property
+    def disable_double_click_zoom(self) -> bool: ...
+    @disable_double_click_zoom.setter
+    def disable_double_click_zoom(self, value: bool) -> None: ...
+    @property
+    def draggable(self) -> bool: ...
+    @draggable.setter
+    def draggable(self, value: bool) -> None: ...
+    @property
+    def draggable_cursor(self) -> str: ...
+    @draggable_cursor.setter
+    def draggable_cursor(self, value: str) -> None: ...
+    @property
+    def dragging_cursor(self) -> str: ...
+    @dragging_cursor.setter
+    def dragging_cursor(self, value: str) -> None: ...
+    @property
+    def fullscreen_control(self) -> bool: ...
+    @fullscreen_control.setter
+    def fullscreen_control(self, value: bool) -> None: ...
+    @property
+    def fullscreen_control_options(self) -> Any: ...
+    @fullscreen_control_options.setter
+    def fullscreen_control_options(self, value: Any) -> None: ...
+    @property
+    def gesture_handling(self) -> str: ...
+    @gesture_handling.setter
+    def gesture_handling(self, value: str) -> None: ...
+    @property
+    def heading(self) -> int | float: ...
+    @heading.setter
+    def heading(self, value: int | float) -> None: ...
+    @property
+    def keyboard_shortcuts(self) -> bool: ...
+    @keyboard_shortcuts.setter
+    def keyboard_shortcuts(self, value: bool) -> None: ...
+    @property
+    def map_type_control(self) -> bool: ...
+    @map_type_control.setter
+    def map_type_control(self, value: bool) -> None: ...
+    @property
+    def map_type_control_options(self) -> Any: ...
+    @map_type_control_options.setter
+    def map_type_control_options(self, value: Any) -> None: ...
+    @property
+    def map_type_id(self) -> Any: ...
+    @map_type_id.setter
+    def map_type_id(self, value: Any) -> None: ...
+    @property
+    def max_zoom(self) -> int | float: ...
+    @max_zoom.setter
+    def max_zoom(self, value: int | float) -> None: ...
+    @property
+    def min_zoom(self) -> int | float: ...
+    @min_zoom.setter
+    def min_zoom(self, value: int | float) -> None: ...
+    @property
+    def rotate_control(self) -> bool: ...
+    @rotate_control.setter
+    def rotate_control(self, value: bool) -> None: ...
+    @property
+    def rotate_control_options(self) -> Any: ...
+    @rotate_control_options.setter
+    def rotate_control_options(self, value: Any) -> None: ...
+    @property
+    def scale_control(self) -> bool: ...
+    @scale_control.setter
+    def scale_control(self, value: bool) -> None: ...
+    @property
+    def scale_control_options(self) -> Any: ...
+    @scale_control_options.setter
+    def scale_control_options(self, value: Any) -> None: ...
+    @property
+    def scroll_wheel(self) -> bool: ...
+    @scroll_wheel.setter
+    def scroll_wheel(self, value: bool) -> None: ...
+    @property
+    def street_view_control(self) -> bool: ...
+    @street_view_control.setter
+    def street_view_control(self, value: bool) -> None: ...
+    @property
+    def street_view_control_options(self) -> Any: ...
+    @street_view_control_options.setter
+    def street_view_control_options(self, value: Any) -> None: ...
+    @property
+    def zoom_control(self) -> bool: ...
+    @zoom_control.setter
+    def zoom_control(self, value: bool) -> None: ...
+    @property
+    def zoom_control_options(self) -> Any: ...
+    @zoom_control_options.setter
+    def zoom_control_options(self, value: Any) -> None: ...
 
     # Nested classes
     @property

@@ -6,7 +6,7 @@
 # Generated files: client/anvil/__init__.pyi, server/anvil/__init__.pyi
 
 from typing import Any, Callable, TypeVar, overload, Iterator, Mapping, Literal, TypedDict
-from typing_extensions import deprecated, override
+from typing_extensions import Unpack, deprecated, override
 
 
 _T = TypeVar("_T")
@@ -29,6 +29,60 @@ _StyleValue = str | Mapping[str, _StylePropertyValue] | None
 class SpacingPropertyValue(TypedDict, total=False):
     margin: MarginPropertyValue
     padding: PaddingPropertyValue
+
+
+_LayoutLength = str | int | float | None
+
+
+class _IndexLayoutKwargs(TypedDict, total=False):
+    index: int | None
+
+
+class _ColumnPanelLayoutKwargs(_IndexLayoutKwargs, total=False):
+    full_width_row: bool
+    row_background: str | None
+    grid_position: str
+
+
+class _FlowPanelLayoutKwargs(_IndexLayoutKwargs, total=False):
+    width: _LayoutLength
+    expand: bool
+
+
+class _GridPanelLayoutKwargs(TypedDict, total=False):
+    row: str
+    col_xs: int
+    width_xs: int
+    col_sm: int
+    width_sm: int
+    col_md: int
+    width_md: int
+    col_lg: int
+    width_lg: int
+
+
+class _XYPanelLayoutKwargs(TypedDict, total=False):
+    x: _LayoutLength
+    y: _LayoutLength
+    width: _LayoutLength
+
+
+class _DataGridLayoutKwargs(_IndexLayoutKwargs, total=False):
+    pinned: bool
+    slot: Literal["footer"] | None
+
+
+class _DataRowPanelLayoutKwargs(TypedDict, total=False):
+    column: str | None
+
+
+class _HtmlComponentLayoutKwargs(_IndexLayoutKwargs, total=False):
+    dropzone: str | None
+
+
+class _SlottedLayoutKwargs(_IndexLayoutKwargs, total=False):
+    slot: str
+    width: _LayoutLength
 
 # ============================================================================
 # Media Classes
