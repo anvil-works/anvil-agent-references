@@ -352,6 +352,20 @@ The item template form can bind against `self.item`:
 </anvil-form>
 ```
 
+When a row template imports a shared client module at the app root (for example
+`client_code/helpers.py`), use **two** parents — the row lives under
+`Components/<Row>/`, one level deeper than top-level forms:
+
+```python
+# client_code/Components/ActivityRow/__init__.py
+from ... import helpers
+from ._anvil_designer import ActivityRowTemplate
+from anvil import *
+```
+
+Using `from .. import helpers` in a row template resolves to the `Components`
+package and fails at runtime when the panel renders.
+
 For editable item fields, use writeback for the input and refresh bindings from
 the component event when sibling bound UI should update immediately:
 
