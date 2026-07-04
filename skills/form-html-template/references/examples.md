@@ -80,7 +80,9 @@ Do not change the converted frontmatter as part of this cleanup. If the old `htm
 Use `anvil:name` when Python should refer to a plain HTML element as a component:
 
 ```html
-<section anvil:name="banner" class="status-banner">Saving...</section>
+<section class="status-region">
+  <div anvil:name="banner" class="status-banner">Saving...</div>
+</section>
 ```
 
 ```python
@@ -91,6 +93,9 @@ self.banner.style["marginTop"] = 4
 self.banner.style.update({"opacity": 0.5})
 self.banner.style.clear()
 ```
+
+If a form has a single top-level plain HTML root, that root is the form's
+`HtmlComponent` (`self`), so its `anvil:name` is ignored.
 
 ## Form Using An Existing Layout
 

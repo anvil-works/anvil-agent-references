@@ -64,6 +64,8 @@ Do not treat these as interchangeable. Use blocks to fill an existing layout, sl
 
 ## Attribute Prefixes
 
+Anvil tags (`<anvil-form>`, `<anvil-component>`, `<anvil-block>`, `<anvil-slot>`, and `<anvil-dropzone>`) use unprefixed attributes such as `name`, `type`, `prop:*`, `bind:*`, `writeback:*`, `on:*`, and `container:*`.
+
 | Prefix | Meaning | Example |
 | --- | --- | --- |
 | `prop:` | Component, container, or layout property | `prop:text="Hello"` |
@@ -86,6 +88,7 @@ Use plain HTML when the element should remain ordinary HTML. Use an Anvil compon
 
 - Use ordinary `class` and `style` attributes for static HTML styling.
 - Use `anvil:name` when Python needs a plain HTML element exposed as a named `HtmlComponent`, including dynamic styling through `self.<name>.classes` or `self.<name>.style`.
+- If a form has a single top-level plain HTML root, that root is the form's `HtmlComponent` (`self`), so its `anvil:name` is ignored.
 - The runtime adds internal `anvil:dom-node` management as needed for plain HTML nodes. Write `anvil:dom-node="name"` only when Python needs the JavaScript bridge for browser DOM APIs that are not exposed by Anvil component properties or helper objects.
 - Use `anvil:on-dom:*` when a plain HTML element should keep native DOM event semantics or the handler needs the browser event object. Use browser `addEventListener` on a DOM node for imperative runtime wiring.
 - Do not use `anvil:name` or `set_event_handler(...)` for browser DOM events such as `click`, `change`, or `input`. `HtmlComponent` only has Anvil `show` / `hide` events. For an Anvil component event, use an Anvil component such as `Button` or `Link`. For a native plain-HTML DOM event, use `anvil:on-dom:*` or browser `addEventListener`.
@@ -115,7 +118,7 @@ self.banner.style.clear()
 Prefer this order for plain HTML styling:
 
 1. Static or durable styling: template `class` plus CSS in `theme/assets/theme.css`.
-2. Dynamic root styling: `anvil:name` plus `self.<name>.classes` / `self.<name>.style`.
+2. Dynamic styling: `anvil:name` plus `self.<name>.classes` / `self.<name>.style`; for the single top-level plain HTML root, use `self.classes` / `self.style`.
 3. Direct DOM access: `anvil:dom-node` / `self.dom_nodes[...]` only for browser DOM APIs that are not exposed by Anvil component properties or helper objects.
 
 ## Bindings And Events

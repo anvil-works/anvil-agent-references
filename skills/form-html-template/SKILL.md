@@ -43,6 +43,7 @@ For form Python, use `form-code`. For visual changes, use `form-styling`. A form
 - If an existing template wires component events in HTML, use `on:<event>="self.method_name"`.
 - For plain HTML DOM events, prefer `anvil:on-dom:<event>="self.method_name"`; the handler accepts the browser `event`. Do not add an explicit `anvil:dom-node` just for declarative DOM event wiring. Use browser `addEventListener` on a DOM node for imperative runtime wiring.
 - Use `anvil:name` for named `HtmlComponent` access, `classes`, and `style` helpers, not browser DOM events; `HtmlComponent` only has Anvil `show` / `hide` events.
+- On Anvil tags such as `<anvil-component>`, `<anvil-form>`, `<anvil-slot>`, and `<anvil-block>`, use unprefixed attributes such as `name`, `type`, `prop:*`, `on:*`, and `container:*`.
 - Wrap browser `addEventListener` callbacks with `anvil.js.report_exceptions`.
 - For repeated interactive elements, put the event target and handler in the `RepeatingPanel` item template form.
 
@@ -84,5 +85,7 @@ Example:
 ```sh
 anvil --json validate client_code/Form1/form_template.html
 ```
+
+Treat validation warnings as actionable even when validation succeeds.
 
 Suggest checking the changed form in the IDE designer when layout changed, and running the affected form workflow when component behavior changed.
