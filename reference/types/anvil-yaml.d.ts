@@ -203,14 +203,14 @@ export interface AgentFacebookService extends AgentBaseRuntimeService<"/runtime/
 }
 
 /**
- * The Users service normally expects a Users table referenced by
+ * The Users service requires a Users table referenced by
  * `server_config.user_table`.
  *
  * A string `user_table` value is a table Python name and can match a `db_schema`
  * key. A number `user_table` value is a legacy table id; do not create a
  * numeric `db_schema` key from it.
  *
- * The default user table name is `users`.
+ * The usual user table name is `users`.
  *
  * The default `users` table should include at least these columns:
  * - `email` (`string`)
@@ -249,13 +249,13 @@ export interface AgentUsersService extends AgentBaseRuntimeService<"/runtime/ser
         use_saml?: boolean;
         use_token?: boolean;
     };
-    server_config?: {
+    server_config: {
         email_content?: Partial<
             Record<"confirm_address" | "mfa_reset" | "reset_password" | "token_login", { html?: string; subject?: string }>
         >;
         email_from_address?: string;
-        /** String values are table Python names. Number values are legacy table ids. */
-        user_table?: string | number;
+        /** Required. String values are table Python names; this is usually `"users"`. Number values are legacy table ids. */
+        user_table: string | number;
     };
 }
 
