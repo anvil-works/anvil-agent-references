@@ -62,6 +62,25 @@ Use form Python for:
 - Runtime updates to named plain-HTML `HtmlComponent.classes` and `HtmlComponent.style` for dynamic styling.
 - Runtime updates to fixed native HTML through `self.dom_nodes[...]` when the template owns those elements.
 
+## Validation And Error Handling
+
+For submit/save handlers, distinguish validation from unexpected failures.
+Validate client-known fields before `anvil.server.call(...)`. For expected
+server-side validation failures in simple form flows, handle an explicit result
+from the server, such as `{"ok": False, "message": "..."}`. Catch exceptions
+only when the type is part of the callable's contract and is catchable on the
+client, such as documented Anvil/service exceptions. Do not rely on ordinary
+Python built-in exceptions raised by server callables, such as `ValueError` or
+`TypeError`, being catchable on the browser client as the same exception type.
+
+Do not wrap the server call or Data Table save path in `except Exception`,
+`except BaseException`, a bare `except`, or `except anvil.server.AnvilWrappedError`.
+Unexpected save/server/schema errors should raise. Use `finally` only to restore
+loading state such as button enabled/text; do not convert unexpected exceptions
+into labels, alerts, or generic retry messages.
+
+## Event Handlers
+
 Match handler signatures to the event source:
 
 - Anvil component events: `def handler(self, **event_args)`.

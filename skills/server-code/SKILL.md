@@ -22,6 +22,20 @@ Server code lives under `server_code/`:
 - Use the Anvil server API stubs available to this agent for Anvil API references.
 - For protected `@anvil.server.callable` functions, prefer declarative decorator arguments such as `require_user=` when existing server modules in this app already use that style for the same kind of access control.
 
+## Validation And Error Handling
+
+- For expected user-fixable validation failures that client code must display
+  inline, prefer an explicit result object for simple form flows, such as
+  `{"ok": False, "message": "Message is required"}` or `{"ok": True}`.
+  Raise normally for unexpected Data Table, service, schema, or implementation
+  errors; do not encode unexpected failures as `{"ok": False, ...}`.
+- Do not rely on ordinary Python built-in exceptions raised by server callables,
+  such as `ValueError` or `TypeError`, being catchable on the browser client as
+  the same exception type. Use exceptions across the client/server boundary only
+  when the type is already a documented/catchable Anvil or app domain exception,
+  or when deliberately adding a registered exception contract that matches an
+  existing app/runtime pattern.
+
 ## Workflow
 
 1. Identify the target module or package.
