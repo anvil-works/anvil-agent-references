@@ -1,0 +1,4 @@
+interface:
+  display_name: "Data Models"
+  short_description: "Design Anvil data flow"
+  default_prompt: "Use $data-models to design idiomatic Anvil model classes, live rows, buffering, and server methods before implementing data workflows."

@@ -24,7 +24,7 @@ For exact field shapes, consult the form YAML type reference available to this a
 
 Layout body data belongs in the HTML body, not frontmatter:
 
-- Root form shape: `<anvil-form container="...">` or `<anvil-form layout="...">`.
+- Root form shape: `<anvil-form container="...">`, `<anvil-form layout="...">`, or no root `<anvil-form>` for an implicit `HtmlComponent` container.
 - Component tree: `<anvil-component>`.
 - Layout usage: `<anvil-block slot="...">`.
 - Layout definition: `<anvil-slot name="...">`.
@@ -91,8 +91,8 @@ The `layout` value must be a package-qualified form spec such as `CustomerApp.La
 Use `custom_component: true` when a reusable Form needs a custom component API,
 such as custom properties/events for parent Forms, Toolbox metadata, or
 container behavior. This frontmatter exposes component metadata only; put the
-visible layout in the HTML body. For the full reusable Form pattern, including
-the advanced plain-HTML internals case, see `examples.md#reusable-form-component`.
+visible layout in the HTML body. For the full reusable Form pattern, see
+`../examples/custom-component.md`.
 
 ```html
 ---

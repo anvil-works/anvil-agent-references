@@ -16,7 +16,7 @@ Client modules live under `client_code/` and have no matching form template.
 - Not a module: `client_code/**/<Form>.py` with `<Form>.yaml` or `<Form>.html`.
 - Not a module: `client_code/**/<Form>/__init__.py` with `form_template.yaml` or `form_template.html`.
 
-Use `form-code` for form definitions.
+Use `client-forms` for form definitions.
 
 ## Rules
 

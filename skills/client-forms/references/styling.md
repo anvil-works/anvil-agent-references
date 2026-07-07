@@ -1,13 +1,8 @@
----
-name: form-styling
-description: Style Anvil form UI using component properties, roles, CSS classes, theme CSS, and M3 guidance.
----
-
 # Forms Styling
 
 Use this workflow when the task affects how a form looks — colors, spacing, typography, roles, or component appearance.
 
-For layout structure, use `form-html-template`. For form Python, use `form-code`.
+For layout structure and Form Python, return to the `client-forms` workflow.
 
 The main distinction is between raw HTML elements and Anvil components:
 
@@ -76,7 +71,7 @@ template values.
 - Do not guess generated component internals.
 - Add hover and active states when the interaction needs them.
 
-See `references/examples.md` before adding or changing component roles. See `references/component-dom.md` when you need the generated DOM shape or a broad Anvil component selector.
+See `references/styling-examples.md` before adding or changing component roles. See `references/component-dom.md` when you need the generated DOM shape or a broad Anvil component selector.
 
 ## Testing
 

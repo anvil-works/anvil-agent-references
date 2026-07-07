@@ -26,7 +26,8 @@ For manual setup, symlink the skills you want into a Codex skill directory:
 ```sh
 mkdir -p ~/.agents/skills
 ln -s /path/to/anvil-agent-references/skills/server-code ~/.agents/skills/server-code
-ln -s /path/to/anvil-agent-references/skills/form-code ~/.agents/skills/form-code
+ln -s /path/to/anvil-agent-references/skills/client-forms ~/.agents/skills/client-forms
+ln -s /path/to/anvil-agent-references/skills/data-models ~/.agents/skills/data-models
 ```
 
 For a project-specific setup, use `.agents/skills` in the project instead of `~/.agents/skills`.
@@ -39,7 +40,7 @@ Load this checkout as a Claude Code plugin while testing:
 claude --plugin-dir /path/to/anvil-agent-references
 ```
 
-Claude exposes plugin skills with the `anvil:` namespace, for example `/anvil:server-code`, `/anvil:form-code`, and `/anvil:form-html-template`.
+Claude exposes plugin skills with the `anvil:` namespace, for example `/anvil:server-code`, `/anvil:client-forms`, and `/anvil:data-models`.
 
 The plugin installs the Anvil skills only. Claude Code does not read `CLAUDE.md` from the plugin checkout while it is working in a separate app. To make these resource paths always available, add a project `CLAUDE.md` that imports this repository's `CLAUDE.md`, or copy the relevant sections into the app project's own `CLAUDE.md`.
 
@@ -48,7 +49,8 @@ For standalone setup, symlink the skills you want into a Claude skill directory:
 ```sh
 mkdir -p ~/.claude/skills
 ln -s /path/to/anvil-agent-references/skills/server-code ~/.claude/skills/server-code
-ln -s /path/to/anvil-agent-references/skills/form-code ~/.claude/skills/form-code
+ln -s /path/to/anvil-agent-references/skills/client-forms ~/.claude/skills/client-forms
+ln -s /path/to/anvil-agent-references/skills/data-models ~/.claude/skills/data-models
 ```
 
 For project-specific setup, use `.claude/skills` in the project instead of `~/.claude/skills`.

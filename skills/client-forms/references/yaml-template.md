@@ -1,11 +1,6 @@
----
-name: form-yaml-template
-description: Convert legacy Anvil form template YAML to HTML with `anvil convert-template` only for template/layout work after confirming no sibling HTML exists. The command removes the source YAML after successful conversion by default. Hand-edit YAML only when the user explicitly asks to stay on YAML.
----
-
 # Forms YAML Template
 
-Use this workflow when an app-editing task affects layout or template structure in a form that still has a legacy YAML template (`form_template.yaml` or `<Form>.yaml`).
+Use this reference when an app-editing task affects layout or template structure in a Form that still has a legacy YAML template (`form_template.yaml` or `<Form>.yaml`).
 
 The default conversion is destructive: `anvil convert-template` validates the YAML, writes the generated HTML, then removes the source YAML after successful conversion. Do not run it for code-only changes, and do not run it when a sibling HTML template already exists unless the user explicitly asks to regenerate that HTML. Do not use `--keep-source`; staying on YAML requires explicit user intent and should follow the YAML workflow below instead.
 
@@ -20,7 +15,7 @@ A form should have exactly one template file: either HTML or YAML, never both. T
 2. Check for the sibling HTML template:
    - `client_code/**/<Form>/form_template.html`
    - `client_code/**/<Form>.html`
-3. If sibling HTML exists, validate it with `anvil --json validate <path-to-html>` and continue layout edits with `form-html-template`.
+3. If sibling HTML exists, validate it with `anvil --json validate <path-to-html>` and continue layout edits with the HTML template guidance in `client-forms`.
    - Do not run conversion over existing HTML unless the user explicitly asks to regenerate it from YAML.
    - Remove the YAML only after validating the HTML, unless the user explicitly wants YAML kept.
 4. If no sibling HTML exists and the task requires template/layout work, run `anvil convert-template` on the YAML template path.
@@ -41,7 +36,7 @@ A form should have exactly one template file: either HTML or YAML, never both. T
    - Ask the user only when inlining is not obviously behavior-preserving, such as multiple ambiguous slots, scripts, behavior-sensitive wrapper structure, or Python/CSS dependencies on the exact wrapper shape.
    - If you do not inline local markup, state the reason before continuing.
 7. Validate the generated HTML path after any normalization: `anvil --json validate <path-to-html>`.
-8. Continue layout edits with `form-html-template`.
+8. Continue layout edits with the HTML template guidance in `client-forms`.
 
 ## Stay On YAML (explicit user request only)
 

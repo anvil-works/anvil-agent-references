@@ -31,10 +31,8 @@ Validate supported app files with `anvil --json validate <path>`. Validate `anvi
 
 Use these public skills for Anvil work:
 
-- `form-code` - form Python.
-- `form-html-template` - form HTML templates.
-- `form-yaml-template` - convert legacy Anvil form YAML to HTML, or edit YAML only when explicitly requested.
-- `form-styling` - form appearance and theme CSS.
-- `client-modules` - client modules that are not forms.
+- `client-forms` - Form Python, HTML templates, styling, simple event wiring, RepeatingPanel item templates, reusable Forms, and legacy YAML conversion.
+- `data-models` - Data Table model classes, live rows, buffering/drafts, Data Bindings, and server methods.
+- `client-modules` - client modules (Python only, not forms).
 - `server-code` - server modules.
 - `anvil-yaml` - `anvil.yaml`.

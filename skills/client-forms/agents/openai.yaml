@@ -1,0 +1,4 @@
+interface:
+  display_name: "Client Forms"
+  short_description: "Edit Anvil client Forms"
+  default_prompt: "Use $client-forms to edit an Anvil client Form and keep Python, templates, styling, and validation in sync."
