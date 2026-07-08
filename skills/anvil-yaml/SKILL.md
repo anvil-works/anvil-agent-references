@@ -35,6 +35,7 @@ When adding or maintaining the Data Tables service:
 
 When enabling Users or changing `db_schema` for `server_config.user_table`:
 
+- When adding the Users service, add or preserve the matching Users table in `db_schema`. If you set `server_config.user_table: users`, `db_schema.users` must exist.
 - Always set `server_config.user_table`. For the standard Users table, use `server_config.user_table: users`.
 - If it is a string, use that string as the `db_schema` table key.
 - If it is a number, treat it as a legacy table id, not a `db_schema` key. Do not create a numeric `db_schema` key. Only edit an existing `db_schema` table when an existing `table_id_hints` entry unambiguously maps that table id to a table Python name; otherwise ask the user to choose or confirm the Users table in the IDE.

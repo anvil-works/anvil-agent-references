@@ -9,6 +9,11 @@ Use this workflow for Anvil client Forms. Keep the default path small: identify 
 
 For ordinary Python modules that are not Forms, use `client-modules`. Before choosing persisted data, CRUD, Data Tables, or client/server data flow, use `data-models`.
 
+## Native Libraries
+
+Use Native Libraries for app-wide browser libraries and page-head assets. They
+live in `anvil.yaml` at `native_deps.head_html`.
+
 ## Core Model
 
 A Form is a Python file plus exactly one template file:

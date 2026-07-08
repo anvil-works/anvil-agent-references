@@ -254,7 +254,14 @@ export interface AgentUsersService extends AgentBaseRuntimeService<"/runtime/ser
             Record<"confirm_address" | "mfa_reset" | "reset_password" | "token_login", { html?: string; subject?: string }>
         >;
         email_from_address?: string;
-        /** Required. String values are table Python names; this is usually `"users"`. Number values are legacy table ids. */
+        /**
+         * Required. String values are table Python names; this is usually
+         * `"users"`. When adding the Users service with a string `user_table`,
+         * add or preserve the matching `db_schema` table in the same manifest.
+         * `user_table: "users"` requires `db_schema.users`.
+         *
+         * Number values are legacy table ids.
+         */
         user_table: string | number;
     };
 }
@@ -335,6 +342,13 @@ export interface AgentAnvilYaml {
     startup_form?: string;
     startup?: { type: "module" | "form"; module?: string };
     native_deps?: {
+        /**
+         * HTML inserted into the app page `<head>`. Use this for known
+         * browser/CDN libraries that load via `<script>` or `<link>` tags, such
+         * as MathJax, fonts, or analytics scripts; agents may add those tags
+         * here directly instead of looking for Python packages or Anvil
+         * dependencies.
+         */
         head_html?: string;
         import_map?: string;
     };
