@@ -6,6 +6,7 @@
 # Generated files: client/anvil/users/__init__.pyi, server/anvil/users/__init__.pyi
 
 from typing import Any
+from typing import Literal, overload
 from anvil.tables import Row
 from anvil.users import mfa as mfa
 
@@ -152,6 +153,10 @@ By default, login status is not remembered between sessions; set remember=True t
     [Anvil Docs](https://anvil.works/docs/users/saml)"""
     ...
 
+@overload
+def login_with_form(show_signup_option: bool = True, remember_by_default: bool = True, allow_remembered: bool = True, allow_cancel: Literal[False] = False, initial_email: str | None = None) -> Row: ...
+@overload
+def login_with_form(show_signup_option: bool = True, remember_by_default: bool = True, allow_remembered: bool = True, allow_cancel: bool = False, initial_email: str | None = None) -> Row | None: ...
 def login_with_form(show_signup_option: bool = True, remember_by_default: bool = True, allow_remembered: bool = True, allow_cancel: bool = False, initial_email: str | None = None) -> Row | None:
     """Display a login form and allow user to log in. Returns user object if logged in, or None if cancelled.
 
@@ -168,6 +173,10 @@ initial_email: Optional email address to pre-fill the Email box with when email 
     [Anvil Docs](https://anvil.works/docs/users/authentication_forms)"""
     ...
 
+@overload
+def signup_with_form(remember_by_default: bool = True, allow_cancel: Literal[False] = False) -> Row: ...
+@overload
+def signup_with_form(remember_by_default: bool = True, allow_cancel: bool = False) -> Row | None: ...
 def signup_with_form(remember_by_default: bool = True, allow_cancel: bool = False) -> Row | None:
     """Display a sign-up form allowing a user to create a new account. Returns the new user object, or None if cancelled.
 

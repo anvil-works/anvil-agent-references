@@ -330,6 +330,7 @@ class NodeList:
     length: int
 
 class Element(Node, InnerHTML, Region, GeometryUtils, ParentNode, NonDocumentTypeChildNode, ChildNode, Slottable, ARIAMixin, Animatable):
+    textContent: str
     outerHTML: str
     def insertAdjacentHTML(self, position: str, text: str) -> None: ...
     def getSpatialNavigationContainer(self) -> Node: ...

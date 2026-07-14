@@ -283,6 +283,7 @@ class request:
     query_params: dict[str, str]
     form_params: dict[str, str]
     cookies: dict[str, str]
+    user: Any
     @staticmethod
     def get_header(name: str) -> str | None: ...
 
@@ -379,6 +380,11 @@ def reset_session() -> None:
 # Background Tasks
 # ============================================================================
 
+task_state: dict[str, Any]
+"""State exposed by the currently running background task.
+
+[Anvil Docs](https://anvil.works/docs/background-tasks/communicating-back)"""
+
 class BackgroundTaskState:
     """Information about a background task."""
 
@@ -391,6 +397,12 @@ class BackgroundTaskState:
 
     def get_state(self) -> dict[str, Any]:
         """Get the current state of this background task."""
+        ...
+
+    def get_task_name(self) -> str:
+        """Get the registered name of this background task.
+
+        [Anvil Docs](https://anvil.works/docs/background-tasks)"""
         ...
 
     def get_return_value(self) -> Any:
@@ -450,7 +462,7 @@ class HttpResponse:
     def __init__(
         self,
         status: int = 200,
-        body: str | bytes = "",
+        body: Any = "",
         headers: dict[str, str] | None = None,
     ) -> None: ...
 
