@@ -80,4 +80,3 @@ def force_login(user_row: Row, remember: bool = False) -> Row | None:
 
     [Anvil Docs](https://anvil.works/docs/users)"""
     ...
-

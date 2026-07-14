@@ -148,5 +148,3 @@ def send(
 
     [Anvil Docs](https://anvil.works/docs/email)"""
     ...
-
-

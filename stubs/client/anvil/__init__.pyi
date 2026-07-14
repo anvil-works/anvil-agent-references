@@ -3296,5 +3296,3 @@ class Timer(Component):
 
         [Anvil Docs](https://anvil.works/docs/client/components/timer)"""
         ...
-
-

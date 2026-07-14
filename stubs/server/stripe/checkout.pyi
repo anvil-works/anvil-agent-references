@@ -6,4 +6,3 @@
 # Generated files: client/stripe/checkout.pyi, server/stripe/checkout.pyi
 
 from typing import Any
-

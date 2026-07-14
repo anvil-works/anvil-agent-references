@@ -62,4 +62,3 @@ def get_available_mfa_types(email_address: str, password: str) -> list[str]:
 def get_enabled_mfa_types() -> list[str]:
     """Get all the enabled MFA types for this app."""
     ...
-

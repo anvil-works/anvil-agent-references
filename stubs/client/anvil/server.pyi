@@ -5,7 +5,8 @@
 # Type stubs for anvil.server module
 # Generated files: client/anvil/server.pyi, server/anvil/server.pyi
 
-from typing import Any, Callable, TypeVar, overload, ParamSpec, Literal
+from typing import Any, Callable, TypeVar, overload, Literal
+from typing_extensions import ParamSpec
 from contextlib import contextmanager
 from anvil.tables import Row
 
@@ -383,4 +384,3 @@ def loading_indicator(
 # ============================================================================
 # HTTP Response Classes
 # ============================================================================
-

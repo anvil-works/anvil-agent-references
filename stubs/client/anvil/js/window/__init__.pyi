@@ -1112,7 +1112,7 @@ class HTMLSelectElement(HTMLElement):
 class HTMLOptionElement(HTMLElement):
     @classmethod
     def new(self) -> HTMLOptionElement: ...
-    """ # GIgnoredStmt 
+    """ # GIgnoredStmt
     LegacyFactoryFunction=Option(optional DOMString text = "", optional DOMString value, optional boolean defaultSelected = False, optional boolean selected = False)
     """
     disabled: bool
@@ -1175,7 +1175,7 @@ class HTMLImageElement(HTMLElement, HTMLAttributionSrcElementUtils):
     def new(self) -> HTMLImageElement: ...
     x: int
     y: int
-    """ # GIgnoredStmt 
+    """ # GIgnoredStmt
     LegacyFactoryFunction=Image(optional unsigned long width, optional unsigned long height)
     """
     alt: str
@@ -1235,7 +1235,7 @@ class HTMLVideoElement(HTMLMediaElement):
 class HTMLAudioElement(HTMLMediaElement):
     @classmethod
     def new(self) -> HTMLAudioElement: ...
-    """ # GIgnoredStmt 
+    """ # GIgnoredStmt
     LegacyFactoryFunction=Audio(optional DOMString src)
     """
 
