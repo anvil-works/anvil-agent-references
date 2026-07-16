@@ -131,6 +131,10 @@ class BlobMedia(Media):
 class URLMedia(Media):
     """Create a Media object representing the data at a specific URL.
 
+    For an app theme asset stored at ``theme/assets/<path>``, use
+    ``URLMedia("_/theme/<path>")``. Do not add a leading slash or an
+    ``assets`` path segment.
+
     Caution: Getting data from URLs directly in your code will often fail
     for security reasons, or fail to handle binary data.
 

@@ -132,6 +132,10 @@ class BlobMedia(Media):
 class URLMedia(Media):
     """Create a Media object representing the data at a specific URL.
 
+    For an app theme asset stored at ``theme/assets/<path>``, use
+    ``URLMedia("_/theme/<path>")``. Do not add a leading slash or an
+    ``assets`` path segment.
+
     Caution: Getting data from URLs directly in your code will often fail
     for security reasons, or fail to handle binary data.
 
@@ -919,7 +923,14 @@ class Image(Component):
     def role(self, value: str | None) -> None: ...
 
     @property
-    def source(self) -> str | Media: ...
+    def source(self) -> str | Media:
+        """The image to display, as a Media object or URL string.
+
+        For an app theme asset stored at ``theme/assets/<path>``, use the
+        runtime-relative URL ``_/theme/<path>`` (for example,
+        ``_/theme/puppy.png``). Do not add a leading slash or an ``assets``
+        path segment."""
+        ...
     @source.setter
     def source(self, value: str | Media) -> None: ...
     @property
