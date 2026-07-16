@@ -36,6 +36,12 @@ class ExternalError(Exception):
 def await_promise(js_promise: Any, /) -> Any:
     """Await the result of a Javascript Promise in Python.
 
+    Calls to JavaScript functions that return Promises are automatically waited
+    on and return the resolved value. Do not wrap those calls in
+    `await_promise()` or use Python `await` syntax. Use this function only for a
+    Promise obtained without calling a JavaScript function, such as the
+    Promise-valued `document.fonts.ready` property or a constructed Promise.
+
     This function will block until the promise resolves or rejects.
     If the promise resolves, it will return the resolved value.
     If the promise rejects, it will raise the rejected value as an exception.

@@ -7,9 +7,8 @@ description: Design idiomatic Anvil data models and client/server data flow for 
 
 Use this workflow before creating or changing app architecture for persisted domain data.
 
-If the user asks about Anvil "models", "model classes", whether model objects
-should replace dict payloads, or designing a CRUD app from scratch, read
-`references/examples.md` before answering or designing the implementation.
+Read `references/examples.md` only when the user asks about model classes or
+the implementation will use one.
 
 ## Workflow
 
@@ -32,6 +31,7 @@ Done when the table schema, model classes, server methods, form bindings, and va
 ## Defaults
 
 - Prefer live Data Table rows, search iterators, and model classes over dict DTOs passed through server callables.
+- Default tables to `client: none` and return rows/search results from server code. Do not choose direct client table access unless the user requests it; client-side row saves use model `client_*` flags and checked `_do_*` hooks, not `client: full`.
 - Put domain behavior on model classes when it naturally belongs to one table or row type.
 - Use Forms for interaction and presentation logic, not as the main home for data rules.
 - Use ordinary `@anvil.server.callable` functions for cross-model operations, external services, background tasks, bootstrapping, or logic that does not naturally belong to one model.
@@ -66,7 +66,7 @@ class TodoItem(app_tables.todo_items.Row, buffered=True):
 - Use Data Bindings against row or model objects when binding components to persisted data.
 - In `RepeatingPanel` item templates, bind component properties directly to `self.item[...]` or model properties instead of copying values into labels or inputs in Python.
 - Use `buffered=True` on model classes, or `row.buffer_changes()`, when users can save or discard edits.
-- Use draft rows by constructing `app_tables.<table_name>.Row()` for create flows, then call `save()` only after the user confirms.
+- Use draft rows for create flows. Client-side `save()` requires a client-writable model with permission checks in the corresponding `_do_*` hooks; do not grant table-level `client: full` for it.
 - Avoid copying rows into dicts solely to make editing cancellable; buffering and drafts exist for that.
 
 ## Server Behavior
@@ -75,6 +75,7 @@ class TodoItem(app_tables.todo_items.Row, buffered=True):
 - Use `@classmethod` with `@anvil.server.server_method` for collection operations such as "get rows visible to the current user".
 - If server method implementation should not be visible in client code, define a client-visible stub on the model and override it in a server-side subclass.
 - Treat non-`self` arguments to server methods as untrusted client input.
+- For private data, derive identity and enforce ownership in trusted server code or model hooks.
 
 ## When Dicts Are Fine
 

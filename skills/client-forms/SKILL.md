@@ -84,6 +84,7 @@ Examples are concrete recipes. References are policies and syntax dictionaries.
 | Legacy YAML template or converted `HtmlTemplate` | `references/yaml-template.md`, `references/template-shapes.md`, then `examples/yaml-htmltemplate-conversion.md` |
 | M3 or dependency component specs | inspect `anvil.yaml`, dependency docs/files, then `examples/dependency-component.md` |
 | Form Python class shape, handler signatures, lifecycle, client runtime caveats, or dynamic updates | `references/python.md` |
+| `anvil.js`, `anvil.js.window`, browser APIs, JavaScript proxies, or Promises | `$javascript-interop` |
 | Roles, theme CSS, generated component DOM, or dependency styling internals | `references/styling.md`, `references/styling-examples.md`, and `references/component-dom.md` |
 
 ## Simple Event Edits

@@ -28,6 +28,7 @@ When adding or maintaining the Data Tables service:
 - `client_config.enable_v2: true` means Accelerated Data Tables. Missing or false `enable_v2` means legacy Data Tables.
 - When adding a new `/runtime/services/tables.yml` service entry, include `client_config.enable_v2: true` to use Accelerated Data Tables.
 - For an existing tables service, preserve the current `client_config` unless the user explicitly asks to migrate table behavior.
+- Default new tables to `client: none`; server-returned rows and client-writable model classes do not require table access. Use `search` for intentional direct client searches, and `full` only when the user explicitly requests unrestricted client table writes.
 - Preserve existing non-empty `db_schema.*.indexes` entries, but do not add new indexes unless the user explicitly asks and confirms the app is on a plan that supports Data Table indexes.
 - For new tables, omit `indexes` or use `indexes: []` if the manifest shape requires it.
 

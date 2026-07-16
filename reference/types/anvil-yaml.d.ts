@@ -71,6 +71,11 @@ export interface AgentTableIndex {
 }
 
 export interface AgentTableSchema {
+    /**
+     * Default to "none"; server-returned rows and client-writable models need no
+     * table access. Use "search" for intentional direct client searches, and
+     * "full" only when the user explicitly requests raw client table writes.
+     */
     client: AgentTableAccess;
     columns: AgentSchemaColumn[];
     server: AgentTableAccess;

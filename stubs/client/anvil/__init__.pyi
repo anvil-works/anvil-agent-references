@@ -517,19 +517,6 @@ class WithLayout(Component):
     """Parent class of any form with a layout."""
 
     @property
-    def visible(self) -> bool: ...
-    @visible.setter
-    def visible(self, value: bool) -> None: ...
-    @property
-    def tooltip(self) -> str: ...
-    @tooltip.setter
-    def tooltip(self, value: str) -> None: ...
-    @property
-    def role(self) -> str | None: ...
-    @role.setter
-    def role(self, value: str | None) -> None: ...
-
-    @property
     def layout(self) -> "Component":
         """This form's layout."""
         ...
@@ -640,10 +627,6 @@ class Component:
 
     parent: "Container | None"
     @property
-    def role(self) -> str | None: ...
-    @role.setter
-    def role(self, value: str | None) -> None: ...
-    @property
     def tag(self) -> Any: ...
     @tag.setter
     def tag(self, value: Any) -> None: ...
@@ -732,6 +715,12 @@ class Container(Component):
         ...
 
 
+    def __init__(
+        self,
+        *,
+        tag: Any = ...,
+    ) -> None: ...
+
 # ============================================================================
 # Basic Display Components
 # ============================================================================
@@ -816,6 +805,30 @@ class Label(Component):
     def spacing(self) -> SpacingPropertyValue: ...
     @spacing.setter
     def spacing(self, value: SpacingPropertyValue) -> None: ...
+
+    def __init__(
+        self,
+        *,
+        tag: Any = ...,
+        visible: bool = ...,
+        tooltip: str = ...,
+        role: str | None = ...,
+        text: str = ...,
+        icon: str = ...,
+        icon_align: str = ...,
+        font_size: int | float | None = ...,
+        font: str = ...,
+        bold: bool = ...,
+        italic: bool = ...,
+        underline: bool = ...,
+        foreground: str = ...,
+        background: str = ...,
+        border: str = ...,
+        align: str = ...,
+        spacing_above: Literal["none", "small", "medium", "large"] = ...,
+        spacing_below: Literal["none", "small", "medium", "large"] = ...,
+        spacing: SpacingPropertyValue = ...,
+    ) -> None: ...
 
 class Link(Component):
     """A clickable link component.
@@ -903,6 +916,29 @@ class Link(Component):
     @override
     def raise_event(self, event_name: _LinkEvents | str, /, **event_args: Any) -> None: ...
 
+
+    def __init__(
+        self,
+        *,
+        tag: Any = ...,
+        visible: bool = ...,
+        tooltip: str = ...,
+        role: str | None = ...,
+        text: str = ...,
+        url: str = ...,
+        icon: str = ...,
+        icon_align: str = ...,
+        font_size: int | float | None = ...,
+        font: str = ...,
+        bold: bool = ...,
+        italic: bool = ...,
+        underline: bool = ...,
+        foreground: str = ...,
+        background: str = ...,
+        border: str = ...,
+        align: str = ...,
+        text_padding: PaddingPropertyValue = ...,
+    ) -> None: ...
 
 class Image(Component):
     """An image display component.
@@ -994,6 +1030,28 @@ class Image(Component):
     def raise_event(self, event_name: _ImageEvents | str, /, **event_args: Any) -> None: ...
 
 
+    def __init__(
+        self,
+        *,
+        tag: Any = ...,
+        visible: bool = ...,
+        tooltip: str = ...,
+        role: str | None = ...,
+        source: str | Media = ...,
+        alt_text: str = ...,
+        display_mode: str = ...,
+        horizontal_align: str = ...,
+        vertical_align: str = ...,
+        height: str = ...,
+        background: str = ...,
+        border: str = ...,
+        border_radius: str = ...,
+        foreground: str = ...,
+        margin: MarginPropertyValue = ...,
+        spacing_above: Literal["none", "small", "medium", "large"] = ...,
+        spacing_below: Literal["none", "small", "medium", "large"] = ...,
+    ) -> None: ...
+
 class Spacer(Component):
     """A spacer component for layout.
 
@@ -1022,6 +1080,17 @@ class Spacer(Component):
     def spacing_below(self) -> Literal["none", "small", "medium", "large"]: ...
     @spacing_below.setter
     def spacing_below(self, value: Literal["none", "small", "medium", "large"]) -> None: ...
+
+    def __init__(
+        self,
+        *,
+        tag: Any = ...,
+        visible: bool = ...,
+        tooltip: str = ...,
+        height: int = ...,
+        spacing_above: Literal["none", "small", "medium", "large"] = ...,
+        spacing_below: Literal["none", "small", "medium", "large"] = ...,
+    ) -> None: ...
 
 class RichText(Component):
     """A rich text display component.
@@ -1116,6 +1185,32 @@ class RichText(Component):
     def add_component(self, component: Component, /, **layout_props: Unpack[_SlottedLayoutKwargs]) -> None: ...
     @overload
     def add_component(self, component: Component, /, **layout_props: Any) -> None: ...
+    def __init__(
+        self,
+        *,
+        tag: Any = ...,
+        visible: bool = ...,
+        tooltip: str = ...,
+        role: str | None = ...,
+        content: str = ...,
+        text: str = ...,
+        format: str = ...,
+        enable_slots: bool = ...,
+        data: dict[str, Any] = ...,
+        align: str = ...,
+        font_size: int | float | None = ...,
+        font: str = ...,
+        bold: bool = ...,
+        italic: bool = ...,
+        underline: bool = ...,
+        background: str = ...,
+        border: str = ...,
+        foreground: str = ...,
+        spacing: SpacingPropertyValue = ...,
+        spacing_above: Literal["none", "small", "medium", "large"] = ...,
+        spacing_below: Literal["none", "small", "medium", "large"] = ...,
+    ) -> None: ...
+
 # ============================================================================
 # Input Components
 # ============================================================================
@@ -1214,6 +1309,31 @@ class Button(Component):
     @override
     def raise_event(self, event_name: _ButtonEvents | str, /, **event_args: Any) -> None: ...
 
+
+    def __init__(
+        self,
+        *,
+        tag: Any = ...,
+        enabled: bool = ...,
+        visible: bool = ...,
+        tooltip: str = ...,
+        role: str | None = ...,
+        text: str = ...,
+        icon: str = ...,
+        icon_align: str = ...,
+        font_size: int | float | None = ...,
+        font: str = ...,
+        bold: bool = ...,
+        italic: bool = ...,
+        underline: bool = ...,
+        foreground: str = ...,
+        background: str = ...,
+        border: str = ...,
+        align: str = ...,
+        spacing: SpacingPropertyValue = ...,
+        spacing_above: Literal["none", "small", "medium", "large"] = ...,
+        spacing_below: Literal["none", "small", "medium", "large"] = ...,
+    ) -> None: ...
 
 class TextBox(Component):
     """A single-line text input component.
@@ -1326,6 +1446,32 @@ class TextBox(Component):
         ...
 
 
+    def __init__(
+        self,
+        *,
+        tag: Any = ...,
+        enabled: bool = ...,
+        visible: bool = ...,
+        tooltip: str = ...,
+        role: str | None = ...,
+        text: str = ...,
+        placeholder: str = ...,
+        type: str = ...,
+        hide_text: bool = ...,
+        font_size: int | float | None = ...,
+        font: str = ...,
+        bold: bool = ...,
+        italic: bool = ...,
+        underline: bool = ...,
+        foreground: str = ...,
+        background: str = ...,
+        border: str = ...,
+        align: str = ...,
+        margin: MarginPropertyValue = ...,
+        spacing_above: Literal["none", "small", "medium", "large"] = ...,
+        spacing_below: Literal["none", "small", "medium", "large"] = ...,
+    ) -> None: ...
+
 class TextArea(Component):
     """A multi-line text input component.
 
@@ -1437,6 +1583,32 @@ class TextArea(Component):
         ...
 
 
+    def __init__(
+        self,
+        *,
+        tag: Any = ...,
+        enabled: bool = ...,
+        visible: bool = ...,
+        tooltip: str = ...,
+        role: str | None = ...,
+        text: str = ...,
+        placeholder: str = ...,
+        auto_expand: bool = ...,
+        height: str = ...,
+        font_size: int | float | None = ...,
+        font: str = ...,
+        bold: bool = ...,
+        italic: bool = ...,
+        underline: bool = ...,
+        foreground: str = ...,
+        background: str = ...,
+        border: str = ...,
+        align: str = ...,
+        margin: MarginPropertyValue = ...,
+        spacing_above: Literal["none", "small", "medium", "large"] = ...,
+        spacing_below: Literal["none", "small", "medium", "large"] = ...,
+    ) -> None: ...
+
 class CheckBox(Component):
     """A checkbox input component.
 
@@ -1531,6 +1703,31 @@ class CheckBox(Component):
     @override
     def raise_event(self, event_name: _CheckBoxEvents | str, /, **event_args: Any) -> None: ...
 
+
+    def __init__(
+        self,
+        *,
+        tag: Any = ...,
+        enabled: bool = ...,
+        visible: bool = ...,
+        tooltip: str = ...,
+        role: str | None = ...,
+        checked: bool = ...,
+        allow_indeterminate: bool = ...,
+        text: str = ...,
+        font_size: int | float | None = ...,
+        font: str = ...,
+        bold: bool = ...,
+        italic: bool = ...,
+        underline: bool = ...,
+        foreground: str = ...,
+        background: str = ...,
+        border: str = ...,
+        align: str = ...,
+        spacing: SpacingPropertyValue = ...,
+        spacing_above: Literal["none", "small", "medium", "large"] = ...,
+        spacing_below: Literal["none", "small", "medium", "large"] = ...,
+    ) -> None: ...
 
 class RadioButton(Component):
     """A radio button input component.
@@ -1638,6 +1835,32 @@ class RadioButton(Component):
         ...
 
 
+    def __init__(
+        self,
+        *,
+        tag: Any = ...,
+        enabled: bool = ...,
+        visible: bool = ...,
+        tooltip: str = ...,
+        role: str | None = ...,
+        selected: bool = ...,
+        value: Any = ...,
+        group_name: str = ...,
+        text: str = ...,
+        font_size: int | float | None = ...,
+        font: str = ...,
+        bold: bool = ...,
+        italic: bool = ...,
+        underline: bool = ...,
+        foreground: str = ...,
+        background: str = ...,
+        border: str = ...,
+        align: str = ...,
+        spacing: SpacingPropertyValue = ...,
+        spacing_above: Literal["none", "small", "medium", "large"] = ...,
+        spacing_below: Literal["none", "small", "medium", "large"] = ...,
+    ) -> None: ...
+
 class DropDown(Component):
     """A dropdown selection component.
 
@@ -1736,6 +1959,32 @@ class DropDown(Component):
     @override
     def raise_event(self, event_name: _DropDownEvents | str, /, **event_args: Any) -> None: ...
 
+
+    def __init__(
+        self,
+        *,
+        tag: Any = ...,
+        enabled: bool = ...,
+        visible: bool = ...,
+        tooltip: str = ...,
+        role: str | None = ...,
+        items: list[Any] = ...,
+        selected_value: Any = ...,
+        include_placeholder: bool = ...,
+        placeholder: str = ...,
+        font_size: int | float | None = ...,
+        font: str = ...,
+        bold: bool = ...,
+        italic: bool = ...,
+        underline: bool = ...,
+        foreground: str = ...,
+        background: str = ...,
+        border: str = ...,
+        align: str = ...,
+        margin: MarginPropertyValue = ...,
+        spacing_above: Literal["none", "small", "medium", "large"] = ...,
+        spacing_below: Literal["none", "small", "medium", "large"] = ...,
+    ) -> None: ...
 
 class DatePicker(Component):
     """A date picker input component.
@@ -1843,6 +2092,34 @@ class DatePicker(Component):
     @override
     def raise_event(self, event_name: _DatePickerEvents | str, /, **event_args: Any) -> None: ...
 
+
+    def __init__(
+        self,
+        *,
+        tag: Any = ...,
+        enabled: bool = ...,
+        visible: bool = ...,
+        tooltip: str = ...,
+        role: str | None = ...,
+        date: Any = ...,
+        min_date: Any = ...,
+        max_date: Any = ...,
+        format: str = ...,
+        pick_time: bool = ...,
+        placeholder: str = ...,
+        font_size: int | float | None = ...,
+        font: str = ...,
+        bold: bool = ...,
+        italic: bool = ...,
+        underline: bool = ...,
+        foreground: str = ...,
+        background: str = ...,
+        border: str = ...,
+        align: str = ...,
+        margin: MarginPropertyValue = ...,
+        spacing_above: Literal["none", "small", "medium", "large"] = ...,
+        spacing_below: Literal["none", "small", "medium", "large"] = ...,
+    ) -> None: ...
 
 class FileLoader(Component):
     """A file upload component.
@@ -1965,6 +2242,36 @@ class FileLoader(Component):
         ...
 
 
+    def __init__(
+        self,
+        *,
+        tag: Any = ...,
+        enabled: bool = ...,
+        visible: bool = ...,
+        tooltip: str = ...,
+        role: str | None = ...,
+        file: Media | None = ...,
+        files: list[Media] = ...,
+        multiple: bool = ...,
+        show_state: bool = ...,
+        file_types: str = ...,
+        text: str = ...,
+        font_size: int | float | None = ...,
+        font: str = ...,
+        bold: bool = ...,
+        italic: bool = ...,
+        underline: bool = ...,
+        foreground: str = ...,
+        background: str = ...,
+        border: str = ...,
+        align: str = ...,
+        icon: str = ...,
+        icon_align: str = ...,
+        spacing: SpacingPropertyValue = ...,
+        spacing_above: Literal["none", "small", "medium", "large"] = ...,
+        spacing_below: Literal["none", "small", "medium", "large"] = ...,
+    ) -> None: ...
+
 # ============================================================================
 # Container Components
 # ============================================================================
@@ -2031,6 +2338,24 @@ class ColumnPanel(Container):
     @overload
     def add_component(self, component: Component, /, **layout_props: Any) -> None: ...
 
+    def __init__(
+        self,
+        *,
+        tag: Any = ...,
+        visible: bool = ...,
+        tooltip: str = ...,
+        role: str | None = ...,
+        col_widths: str = ...,
+        col_spacing: str = ...,
+        wrap_on: str = ...,
+        background: str = ...,
+        foreground: str = ...,
+        border: str = ...,
+        spacing_above: Literal["none", "small", "medium", "large"] = ...,
+        spacing_below: Literal["none", "small", "medium", "large"] = ...,
+        spacing: SpacingPropertyValue = ...,
+    ) -> None: ...
+
 class FlowPanel(Container):
     """A container that arranges components in a flowing layout.
 
@@ -2093,6 +2418,24 @@ class FlowPanel(Container):
     @overload
     def add_component(self, component: Component, /, **layout_props: Any) -> None: ...
 
+    def __init__(
+        self,
+        *,
+        tag: Any = ...,
+        visible: bool = ...,
+        tooltip: str = ...,
+        role: str | None = ...,
+        align: str = ...,
+        spacing: SpacingPropertyValue = ...,
+        vertical_align: str = ...,
+        background: str = ...,
+        foreground: str = ...,
+        border: str = ...,
+        spacing_above: Literal["none", "small", "medium", "large"] = ...,
+        spacing_below: Literal["none", "small", "medium", "large"] = ...,
+        gap: str = ...,
+    ) -> None: ...
+
 class LinearPanel(Container):
     """A container that arranges components in a linear layout.
 
@@ -2143,6 +2486,21 @@ class LinearPanel(Container):
     @overload
     def add_component(self, component: Component, /, **layout_props: Any) -> None: ...
 
+    def __init__(
+        self,
+        *,
+        tag: Any = ...,
+        visible: bool = ...,
+        tooltip: str = ...,
+        role: str | None = ...,
+        background: str = ...,
+        foreground: str = ...,
+        border: str = ...,
+        spacing_above: Literal["none", "small", "medium", "large"] = ...,
+        spacing_below: Literal["none", "small", "medium", "large"] = ...,
+        spacing: SpacingPropertyValue = ...,
+    ) -> None: ...
+
 class GridPanel(Container):
     """A container that arranges components in a grid.
 
@@ -2192,6 +2550,21 @@ class GridPanel(Container):
     def add_component(self, component: Component, /, **layout_props: Unpack[_GridPanelLayoutKwargs]) -> None: ...
     @overload
     def add_component(self, component: Component, /, **layout_props: Any) -> None: ...
+
+    def __init__(
+        self,
+        *,
+        tag: Any = ...,
+        visible: bool = ...,
+        tooltip: str = ...,
+        role: str | None = ...,
+        background: str = ...,
+        foreground: str = ...,
+        border: str = ...,
+        spacing: SpacingPropertyValue = ...,
+        spacing_above: Literal["none", "small", "medium", "large"] = ...,
+        spacing_below: Literal["none", "small", "medium", "large"] = ...,
+    ) -> None: ...
 
 class XYPanel(Container):
     """A container that positions components at absolute coordinates.
@@ -2254,6 +2627,24 @@ class XYPanel(Container):
     def add_component(self, component: Component, /, **layout_props: Unpack[_XYPanelLayoutKwargs]) -> None: ...
     @overload
     def add_component(self, component: Component, /, **layout_props: Any) -> None: ...
+
+    def __init__(
+        self,
+        *,
+        tag: Any = ...,
+        visible: bool = ...,
+        tooltip: str = ...,
+        role: str | None = ...,
+        background: str = ...,
+        foreground: str = ...,
+        border: str = ...,
+        height: str = ...,
+        width: str = ...,
+        align: str = ...,
+        margin: MarginPropertyValue = ...,
+        spacing_above: Literal["none", "small", "medium", "large"] = ...,
+        spacing_below: Literal["none", "small", "medium", "large"] = ...,
+    ) -> None: ...
 
 class DataGrid(Container):
     """A data grid component for displaying tabular data.
@@ -2334,6 +2725,26 @@ class DataGrid(Container):
     @overload
     def add_component(self, component: Component, /, **layout_props: Any) -> None: ...
 
+
+    def __init__(
+        self,
+        *,
+        tag: Any = ...,
+        visible: bool = ...,
+        tooltip: str = ...,
+        role: str | None = ...,
+        columns: list[dict[str, Any]] = ...,
+        rows_per_page: int | None = ...,
+        show_page_controls: bool = ...,
+        auto_header: bool = ...,
+        wrap_on: str = ...,
+        background: str = ...,
+        foreground: str = ...,
+        border: str = ...,
+        margin: MarginPropertyValue = ...,
+        spacing_above: Literal["none", "small", "medium", "large"] = ...,
+        spacing_below: Literal["none", "small", "medium", "large"] = ...,
+    ) -> None: ...
 
 class DataRowPanel(Container):
     """A row within a DataGrid.
@@ -2417,6 +2828,29 @@ class DataRowPanel(Container):
     @overload
     def add_component(self, component: Component, /, **layout_props: Any) -> None: ...
 
+    def __init__(
+        self,
+        *,
+        tag: Any = ...,
+        visible: bool = ...,
+        tooltip: str = ...,
+        role: str | None = ...,
+        item: dict[str, Any] = ...,
+        auto_display_data: bool = ...,
+        background: str = ...,
+        foreground: str = ...,
+        border: str = ...,
+        align: str = ...,
+        font_size: int | float | None = ...,
+        font: str = ...,
+        bold: bool = ...,
+        italic: bool = ...,
+        underline: bool = ...,
+        margin: MarginPropertyValue = ...,
+        spacing_above: Literal["none", "small", "medium", "large"] = ...,
+        spacing_below: Literal["none", "small", "medium", "large"] = ...,
+    ) -> None: ...
+
 class RepeatingPanel(Container):
     """A panel that repeats a template for each item in a list.
 
@@ -2475,6 +2909,22 @@ class RepeatingPanel(Container):
         ...
 
 
+    def __init__(
+        self,
+        *,
+        tag: Any = ...,
+        visible: bool = ...,
+        tooltip: str = ...,
+        role: str | None = ...,
+        items: list[Any] | Iterator[Any] = ...,
+        background: str = ...,
+        foreground: str = ...,
+        border: str = ...,
+        margin: MarginPropertyValue = ...,
+        spacing_above: Literal["none", "small", "medium", "large"] = ...,
+        spacing_below: Literal["none", "small", "medium", "large"] = ...,
+    ) -> None: ...
+
 # ============================================================================
 # Media/Visualization Components
 # ============================================================================
@@ -2509,6 +2959,16 @@ class HtmlComponent(Container):
     @overload
     def add_component(self, component: Component, /, **layout_props: Any) -> None: ...
 
+
+    def __init__(
+        self,
+        *,
+        tag: Any = ...,
+        visible: bool = ...,
+        html: str = ...,
+        classes: _ClassesValue | Classes = ...,
+        style: _StyleValue | Style = ...,
+    ) -> None: ...
 
 class HtmlTemplate(Container):
     """A container that renders HTML.
@@ -2558,6 +3018,19 @@ class HtmlTemplate(Container):
         [Anvil Docs](https://anvil.works/docs/client/javascript)"""
         ...
 
+
+    def __init__(
+        self,
+        *,
+        tag: Any = ...,
+        visible: bool = ...,
+        tooltip: str = ...,
+        role: str | None = ...,
+        html: str = ...,
+        background: str = ...,
+        border: str = ...,
+        foreground: str = ...,
+    ) -> None: ...
 
 HtmlPanel = deprecated("HtmlPanel is deprecated. Use HtmlTemplate instead.")(HtmlTemplate)
 
@@ -2636,6 +3109,23 @@ class Canvas(Component):
         [Anvil Docs](https://anvil.works/docs/client/components/canvas)"""
         ...
 
+
+    def __init__(
+        self,
+        *,
+        tag: Any = ...,
+        visible: bool = ...,
+        tooltip: str = ...,
+        role: str | None = ...,
+        width: int = ...,
+        height: int = ...,
+        background: str = ...,
+        border: str = ...,
+        foreground: str = ...,
+        margin: MarginPropertyValue = ...,
+        spacing_above: Literal["none", "small", "medium", "large"] = ...,
+        spacing_below: Literal["none", "small", "medium", "large"] = ...,
+    ) -> None: ...
 
 class Plot(Component):
     """A Plotly chart component.
@@ -2724,6 +3214,23 @@ class Plot(Component):
         ...
 
 
+    def __init__(
+        self,
+        *,
+        tag: Any = ...,
+        visible: bool = ...,
+        tooltip: str = ...,
+        data: list[dict[str, Any]] = ...,
+        layout: dict[str, Any] = ...,
+        config: dict[str, Any] = ...,
+        figure: dict[str, Any] = ...,
+        interactive: bool = ...,
+        height: str = ...,
+        margin: MarginPropertyValue = ...,
+        spacing_above: Literal["none", "small", "medium", "large"] = ...,
+        spacing_below: Literal["none", "small", "medium", "large"] = ...,
+    ) -> None: ...
+
 class _LatLng:
     """A latitude/longitude pair for GoogleMap.
 
@@ -2805,6 +3312,23 @@ class _MapMarker(Component):
         """Remove this marker from the map."""
         ...
 
+
+    def __init__(
+        self,
+        *,
+        tag: Any = ...,
+        enabled: bool = ...,
+        tooltip: str = ...,
+        role: str | None = ...,
+        animation: Any = ...,
+        position: _LatLng = ...,
+        icon: Any = ...,
+        label: Any = ...,
+        clickable: bool = ...,
+        draggable: bool = ...,
+        visible: bool = ...,
+        z_index: int = ...,
+    ) -> None: ...
 
 class _MapPolygon(Component):
     """A polygon overlay on a GoogleMap.
@@ -2895,6 +3419,26 @@ class _MapPolygon(Component):
         ...
 
 
+    def __init__(
+        self,
+        *,
+        tag: Any = ...,
+        enabled: bool = ...,
+        tooltip: str = ...,
+        role: str | None = ...,
+        path: list[_LatLng] = ...,
+        geodesic: bool = ...,
+        editable: bool = ...,
+        draggable: bool = ...,
+        visible: bool = ...,
+        stroke_color: str = ...,
+        stroke_opacity: float = ...,
+        stroke_weight: int = ...,
+        fill_color: str = ...,
+        fill_opacity: float = ...,
+        z_index: int = ...,
+    ) -> None: ...
+
 class _MapPolyline(Component):
     """A polyline overlay on a GoogleMap.
 
@@ -2977,6 +3521,25 @@ class _MapPolyline(Component):
         """Remove this polyline from the map."""
         ...
 
+
+    def __init__(
+        self,
+        *,
+        tag: Any = ...,
+        enabled: bool = ...,
+        tooltip: str = ...,
+        role: str | None = ...,
+        icons: list[Any] = ...,
+        path: list[_LatLng] = ...,
+        geodesic: bool = ...,
+        editable: bool = ...,
+        draggable: bool = ...,
+        visible: bool = ...,
+        stroke_color: str = ...,
+        stroke_opacity: float = ...,
+        stroke_weight: int = ...,
+        z_index: int = ...,
+    ) -> None: ...
 
 class GoogleMap(Component):
     """A Google Maps component.
@@ -3168,6 +3731,52 @@ class GoogleMap(Component):
         ...
 
 
+    def __init__(
+        self,
+        *,
+        tag: Any = ...,
+        visible: bool = ...,
+        center: _LatLng | Any = ...,
+        zoom: int = ...,
+        map_type: str = ...,
+        markers: list[_MapMarker] = ...,
+        map_data: Any = ...,
+        background_color: str = ...,
+        clickable_icons: bool = ...,
+        disable_default_ui: bool = ...,
+        disable_double_click_zoom: bool = ...,
+        draggable: bool = ...,
+        draggable_cursor: str = ...,
+        dragging_cursor: str = ...,
+        fullscreen_control: bool = ...,
+        fullscreen_control_options: Any = ...,
+        gesture_handling: str = ...,
+        heading: int | float = ...,
+        keyboard_shortcuts: bool = ...,
+        map_type_control: bool = ...,
+        map_type_control_options: Any = ...,
+        map_type_id: Any = ...,
+        max_zoom: int | float = ...,
+        min_zoom: int | float = ...,
+        rotate_control: bool = ...,
+        rotate_control_options: Any = ...,
+        scale_control: bool = ...,
+        scale_control_options: Any = ...,
+        scroll_wheel: bool = ...,
+        street_view_control: bool = ...,
+        street_view_control_options: Any = ...,
+        zoom_control: bool = ...,
+        zoom_control_options: Any = ...,
+        LatLng: type[_LatLng] = ...,
+        Marker: type[_MapMarker] = ...,
+        Polygon: type[_MapPolygon] = ...,
+        Polyline: type[_MapPolyline] = ...,
+        height: str = ...,
+        margin: MarginPropertyValue = ...,
+        spacing_above: Literal["none", "small", "medium", "large"] = ...,
+        spacing_below: Literal["none", "small", "medium", "large"] = ...,
+    ) -> None: ...
+
 class YouTubeVideo(Component):
     """A YouTube video player component.
 
@@ -3273,6 +3882,29 @@ class YouTubeVideo(Component):
         ...
 
 
+    def __init__(
+        self,
+        *,
+        tag: Any = ...,
+        visible: bool = ...,
+        role: str | None = ...,
+        youtube_id: str = ...,
+        autoplay: bool = ...,
+        loop: bool = ...,
+        mute: bool = ...,
+        volume: float = ...,
+        current_time: float = ...,
+        duration: float = ...,
+        state: str = ...,
+        background: str = ...,
+        border: str = ...,
+        foreground: str = ...,
+        height: str = ...,
+        margin: MarginPropertyValue = ...,
+        spacing_above: Literal["none", "small", "medium", "large"] = ...,
+        spacing_below: Literal["none", "small", "medium", "large"] = ...,
+    ) -> None: ...
+
 # ============================================================================
 # Utility Components
 # ============================================================================
@@ -3307,3 +3939,9 @@ class Timer(Component):
 
         [Anvil Docs](https://anvil.works/docs/client/components/timer)"""
         ...
+    def __init__(
+        self,
+        *,
+        tag: Any = ...,
+        interval: float = ...,
+    ) -> None: ...

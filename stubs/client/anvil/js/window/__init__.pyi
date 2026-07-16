@@ -21,18 +21,14 @@ DOM types are also available for type annotations.
 Generated from WebIDL specifications via webtypy.
 """
 
-from typing import Any, Awaitable, Callable, Sequence, overload
+from typing import Any, Callable, Sequence, overload
 
 class EventTarget:
-    @classmethod
-    def new(self) -> EventTarget: ...
     def addEventListener(self, type: str, callback: EventListener | None, options: AddEventListenerOptions | bool | None = {}) -> None: ...
     def removeEventListener(self, type: str, callback: EventListener | None, options: EventListenerOptions | bool | None = {}) -> None: ...
     def dispatchEvent(self, event: Event) -> bool: ...
 
 class Event:
-    @classmethod
-    def new(self, type: str, eventInitDict: EventInit | None = {}) -> Event: ...
     type: str
     target: EventTarget | None
     srcElement: EventTarget | None
@@ -57,8 +53,6 @@ class Event:
     def initEvent(self, type: str, bubbles: bool | None = False, cancelable: bool | None = False) -> None: ...
 
 class UIEvent(Event):
-    @classmethod
-    def new(self, type: str, eventInitDict: UIEventInit | None = {}) -> UIEvent: ...
     sourceCapabilities: InputDeviceCapabilities | None
     view: Window | None
     detail: int
@@ -66,8 +60,6 @@ class UIEvent(Event):
     which: int
 
 class MouseEvent(UIEvent):
-    @classmethod
-    def new(self, type: str, eventInitDict: MouseEventInit | None = {}) -> MouseEvent: ...
     pageX: float
     pageY: float
     x: float
@@ -91,8 +83,6 @@ class MouseEvent(UIEvent):
     def initMouseEvent(self, typeArg: str, bubblesArg: bool | None = False, cancelableArg: bool | None = False, viewArg: Window | None = None, detailArg: int | None = 0, screenXArg: int | None = 0, screenYArg: int | None = 0, clientXArg: int | None = 0, clientYArg: int | None = 0, ctrlKeyArg: bool | None = False, altKeyArg: bool | None = False, shiftKeyArg: bool | None = False, metaKeyArg: bool | None = False, buttonArg: short | None = 0, relatedTargetArg: EventTarget | None = None) -> None: ...
 
 class KeyboardEvent(UIEvent):
-    @classmethod
-    def new(self, type: str, eventInitDict: KeyboardEventInit | None = {}) -> KeyboardEvent: ...
     DOM_KEY_LOCATION_STANDARD = 0x00
     DOM_KEY_LOCATION_LEFT = 0x01
     DOM_KEY_LOCATION_RIGHT = 0x02
@@ -112,13 +102,9 @@ class KeyboardEvent(UIEvent):
     keyCode: int
 
 class FocusEvent(UIEvent):
-    @classmethod
-    def new(self, type: str, eventInitDict: FocusEventInit | None = {}) -> FocusEvent: ...
     relatedTarget: EventTarget | None
 
 class InputEvent(UIEvent):
-    @classmethod
-    def new(self, type: str, eventInitDict: InputEventInit | None = {}) -> InputEvent: ...
     dataTransfer: DataTransfer | None
     def getTargetRanges(self) -> Sequence[StaticRange]: ...
     data: str | None
@@ -126,8 +112,6 @@ class InputEvent(UIEvent):
     inputType: str
 
 class WheelEvent(MouseEvent):
-    @classmethod
-    def new(self, type: str, eventInitDict: WheelEventInit | None = {}) -> WheelEvent: ...
     DOM_DELTA_PIXEL = 0x00
     DOM_DELTA_LINE = 0x01
     DOM_DELTA_PAGE = 0x02
@@ -137,8 +121,6 @@ class WheelEvent(MouseEvent):
     deltaMode: int
 
 class TouchEvent(UIEvent):
-    @classmethod
-    def new(self, type: str, eventInitDict: TouchEventInit | None = {}) -> TouchEvent: ...
     touches: TouchList
     targetTouches: TouchList
     changedTouches: TouchList
@@ -148,8 +130,6 @@ class TouchEvent(UIEvent):
     shiftKey: bool
 
 class Touch:
-    @classmethod
-    def new(self, touchInitDict: TouchInit) -> Touch: ...
     identifier: int
     target: EventTarget
     screenX: float
@@ -170,8 +150,6 @@ class TouchList:
     length: int
 
 class PointerEvent(MouseEvent):
-    @classmethod
-    def new(self, type: str, eventInitDict: PointerEventInit | None = {}) -> PointerEvent: ...
     pointerId: int
     width: float
     height: float
@@ -188,38 +166,26 @@ class PointerEvent(MouseEvent):
     def getPredictedEvents(self) -> Sequence[PointerEvent]: ...
 
 class DragEvent(MouseEvent):
-    @classmethod
-    def new(self, type: str, eventInitDict: DragEventInit | None = {}) -> DragEvent: ...
     dataTransfer: DataTransfer | None
 
 class ClipboardEvent(Event):
-    @classmethod
-    def new(self, type: str, eventInitDict: ClipboardEventInit | None = {}) -> ClipboardEvent: ...
     clipboardData: DataTransfer | None
 
 class AnimationEvent(Event):
-    @classmethod
-    def new(self, type: CSSOMString, animationEventInitDict: AnimationEventInit | None = {}) -> AnimationEvent: ...
     animationName: CSSOMString
     elapsedTime: float
     pseudoElement: CSSOMString
 
 class TransitionEvent(Event):
-    @classmethod
-    def new(self, type: CSSOMString, transitionEventInitDict: TransitionEventInit | None = {}) -> TransitionEvent: ...
     propertyName: CSSOMString
     elapsedTime: float
     pseudoElement: CSSOMString
 
 class CustomEvent(Event):
-    @classmethod
-    def new(self, type: str, eventInitDict: CustomEventInit | None = {}) -> CustomEvent: ...
     detail: Any
     def initCustomEvent(self, type: str, bubbles: bool | None = False, cancelable: bool | None = False, detail: Any | None = None) -> None: ...
 
 class ErrorEvent(Event):
-    @classmethod
-    def new(self, type: str, eventInitDict: ErrorEventInit | None = {}) -> ErrorEvent: ...
     message: str
     filename: USVString
     lineno: int
@@ -227,36 +193,24 @@ class ErrorEvent(Event):
     error: Any
 
 class ProgressEvent(Event):
-    @classmethod
-    def new(self, type: str, eventInitDict: ProgressEventInit | None = {}) -> ProgressEvent: ...
     lengthComputable: bool
     loaded: int
     total: int
 
 class SubmitEvent(Event):
-    @classmethod
-    def new(self, type: str, eventInitDict: SubmitEventInit | None = {}) -> SubmitEvent: ...
     submitter: HTMLElement | None
 
 class FormDataEvent(Event):
-    @classmethod
-    def new(self, type: str, eventInitDict: FormDataEventInit) -> FormDataEvent: ...
     formData: FormData
 
 class HashChangeEvent(Event):
-    @classmethod
-    def new(self, type: str, eventInitDict: HashChangeEventInit | None = {}) -> HashChangeEvent: ...
     oldURL: USVString
     newURL: USVString
 
 class PopStateEvent(Event):
-    @classmethod
-    def new(self, type: str, eventInitDict: PopStateEventInit | None = {}) -> PopStateEvent: ...
     state: Any
 
 class StorageEvent(Event):
-    @classmethod
-    def new(self, type: str, eventInitDict: StorageEventInit | None = {}) -> StorageEvent: ...
     key: str | None
     oldValue: str | None
     newValue: str | None
@@ -265,8 +219,6 @@ class StorageEvent(Event):
     def initStorageEvent(self, type: str, bubbles: bool | None = False, cancelable: bool | None = False, key: str | None = None, oldValue: str | None = None, newValue: str | None = None, url: USVString | None = "", storageArea: Storage | None = None) -> None: ...
 
 class MessageEvent(Event):
-    @classmethod
-    def new(self, type: str, eventInitDict: MessageEventInit | None = {}) -> MessageEvent: ...
     data: Any
     origin: USVString
     lastEventId: str
@@ -400,7 +352,7 @@ class Element(Node, InnerHTML, Region, GeometryUtils, ParentNode, NonDocumentTyp
     def insertAdjacentText(self, where: str, data: str) -> None: ...
     editContext: EditContext | None
     elementTiming: str
-    def requestFullscreen(self, options: FullscreenOptions | None = {}) -> Awaitable[None]: ...
+    def requestFullscreen(self, options: FullscreenOptions | None = {}) -> None: ...
     onfullscreenchange: EventHandler
     onfullscreenerror: EventHandler
     def setPointerCapture(self, pointerId: int) -> None: ...
@@ -423,16 +375,12 @@ class DOMTokenList:
     value: str
 
 class DOMRect(DOMRectReadOnly):
-    @classmethod
-    def new(self, x: float | None = 0, y: float | None = 0, width: float | None = 0, height: float | None = 0) -> DOMRect: ...
     x: float
     y: float
     width: float
     height: float
 
 class DOMRectReadOnly:
-    @classmethod
-    def new(self, x: float | None = 0, y: float | None = 0, width: float | None = 0, height: float | None = 0) -> DOMRectReadOnly: ...
     x: float
     y: float
     width: float
@@ -677,8 +625,6 @@ class XPathEvaluatorBase:
     def evaluate(self, expression: str, contextNode: Node, resolver: XPathNSResolver | None = None, type: int | None = 0, result: XPathResult | None = None) -> XPathResult: ...
 
 class Document(Node, FontFaceSource, GeometryUtils, NonElementParentNode, DocumentOrShadowRoot, ParentNode, XPathEvaluatorBase, GlobalEventHandlers):
-    @classmethod
-    def new(self) -> Document: ...
     rootElement: SVGSVGElement | None
     namedFlows: NamedFlowMap
     def startViewTransition(self, callback: UpdateCallback | None = None) -> ViewTransition: ...
@@ -718,7 +664,7 @@ class Document(Node, FontFaceSource, GeometryUtils, NonElementParentNode, Docume
     def measureText(self, text: str, styleMap: StylePropertyMapReadOnly) -> FontMetrics: ...
     fullscreenEnabled: bool
     fullscreen: bool
-    def exitFullscreen(self) -> Awaitable[None]: ...
+    def exitFullscreen(self) -> None: ...
     onfullscreenchange: EventHandler
     onfullscreenerror: EventHandler
     location: Location | None
@@ -775,7 +721,7 @@ class Document(Node, FontFaceSource, GeometryUtils, NonElementParentNode, Docume
     wasDiscarded: bool
     permissionsPolicy: PermissionsPolicy
     pictureInPictureEnabled: bool
-    def exitPictureInPicture(self) -> Awaitable[None]: ...
+    def exitPictureInPicture(self) -> None: ...
     onpointerlockchange: EventHandler
     onpointerlockerror: EventHandler
     def exitPointerLock(self) -> None: ...
@@ -783,17 +729,15 @@ class Document(Node, FontFaceSource, GeometryUtils, NonElementParentNode, Docume
     onprerenderingchange: EventHandler
     fragmentDirective: FragmentDirective
     def getSelection(self) -> Selection | None: ...
-    def hasStorageAccess(self) -> Awaitable[bool]: ...
-    def requestStorageAccess(self) -> Awaitable[None]: ...
+    def hasStorageAccess(self) -> bool: ...
+    def requestStorageAccess(self) -> None: ...
     timeline: DocumentTimeline
 
 class DocumentFragment(Node, NonElementParentNode, ParentNode):
-    @classmethod
-    def new(self) -> DocumentFragment: ...
+    ...
+    ...
 
 class HTMLElement(Element, ElementCSSInlineStyle, GlobalEventHandlers, ElementContentEditable, HTMLOrSVGElement):
-    @classmethod
-    def new(self) -> HTMLElement: ...
     offsetParent: Element | None
     offsetTop: int
     offsetLeft: int
@@ -816,32 +760,22 @@ class HTMLElement(Element, ElementCSSInlineStyle, GlobalEventHandlers, ElementCo
     def attachInternals(self) -> ElementInternals: ...
 
 class HTMLDivElement(HTMLElement):
-    @classmethod
-    def new(self) -> HTMLDivElement: ...
     align: str
 
 class HTMLSpanElement(HTMLElement):
-    @classmethod
-    def new(self) -> HTMLSpanElement: ...
+    ...
+    ...
 
 class HTMLParagraphElement(HTMLElement):
-    @classmethod
-    def new(self) -> HTMLParagraphElement: ...
     align: str
 
 class HTMLHeadingElement(HTMLElement):
-    @classmethod
-    def new(self) -> HTMLHeadingElement: ...
     align: str
 
 class HTMLBRElement(HTMLElement):
-    @classmethod
-    def new(self) -> HTMLBRElement: ...
     clear: str
 
 class HTMLHRElement(HTMLElement):
-    @classmethod
-    def new(self) -> HTMLHRElement: ...
     align: str
     color: str
     noShade: bool
@@ -849,45 +783,31 @@ class HTMLHRElement(HTMLElement):
     width: str
 
 class HTMLPreElement(HTMLElement):
-    @classmethod
-    def new(self) -> HTMLPreElement: ...
     width: int
 
 class HTMLQuoteElement(HTMLElement):
-    @classmethod
-    def new(self) -> HTMLQuoteElement: ...
     cite: USVString
 
 class HTMLLabelElement(HTMLElement):
-    @classmethod
-    def new(self) -> HTMLLabelElement: ...
     form: HTMLFormElement | None
     htmlFor: str
     control: HTMLElement | None
 
 class HTMLLIElement(HTMLElement):
-    @classmethod
-    def new(self) -> HTMLLIElement: ...
     value: int
     type: str
 
 class HTMLUListElement(HTMLElement):
-    @classmethod
-    def new(self) -> HTMLUListElement: ...
     compact: bool
     type: str
 
 class HTMLOListElement(HTMLElement):
-    @classmethod
-    def new(self) -> HTMLOListElement: ...
     reversed: bool
     start: int
     type: str
     compact: bool
 
 class HTMLTableElement(HTMLElement):
-    @classmethod
-    def new(self) -> HTMLTableElement: ...
     caption: HTMLTableCaptionElement | None
     def createCaption(self) -> HTMLTableCaptionElement: ...
     def deleteCaption(self) -> None: ...
@@ -913,8 +833,6 @@ class HTMLTableElement(HTMLElement):
     cellSpacing: str
 
 class HTMLTableRowElement(HTMLElement):
-    @classmethod
-    def new(self) -> HTMLTableRowElement: ...
     rowIndex: int
     sectionRowIndex: int
     cells: HTMLCollection
@@ -927,8 +845,6 @@ class HTMLTableRowElement(HTMLElement):
     bgColor: str
 
 class HTMLTableCellElement(HTMLElement):
-    @classmethod
-    def new(self) -> HTMLTableCellElement: ...
     colSpan: int
     rowSpan: int
     headers: str
@@ -946,8 +862,6 @@ class HTMLTableCellElement(HTMLElement):
     bgColor: str
 
 class HTMLTableSectionElement(HTMLElement):
-    @classmethod
-    def new(self) -> HTMLTableSectionElement: ...
     rows: HTMLCollection
     def insertRow(self, index: int | None = -1) -> HTMLTableRowElement: ...
     def deleteRow(self, index: int) -> None: ...
@@ -957,8 +871,6 @@ class HTMLTableSectionElement(HTMLElement):
     vAlign: str
 
 class HTMLFormElement(HTMLElement):
-    @classmethod
-    def new(self) -> HTMLFormElement: ...
     acceptCharset: str
     action: USVString
     autocomplete: str
@@ -979,8 +891,6 @@ class HTMLFormElement(HTMLElement):
     def reportValidity(self) -> bool: ...
 
 class HTMLInputElement(HTMLElement):
-    @classmethod
-    def new(self) -> HTMLInputElement: ...
     webkitdirectory: bool
     webkitEntries: Sequence[FileSystemEntry]
     capture: str
@@ -1043,8 +953,6 @@ class HTMLInputElement(HTMLElement):
     useMap: str
 
 class HTMLTextAreaElement(HTMLElement):
-    @classmethod
-    def new(self) -> HTMLTextAreaElement: ...
     autocomplete: str
     cols: int
     dirName: str
@@ -1080,8 +988,6 @@ class HTMLTextAreaElement(HTMLElement):
     def setSelectionRange(self, start: int, end: int, direction: str | None = None) -> None: ...
 
 class HTMLSelectElement(HTMLElement):
-    @classmethod
-    def new(self) -> HTMLSelectElement: ...
     autocomplete: str
     disabled: bool
     form: HTMLFormElement | None
@@ -1110,8 +1016,6 @@ class HTMLSelectElement(HTMLElement):
     labels: NodeList
 
 class HTMLOptionElement(HTMLElement):
-    @classmethod
-    def new(self) -> HTMLOptionElement: ...
     """ # GIgnoredStmt
     LegacyFactoryFunction=Option(optional DOMString text = "", optional DOMString value, optional boolean defaultSelected = False, optional boolean selected = False)
     """
@@ -1125,14 +1029,10 @@ class HTMLOptionElement(HTMLElement):
     index: int
 
 class HTMLOptGroupElement(HTMLElement):
-    @classmethod
-    def new(self) -> HTMLOptGroupElement: ...
     disabled: bool
     label: str
 
 class HTMLButtonElement(HTMLElement):
-    @classmethod
-    def new(self) -> HTMLButtonElement: ...
     disabled: bool
     form: HTMLFormElement | None
     formAction: USVString
@@ -1152,8 +1052,6 @@ class HTMLButtonElement(HTMLElement):
     labels: NodeList
 
 class HTMLAnchorElement(HTMLElement, HTMLAttributionSrcElementUtils, HTMLHyperlinkElementUtils):
-    @classmethod
-    def new(self) -> HTMLAnchorElement: ...
     target: str
     download: str
     ping: USVString
@@ -1171,8 +1069,6 @@ class HTMLAnchorElement(HTMLElement, HTMLAttributionSrcElementUtils, HTMLHyperli
     attributionSourceId: int
 
 class HTMLImageElement(HTMLElement, HTMLAttributionSrcElementUtils):
-    @classmethod
-    def new(self) -> HTMLImageElement: ...
     x: int
     y: int
     """ # GIgnoredStmt
@@ -1194,7 +1090,7 @@ class HTMLImageElement(HTMLElement, HTMLAttributionSrcElementUtils):
     referrerPolicy: str
     decoding: str
     loading: str
-    def decode(self) -> Awaitable[None]: ...
+    def decode(self) -> None: ...
     name: str
     lowsrc: USVString
     align: str
@@ -1205,8 +1101,6 @@ class HTMLImageElement(HTMLElement, HTMLAttributionSrcElementUtils):
     fetchPriority: str
 
 class HTMLCanvasElement(HTMLElement):
-    @classmethod
-    def new(self) -> HTMLCanvasElement: ...
     width: int
     height: int
     def getContext(self, contextId: str, options: Any | None = None) -> RenderingContext | None: ...
@@ -1216,8 +1110,6 @@ class HTMLCanvasElement(HTMLElement):
     def captureStream(self, frameRequestRate: float | None = None) -> MediaStream: ...
 
 class HTMLVideoElement(HTMLMediaElement):
-    @classmethod
-    def new(self) -> HTMLVideoElement: ...
     width: int
     height: int
     videoWidth: int
@@ -1225,7 +1117,7 @@ class HTMLVideoElement(HTMLMediaElement):
     poster: USVString
     playsInline: bool
     def getVideoPlaybackQuality(self) -> VideoPlaybackQuality: ...
-    def requestPictureInPicture(self) -> Awaitable[PictureInPictureWindow]: ...
+    def requestPictureInPicture(self) -> PictureInPictureWindow: ...
     onenterpictureinpicture: EventHandler
     onleavepictureinpicture: EventHandler
     disablePictureInPicture: bool
@@ -1233,15 +1125,11 @@ class HTMLVideoElement(HTMLMediaElement):
     def cancelVideoFrameCallback(self, handle: int) -> None: ...
 
 class HTMLAudioElement(HTMLMediaElement):
-    @classmethod
-    def new(self) -> HTMLAudioElement: ...
     """ # GIgnoredStmt
     LegacyFactoryFunction=Audio(optional DOMString src)
     """
 
 class HTMLSourceElement(HTMLElement):
-    @classmethod
-    def new(self) -> HTMLSourceElement: ...
     src: USVString
     type: str
     srcset: USVString
@@ -1252,11 +1140,11 @@ class HTMLSourceElement(HTMLElement):
 
 class HTMLMediaElement(HTMLElement):
     sinkId: str
-    def setSinkId(self, sinkId: str) -> Awaitable[None]: ...
+    def setSinkId(self, sinkId: str) -> None: ...
     mediaKeys: MediaKeys | None
     onencrypted: EventHandler
     onwaitingforkey: EventHandler
-    def setMediaKeys(self, mediaKeys: MediaKeys | None) -> Awaitable[None]: ...
+    def setMediaKeys(self, mediaKeys: MediaKeys | None) -> None: ...
     error: MediaError | None
     src: USVString
     srcObject: MediaProvider | None
@@ -1291,7 +1179,7 @@ class HTMLMediaElement(HTMLElement):
     ended: bool
     autoplay: bool
     loop: bool
-    def play(self) -> Awaitable[None]: ...
+    def play(self) -> None: ...
     def pause(self) -> None: ...
     controls: bool
     volume: float
@@ -1306,8 +1194,6 @@ class HTMLMediaElement(HTMLElement):
     disableRemotePlayback: bool
 
 class HTMLIFrameElement(HTMLElement):
-    @classmethod
-    def new(self) -> HTMLIFrameElement: ...
     csp: str
     src: USVString
     srcdoc: str
@@ -1332,8 +1218,6 @@ class HTMLIFrameElement(HTMLElement):
     fetchPriority: str
 
 class HTMLScriptElement(HTMLElement, HTMLAttributionSrcElementUtils):
-    @classmethod
-    def new(self) -> HTMLScriptElement: ...
     src: USVString
     type: str
     noModule: bool
@@ -1350,16 +1234,12 @@ class HTMLScriptElement(HTMLElement, HTMLAttributionSrcElementUtils):
     fetchPriority: str
 
 class HTMLStyleElement(HTMLElement, LinkStyle):
-    @classmethod
-    def new(self) -> HTMLStyleElement: ...
     disabled: bool
     media: str
     blocking: DOMTokenList
     type: str
 
 class HTMLLinkElement(HTMLElement, LinkStyle):
-    @classmethod
-    def new(self) -> HTMLLinkElement: ...
     href: USVString
     crossOrigin: str | None
     rel: str
@@ -1380,8 +1260,6 @@ class HTMLLinkElement(HTMLElement, LinkStyle):
     fetchPriority: str
 
 class HTMLMetaElement(HTMLElement):
-    @classmethod
-    def new(self) -> HTMLMetaElement: ...
     name: str
     httpEquiv: str
     content: str
@@ -1389,13 +1267,9 @@ class HTMLMetaElement(HTMLElement):
     scheme: str
 
 class HTMLTemplateElement(HTMLElement):
-    @classmethod
-    def new(self) -> HTMLTemplateElement: ...
     content: DocumentFragment
 
 class HTMLDialogElement(HTMLElement):
-    @classmethod
-    def new(self) -> HTMLDialogElement: ...
     open: bool
     returnValue: str
     def show(self) -> None: ...
@@ -1440,11 +1314,11 @@ class Window(EventTarget, GlobalEventHandlers, WindowEventHandlers, WindowOrWork
     outerHeight: int
     devicePixelRatio: float
     def getComputedStyle(self, elt: Element, pseudoElt: CSSOMString | None = None) -> CSSStyleDeclaration: ...
-    def getDigitalGoodsService(self, serviceProvider: str) -> Awaitable[DigitalGoodsService]: ...
+    def getDigitalGoodsService(self, serviceProvider: str) -> DigitalGoodsService: ...
     event: Event | None
-    def showOpenFilePicker(self, options: OpenFilePickerOptions | None = {}) -> Awaitable[Sequence[FileSystemFileHandle]]: ...
-    def showSaveFilePicker(self, options: SaveFilePickerOptions | None = {}) -> Awaitable[FileSystemFileHandle]: ...
-    def showDirectoryPicker(self, options: DirectoryPickerOptions | None = {}) -> Awaitable[FileSystemDirectoryHandle]: ...
+    def showOpenFilePicker(self, options: OpenFilePickerOptions | None = {}) -> Sequence[FileSystemFileHandle]: ...
+    def showSaveFilePicker(self, options: SaveFilePickerOptions | None = {}) -> FileSystemFileHandle: ...
+    def showDirectoryPicker(self, options: DirectoryPickerOptions | None = {}) -> FileSystemDirectoryHandle: ...
     window: WindowProxy
     self: WindowProxy
     document: Document
@@ -1488,7 +1362,7 @@ class Window(EventTarget, GlobalEventHandlers, WindowEventHandlers, WindowOrWork
     def captureEvents(self) -> None: ...
     def releaseEvents(self) -> None: ...
     external: External
-    def queryLocalFonts(self, options: QueryOptions | None = {}) -> Awaitable[Sequence[FontData]]: ...
+    def queryLocalFonts(self, options: QueryOptions | None = {}) -> Sequence[FontData]: ...
     onappinstalled: EventHandler
     onbeforeinstallprompt: EventHandler
     navigation: Navigation
@@ -1502,7 +1376,7 @@ class Window(EventTarget, GlobalEventHandlers, WindowEventHandlers, WindowOrWork
     def getSelection(self) -> Selection | None: ...
     speechSynthesis: SpeechSynthesis
     launchQueue: LaunchQueue
-    def getScreenDetails(self) -> Awaitable[ScreenDetails]: ...
+    def getScreenDetails(self) -> ScreenDetails: ...
 
 class Location:
     href: USVString
@@ -1536,19 +1410,19 @@ class Navigator(NavigatorBadge, NavigatorDeviceMemory, NavigatorID, NavigatorLan
     def getAutoplayPolicy(self, element: HTMLMediaElement) -> AutoplayPolicy: ...
     @overload
     def getAutoplayPolicy(self, context: AudioContext) -> AutoplayPolicy: ...
-    def setClientBadge(self, contents: int | None = None) -> Awaitable[None]: ...
-    def clearClientBadge(self) -> Awaitable[None]: ...
-    def getBattery(self) -> Awaitable[BatteryManager]: ...
+    def setClientBadge(self, contents: int | None = None) -> None: ...
+    def clearClientBadge(self) -> None: ...
+    def getBattery(self) -> BatteryManager: ...
     def sendBeacon(self, url: USVString, data: BodyInit | None = None) -> bool: ...
     clipboard: Clipboard
     contacts: ContactsManager
     credentials: CredentialsContainer
     devicePosture: DevicePosture
-    def requestMediaKeySystemAccess(self, keySystem: str, supportedConfigurations: Sequence[MediaKeySystemConfiguration]) -> Awaitable[MediaKeySystemAccess]: ...
+    def requestMediaKeySystemAccess(self, keySystem: str, supportedConfigurations: Sequence[MediaKeySystemConfiguration]) -> MediaKeySystemAccess: ...
     epubReadingSystem: EpubReadingSystem
     def getGamepads(self) -> Sequence[Gamepad | None]: ...
     geolocation: Geolocation
-    def getInstalledRelatedApps(self) -> Awaitable[Sequence[RelatedApplication]]: ...
+    def getInstalledRelatedApps(self) -> Sequence[RelatedApplication]: ...
     userActivation: UserActivation
     ink: Ink
     scheduling: Scheduling
@@ -1566,10 +1440,10 @@ class Navigator(NavigatorBadge, NavigatorDeviceMemory, NavigatorID, NavigatorLan
     def vibrate(self, pattern: VibratePattern) -> bool: ...
     virtualKeyboard: VirtualKeyboard
     bluetooth: Bluetooth
-    def share(self, data: ShareData | None = {}) -> Awaitable[None]: ...
+    def share(self, data: ShareData | None = {}) -> None: ...
     def canShare(self, data: ShareData | None = {}) -> bool: ...
     hid: HID
-    def requestMIDIAccess(self, options: MIDIOptions | None = {}) -> Awaitable[MIDIAccess]: ...
+    def requestMIDIAccess(self, options: MIDIOptions | None = {}) -> MIDIAccess: ...
     usb: USB
     xr: XRSystem
     windowControlsOverlay: WindowControlsOverlay
@@ -1601,10 +1475,10 @@ class ConsoleNamespace:
     def timeEnd(self, label: str | None = "default") -> None: ...
 
 class Clipboard(EventTarget):
-    def read(self) -> Awaitable[ClipboardItems]: ...
-    def readText(self) -> Awaitable[str]: ...
-    def write(self, data: ClipboardItems) -> Awaitable[None]: ...
-    def writeText(self, data: str) -> Awaitable[None]: ...
+    def read(self) -> ClipboardItems: ...
+    def readText(self) -> str: ...
+    def write(self, data: ClipboardItems) -> None: ...
+    def writeText(self, data: str) -> None: ...
 
 class Geolocation:
     def getCurrentPosition(self, successCallback: PositionCallback, errorCallback: PositionErrorCallback | None = None, options: PositionOptions | None = {}) -> None: ...
@@ -2069,13 +1943,11 @@ class CSSStyleDeclaration:
     zoom: str
 
 class CSSStyleSheet(StyleSheet):
-    @classmethod
-    def new(self, options: CSSStyleSheetInit | None = {}) -> CSSStyleSheet: ...
     ownerRule: CSSRule | None
     cssRules: CSSRuleList
     def insertRule(self, rule: CSSOMString, index: int | None = 0) -> int: ...
     def deleteRule(self, index: int) -> None: ...
-    def replace(self, text: USVString) -> Awaitable[CSSStyleSheet]: ...
+    def replace(self, text: USVString) -> CSSStyleSheet: ...
     def replaceSync(self, text: USVString) -> None: ...
     rules: CSSRuleList
     def addRule(self, selector: str | None = "undefined", style: str | None = "undefined", index: int | None = None) -> int: ...
@@ -2098,8 +1970,6 @@ class MediaQueryList(EventTarget):
     onchange: EventHandler
 
 class File(Blob):
-    @classmethod
-    def new(self, fileBits: Sequence[BlobPart], fileName: USVString, options: FilePropertyBag | None = {}) -> File: ...
     name: str
     lastModified: int
     webkitRelativePath: USVString
@@ -2108,18 +1978,14 @@ class FileList:
     length: int
 
 class Blob:
-    @classmethod
-    def new(self, blobParts: Sequence[BlobPart] | None = None, options: BlobPropertyBag | None = {}) -> Blob: ...
     size: int
     type: str
     def slice(self, start: int | None = None, end: int | None = None, contentType: str | None = None) -> Blob: ...
     def stream(self) -> ReadableStream: ...
-    def text(self) -> Awaitable[USVString]: ...
-    def arrayBuffer(self) -> Awaitable[ArrayBuffer]: ...
+    def text(self) -> USVString: ...
+    def arrayBuffer(self) -> ArrayBuffer: ...
 
 class FileReader(EventTarget):
-    @classmethod
-    def new(self) -> FileReader: ...
     def readAsArrayBuffer(self, blob: Blob) -> None: ...
     def readAsBinaryString(self, blob: Blob) -> None: ...
     def readAsText(self, blob: Blob, encoding: str | None = None) -> None: ...
@@ -2139,8 +2005,6 @@ class FileReader(EventTarget):
     onloadend: EventHandler
 
 class DataTransfer:
-    @classmethod
-    def new(self) -> DataTransfer: ...
     dropEffect: str
     effectAllowed: str
     items: DataTransferItemList
@@ -2153,7 +2017,7 @@ class DataTransfer:
 
 class DataTransferItem:
     def webkitGetAsEntry(self) -> FileSystemEntry | None: ...
-    def getAsFileSystemHandle(self) -> Awaitable[FileSystemHandle | None]: ...
+    def getAsFileSystemHandle(self) -> FileSystemHandle | None: ...
     kind: str
     type: str
     def getAsString(self, callback: FunctionStringCallback | None) -> None: ...
@@ -2169,8 +2033,6 @@ class DataTransferItemList:
     def clear(self) -> None: ...
 
 class Range(AbstractRange):
-    @classmethod
-    def new(self) -> Range: ...
     def createContextualFragment(self, fragment: str) -> DocumentFragment: ...
     def getClientRects(self) -> DOMRectList: ...
     def getBoundingClientRect(self) -> DOMRect: ...
@@ -2226,8 +2088,6 @@ class Selection:
     def containsNode(self, node: Node, allowPartialContainment: bool | None = False) -> bool: ...
 
 class MutationObserver:
-    @classmethod
-    def new(self, callback: MutationCallback) -> MutationObserver: ...
     def observe(self, target: Node, options: MutationObserverInit | None = {}) -> None: ...
     def disconnect(self) -> None: ...
     def takeRecords(self) -> Sequence[MutationRecord]: ...
@@ -2244,8 +2104,6 @@ class MutationRecord:
     oldValue: str | None
 
 class IntersectionObserver:
-    @classmethod
-    def new(self, callback: IntersectionObserverCallback, options: IntersectionObserverInit | None = {}) -> IntersectionObserver: ...
     root: Element | Document | None
     rootMargin: str
     thresholds: Sequence[float]
@@ -2255,8 +2113,6 @@ class IntersectionObserver:
     def takeRecords(self) -> Sequence[IntersectionObserverEntry]: ...
 
 class IntersectionObserverEntry:
-    @classmethod
-    def new(self, intersectionObserverEntryInit: IntersectionObserverEntryInit) -> IntersectionObserverEntry: ...
     time: DOMHighResTimeStamp
     rootBounds: DOMRectReadOnly | None
     boundingClientRect: DOMRectReadOnly
@@ -2266,8 +2122,6 @@ class IntersectionObserverEntry:
     target: Element
 
 class ResizeObserver:
-    @classmethod
-    def new(self, callback: ResizeObserverCallback) -> ResizeObserver: ...
     def observe(self, target: Element, options: ResizeObserverOptions | None = {}) -> None: ...
     def unobserve(self, target: Element) -> None: ...
     def disconnect(self) -> None: ...
@@ -2284,25 +2138,15 @@ class CanvasRenderingContext2D(CanvasState, CanvasTransform, CanvasCompositing, 
     def getContextAttributes(self) -> CanvasRenderingContext2DSettings: ...
 
 class ImageData:
-    @overload
-    @classmethod
-    def new(self, sw: int, sh: int, settings: ImageDataSettings | None = {}) -> ImageData: ...
-    @overload
-    @classmethod
-    def new(self, data: Uint8ClampedArray, sw: int, sh: int | None = None, settings: ImageDataSettings | None = {}) -> ImageData: ...
     width: int
     height: int
     data: Uint8ClampedArray
     colorSpace: PredefinedColorSpace
 
 class Path2D(CanvasPath):
-    @classmethod
-    def new(self, path: Path2D | str | None = None) -> Path2D: ...
     def addPath(self, path: Path2D, transform: DOMMatrix2DInit | None = {}) -> None: ...
 
 class URL:
-    @classmethod
-    def new(self, url: USVString, base: USVString | None = None) -> URL: ...
     href: USVString
     origin: USVString
     protocol: USVString
@@ -2318,8 +2162,6 @@ class URL:
     def toJSON(self) -> USVString: ...
 
 class URLSearchParams:
-    @classmethod
-    def new(self, init: Sequence[Sequence[USVString]] | USVString | USVString | None = "") -> URLSearchParams: ...
     def append(self, name: USVString, value: USVString) -> None: ...
     def delete(self, name: USVString) -> None: ...
     def get(self, name: USVString) -> USVString | None: ...
@@ -2329,8 +2171,6 @@ class URLSearchParams:
     def sort(self) -> None: ...
 
 class Headers:
-    @classmethod
-    def new(self, init: HeadersInit | None = None) -> Headers: ...
     def append(self, name: ByteString, value: ByteString) -> None: ...
     def delete(self, name: ByteString) -> None: ...
     def get(self, name: ByteString) -> ByteString | None: ...
@@ -2338,8 +2178,6 @@ class Headers:
     def set(self, name: ByteString, value: ByteString) -> None: ...
 
 class Request(Body):
-    @classmethod
-    def new(self, input: RequestInfo, init: RequestInit | None = {}) -> Request: ...
     method: ByteString
     url: USVString
     headers: Headers
@@ -2359,8 +2197,6 @@ class Request(Body):
     def clone(self) -> Request: ...
 
 class Response(Body):
-    @classmethod
-    def new(self, body: BodyInit | None = None, init: ResponseInit | None = {}) -> Response: ...
     type: ResponseType
     url: USVString
     redirected: bool
@@ -2373,18 +2209,12 @@ class Response(Body):
 class DOMStringMap: ...
 
 class DOMParser:
-    @classmethod
-    def new(self) -> DOMParser: ...
     def parseFromString(self, string: str, type: DOMParserSupportedType) -> Document: ...
 
 class XMLSerializer:
-    @classmethod
-    def new(self) -> XMLSerializer: ...
     def serializeToString(self, root: Node) -> str: ...
 
 class FormData:
-    @classmethod
-    def new(self, form: HTMLFormElement | None = None) -> FormData: ...
     @overload
     def append(self, name: USVString, value: USVString) -> None: ...
     @overload
@@ -2399,8 +2229,6 @@ class FormData:
     def set(self, name: USVString, blobValue: Blob, filename: USVString | None = None) -> None: ...
 
 class AbortController:
-    @classmethod
-    def new(self) -> AbortController: ...
     signal: AbortSignal
     def abort(self, reason: Any | None = None) -> None: ...
 

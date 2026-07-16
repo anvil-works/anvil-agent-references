@@ -13,10 +13,16 @@ Create the model in a client Module so both client and server code can import it
 from datetime import date
 
 import anvil.server
+import anvil.users
 from anvil.tables import app_tables
 
 
-class Task(app_tables.tasks.Row, buffered=True):
+class Task(
+    app_tables.tasks.Row,
+    buffered=True,
+    client_creatable=True,
+    client_updatable=True,
+):
     @property
     def is_done(self):
         return self["status"] == "done"
@@ -28,6 +34,20 @@ class Task(app_tables.tasks.Row, buffered=True):
     @anvil.server.server_method(require_user=True)
     def mark_done(self):
         raise NotImplementedError
+
+    @classmethod
+    def _do_create(cls, values, from_client):
+        if from_client:
+            user = anvil.users.get_user()
+            if user is None:
+                raise PermissionError("Sign in to create tasks")
+            values["owner"] = user
+        return super()._do_create(values, from_client)
+
+    def _do_update(self, updates, from_client):
+        if from_client and self["owner"] != anvil.users.get_user():
+            raise PermissionError("This task belongs to another user")
+        return super()._do_update(updates, from_client)
 
     @anvil.server.server_method(require_user=True)
     @classmethod
@@ -66,6 +86,8 @@ import TaskModels
 class Task(TaskModels.Task):
     @anvil.server.server_method(require_user=True)
     def mark_done(self):
+        if self["owner"] != anvil.users.get_user():
+            raise PermissionError("This task belongs to another user")
         self["status"] = "done"
         self["updated_at"] = datetime.now()
 
@@ -75,6 +97,10 @@ class Task(TaskModels.Task):
         user = anvil.users.get_user()
         return app_tables.tasks.search(owner=user)
 ```
+
+Keep the table at `client: none`. The model's `client_*` options route permitted
+operations through its server-side `_do_*` hooks; they do not require table-level
+client write access.
 
 ## Forms Bind To Rows
 
@@ -130,7 +156,7 @@ with task.buffer_changes():
         task.save()
 ```
 
-If the model class uses `buffered=True`, rows already buffer changes by default; Save should call `row.save()` and Cancel should call `row.reset()` or discard the draft.
+If the model class uses `buffered=True`, rows already buffer changes by default; Save should call `row.save()` and Cancel should call `row.reset()` or discard the draft. The model's `_do_create()` and `_do_update()` hooks above validate client saves on the server.
 
 ## Keep Server Callables For Non-Model Work
 
