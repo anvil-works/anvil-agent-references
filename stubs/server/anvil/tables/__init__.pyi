@@ -169,8 +169,19 @@ class Table(Generic[_T]):
 
         [Anvil Docs](https://anvil.works/docs/data-tables/data-tables-in-code)"""
         ...
-    def search(self, *args: Any, **kwargs: Any) -> SearchIterator[_T]:
+    def search(self, *query_expressions: Any, **column_filters: Any) -> SearchIterator[_T]:
         """Search for rows matching the given criteria.
+
+        Pass query expressions such as ``anvil.tables.query.fetch_only(...)``
+        as positional arguments. Keyword arguments filter rows by column.
+        ``fetch_only()`` controls which data is loaded; it does not create a
+        column-restricted client view. For that, pass ``query.only_cols(...)``
+        to a ``client_*`` view method.
+
+        Example::
+
+            from anvil.tables import query as q
+            app_tables.employees.search(q.fetch_only("name", "email"), role="Engineer")
 
         [Anvil Docs](https://anvil.works/docs/data-tables/data-tables-in-code)"""
         ...
@@ -213,18 +224,47 @@ class Table(Generic[_T]):
 
         [Anvil Docs](https://anvil.works/docs/data-tables/export-csv)"""
         ...
-    def client_readable(self, *args: Any, **kwargs: Any) -> "Table[_T]":
+    def client_readable(self, *view_restrictions: Any, **row_restrictions: Any) -> "Table[_T]":
         """Return a view of this table that clients can read.
 
-        [Anvil Docs](https://anvil.works/docs/data-tables/data-security)"""
-        ...
-    def client_writable(self, *args: Any, **kwargs: Any) -> "Table[_T]":
-        """Return a view of this table that clients can write to.
+        Pass ``anvil.tables.query.only_cols(...)`` directly as a positional
+        argument to restrict which columns the client can access. Keyword
+        arguments restrict which rows the view contains. Return this table
+        view itself when exposing it to clients; ``search()`` returns rows,
+        not the view.
+
+        Example::
+
+            from anvil.tables import query as q
+            app_tables.employees.client_readable(q.only_cols("name", "email"))
 
         [Anvil Docs](https://anvil.works/docs/data-tables/data-security)"""
         ...
-    def client_writable_cascade(self, *args: Any, **kwargs: Any) -> "Table[_T]":
+    def client_writable(self, *view_restrictions: Any, **row_restrictions: Any) -> "Table[_T]":
+        """Return a view of this table that clients can write to.
+
+        Pass ``anvil.tables.query.only_cols(...)`` directly as a positional
+        argument to restrict which columns the client can access. Keyword
+        arguments restrict which rows the view contains.
+
+        Example::
+
+            from anvil.tables import query as q
+            app_tables.employees.client_writable(q.only_cols("name", "email"))
+
+        [Anvil Docs](https://anvil.works/docs/data-tables/data-security)"""
+        ...
+    def client_writable_cascade(self, *view_restrictions: Any, **row_restrictions: Any) -> "Table[_T]":
         """Return a view of this table that clients can write to, with cascading permissions.
+
+        Pass ``anvil.tables.query.only_cols(...)`` directly as a positional
+        argument to restrict which columns the client can access. Keyword
+        arguments restrict which rows the view contains.
+
+        Example::
+
+            from anvil.tables import query as q
+            app_tables.employees.client_writable_cascade(q.only_cols("name", "email"))
 
         [Anvil Docs](https://anvil.works/docs/data-tables/data-security)"""
         ...
