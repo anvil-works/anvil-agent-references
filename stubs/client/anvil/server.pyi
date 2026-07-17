@@ -7,7 +7,6 @@
 
 from typing import Any, Callable, TypeVar, overload, Literal
 from typing_extensions import ParamSpec
-from contextlib import contextmanager
 from anvil.tables import Row
 
 _T = TypeVar("_T")
@@ -355,7 +354,7 @@ def list_background_tasks(all_environments: bool = False) -> list[BackgroundTask
 class _NoLoadingIndicator:
     """Context manager to suppress the loading indicator."""
 
-    def __enter__(self) -> None: ...
+    def __enter__(self) -> "_NoLoadingIndicator": ...
     def __exit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None: ...
 
 
@@ -363,22 +362,39 @@ no_loading_indicator: _NoLoadingIndicator
 """Use `with anvil.server.no_loading_indicator:` to suppress the loading indicator when making server calls."""
 
 
-@contextmanager
-def loading_indicator(
-    *,
-    component_name: Any | None = None,
-    min_height: int | None = None,
-) -> Any:
-    """Create a loading indicator manually.
+class _LoadingIndicator:
+    """A loading indicator that can be controlled manually or used as a context manager.
 
     By default, a loading indicator is displayed when your app is retrieving data.
-    This context manager allows you to create loading indicators manually.
 
-    Args:
-        component_name: Optionally give the component or container that the loading
-            indicator should overlay.
-        min_height: Optionally set the minimum height of the loading indicator."""
-    ...
+    [Anvil Docs](https://anvil.works/docs/client/adding-ui-elements/loading-indicator)"""
+
+    def __call__(
+        self,
+        component: Any | None = None,
+        /,
+        *,
+        min_height: str | int | float | None = None,
+    ) -> "_LoadingIndicator":
+        """Create a loading indicator, optionally over a specific component."""
+        ...
+
+    def __enter__(self) -> "_LoadingIndicator": ...
+    def __exit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None: ...
+
+    def start(self) -> None:
+        """Start displaying the loading indicator."""
+        ...
+
+    def stop(self) -> None:
+        """Stop displaying the loading indicator."""
+        ...
+
+
+loading_indicator: _LoadingIndicator
+"""Create or control a loading indicator manually.
+
+[Anvil Docs](https://anvil.works/docs/client/adding-ui-elements/loading-indicator)"""
 
 
 # ============================================================================

@@ -7,7 +7,6 @@
 
 from typing import Any, Callable, TypeVar, overload, Literal
 from typing_extensions import ParamSpec
-from contextlib import contextmanager
 from anvil.tables import Row
 
 _T = TypeVar("_T")

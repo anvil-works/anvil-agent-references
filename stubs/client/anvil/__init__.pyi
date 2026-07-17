@@ -663,6 +663,12 @@ class Component:
         [Anvil Docs](https://anvil.works/docs/client/python/events)"""
         ...
 
+    def remove_from_parent(self) -> None:
+        """Remove this component from its parent container.
+
+        [Anvil Docs](https://anvil.works/docs/client/components)"""
+        ...
+
     def raise_event(self, event_name: _ComponentEvents | str, /, **event_args: Any) -> None:
         """Raise an event on this component.
 
@@ -683,13 +689,6 @@ class Container(Component):
 
     def add_component(self, component: Component, /, **layout_props: Any) -> None:
         """Add a component to this container.
-
-        [Anvil Docs](https://anvil.works/docs/client/components)"""
-        ...
-
-    @override
-    def remove_from_parent(self) -> None:
-        """Remove this container from its parent.
 
         [Anvil Docs](https://anvil.works/docs/client/components)"""
         ...
@@ -728,7 +727,7 @@ class Container(Component):
 class Label(Component):
     """A label for displaying text.
 
-    [Anvil Docs](https://anvil.works/docs/client/components/label)"""
+    [Anvil Docs](https://anvil.works/docs/client/components/basic#label)"""
 
     @property
     def visible(self) -> bool: ...
@@ -833,7 +832,7 @@ class Label(Component):
 class Link(Component):
     """A clickable link component.
 
-    [Anvil Docs](https://anvil.works/docs/client/components/link)"""
+    [Anvil Docs](https://anvil.works/docs/client/components/basic#link)"""
 
     @property
     def visible(self) -> bool: ...
@@ -943,7 +942,7 @@ class Link(Component):
 class Image(Component):
     """An image display component.
 
-    [Anvil Docs](https://anvil.works/docs/client/components/image)"""
+    [Anvil Docs](https://anvil.works/docs/client/components/basic#image)"""
 
     @property
     def visible(self) -> bool: ...
@@ -1055,7 +1054,7 @@ class Image(Component):
 class Spacer(Component):
     """A spacer component for layout.
 
-    [Anvil Docs](https://anvil.works/docs/client/components/spacer)"""
+    [Anvil Docs](https://anvil.works/docs/client/components/basic#spacer)"""
 
     @property
     def visible(self) -> bool: ...
@@ -1095,7 +1094,7 @@ class Spacer(Component):
 class RichText(Component):
     """A rich text display component.
 
-    [Anvil Docs](https://anvil.works/docs/client/components/richtext)"""
+    [Anvil Docs](https://anvil.works/docs/client/components/containers#richtext)"""
 
     @property
     def visible(self) -> bool: ...
@@ -1218,7 +1217,7 @@ class RichText(Component):
 class Button(Component):
     """A clickable button component.
 
-    [Anvil Docs](https://anvil.works/docs/client/components/button)"""
+    [Anvil Docs](https://anvil.works/docs/client/components/basic#button)"""
 
     @property
     def enabled(self) -> bool: ...
@@ -1338,7 +1337,7 @@ class Button(Component):
 class TextBox(Component):
     """A single-line text input component.
 
-    [Anvil Docs](https://anvil.works/docs/client/components/textbox)"""
+    [Anvil Docs](https://anvil.works/docs/client/components/basic#textbox)"""
 
     @property
     def enabled(self) -> bool: ...
@@ -1436,13 +1435,13 @@ class TextBox(Component):
     def focus(self) -> None:
         """Set focus to this text box.
 
-        [Anvil Docs](https://anvil.works/docs/client/components/textbox)"""
+        [Anvil Docs](https://anvil.works/docs/client/components/basic#textbox)"""
         ...
 
     def select(self) -> None:
         """Select all text in this text box.
 
-        [Anvil Docs](https://anvil.works/docs/client/components/textbox)"""
+        [Anvil Docs](https://anvil.works/docs/client/components/basic#textbox)"""
         ...
 
 
@@ -1475,7 +1474,7 @@ class TextBox(Component):
 class TextArea(Component):
     """A multi-line text input component.
 
-    [Anvil Docs](https://anvil.works/docs/client/components/textarea)"""
+    [Anvil Docs](https://anvil.works/docs/client/components/basic#textarea)"""
 
     @property
     def enabled(self) -> bool: ...
@@ -1573,13 +1572,13 @@ class TextArea(Component):
     def focus(self) -> None:
         """Set focus to this text area.
 
-        [Anvil Docs](https://anvil.works/docs/client/components/textarea)"""
+        [Anvil Docs](https://anvil.works/docs/client/components/basic#textarea)"""
         ...
 
     def select(self) -> None:
         """Select all text in this text area.
 
-        [Anvil Docs](https://anvil.works/docs/client/components/textarea)"""
+        [Anvil Docs](https://anvil.works/docs/client/components/basic#textarea)"""
         ...
 
 
@@ -1612,7 +1611,7 @@ class TextArea(Component):
 class CheckBox(Component):
     """A checkbox input component.
 
-    [Anvil Docs](https://anvil.works/docs/client/components/checkbox)"""
+    [Anvil Docs](https://anvil.works/docs/client/components/basic#checkbox)"""
 
     @property
     def enabled(self) -> bool: ...
@@ -1703,6 +1702,10 @@ class CheckBox(Component):
     @override
     def raise_event(self, event_name: _CheckBoxEvents | str, /, **event_args: Any) -> None: ...
 
+    def focus(self) -> None:
+        """Set keyboard focus to this checkbox."""
+        ...
+
 
     def __init__(
         self,
@@ -1732,7 +1735,7 @@ class CheckBox(Component):
 class RadioButton(Component):
     """A radio button input component.
 
-    [Anvil Docs](https://anvil.works/docs/client/components/radiobutton)"""
+    [Anvil Docs](https://anvil.works/docs/client/components/basic#radiobutton)"""
 
     @property
     def enabled(self) -> bool: ...
@@ -1831,7 +1834,7 @@ class RadioButton(Component):
     def get_group_value(group_name: str) -> Any:
         """Get the selected value from a radio button group.
 
-        [Anvil Docs](https://anvil.works/docs/client/components/radiobutton)"""
+        [Anvil Docs](https://anvil.works/docs/client/components/basic#radiobutton)"""
         ...
 
 
@@ -1864,7 +1867,7 @@ class RadioButton(Component):
 class DropDown(Component):
     """A dropdown selection component.
 
-    [Anvil Docs](https://anvil.works/docs/client/components/dropdown)"""
+    [Anvil Docs](https://anvil.works/docs/client/components/basic#dropdown)"""
 
     @property
     def enabled(self) -> bool: ...
@@ -1959,6 +1962,10 @@ class DropDown(Component):
     @override
     def raise_event(self, event_name: _DropDownEvents | str, /, **event_args: Any) -> None: ...
 
+    def focus(self) -> None:
+        """Set keyboard focus to this drop-down menu."""
+        ...
+
 
     def __init__(
         self,
@@ -1989,7 +1996,7 @@ class DropDown(Component):
 class DatePicker(Component):
     """A date picker input component.
 
-    [Anvil Docs](https://anvil.works/docs/client/components/datepicker)"""
+    [Anvil Docs](https://anvil.works/docs/client/components/basic#datepicker)"""
 
     @property
     def enabled(self) -> bool: ...
@@ -2092,6 +2099,10 @@ class DatePicker(Component):
     @override
     def raise_event(self, event_name: _DatePickerEvents | str, /, **event_args: Any) -> None: ...
 
+    def focus(self) -> None:
+        """Set keyboard focus to this date picker."""
+        ...
+
 
     def __init__(
         self,
@@ -2124,7 +2135,7 @@ class DatePicker(Component):
 class FileLoader(Component):
     """A file upload component.
 
-    [Anvil Docs](https://anvil.works/docs/client/components/fileloader)"""
+    [Anvil Docs](https://anvil.works/docs/client/components/basic#fileloader)"""
 
     @property
     def enabled(self) -> bool: ...
@@ -2235,10 +2246,20 @@ class FileLoader(Component):
     @override
     def raise_event(self, event_name: _FileLoaderEvents | str, /, **event_args: Any) -> None: ...
 
+    def open_file_selector(self) -> None:
+        """Open the browser's file selector.
+
+        Call this from another component's ``click`` event handler."""
+        ...
+
+    def focus(self) -> None:
+        """Set keyboard focus to this file loader."""
+        ...
+
     def clear(self) -> None:
         """Clear the selected file(s).
 
-        [Anvil Docs](https://anvil.works/docs/client/components/fileloader)"""
+        [Anvil Docs](https://anvil.works/docs/client/components/basic#fileloader)"""
         ...
 
 
@@ -2279,7 +2300,7 @@ class FileLoader(Component):
 class ColumnPanel(Container):
     """A container that arranges components vertically.
 
-    [Anvil Docs](https://anvil.works/docs/client/components/columnpanel)"""
+    [Anvil Docs](https://anvil.works/docs/client/components/containers#columnpanel)"""
 
     @property
     def visible(self) -> bool: ...
@@ -2359,7 +2380,7 @@ class ColumnPanel(Container):
 class FlowPanel(Container):
     """A container that arranges components in a flowing layout.
 
-    [Anvil Docs](https://anvil.works/docs/client/components/flowpanel)"""
+    [Anvil Docs](https://anvil.works/docs/client/components/containers#flowpanel)"""
 
     @property
     def visible(self) -> bool: ...
@@ -2439,7 +2460,7 @@ class FlowPanel(Container):
 class LinearPanel(Container):
     """A container that arranges components in a linear layout.
 
-    [Anvil Docs](https://anvil.works/docs/client/components/linearpanel)"""
+    [Anvil Docs](https://anvil.works/docs/client/components/containers#linearpanel)"""
 
     @property
     def visible(self) -> bool: ...
@@ -2504,7 +2525,7 @@ class LinearPanel(Container):
 class GridPanel(Container):
     """A container that arranges components in a grid.
 
-    [Anvil Docs](https://anvil.works/docs/client/components/gridpanel)"""
+    [Anvil Docs](https://anvil.works/docs/client/components/containers#gridpanel)"""
 
     @property
     def visible(self) -> bool: ...
@@ -2569,7 +2590,7 @@ class GridPanel(Container):
 class XYPanel(Container):
     """A container that positions components at absolute coordinates.
 
-    [Anvil Docs](https://anvil.works/docs/client/components/xypanel)"""
+    [Anvil Docs](https://anvil.works/docs/client/components/containers#xypanel)"""
 
     @property
     def visible(self) -> bool: ...
@@ -2628,6 +2649,10 @@ class XYPanel(Container):
     @overload
     def add_component(self, component: Component, /, **layout_props: Any) -> None: ...
 
+    def get_width(self) -> int | float:
+        """Get this panel's width in pixels."""
+        ...
+
     def __init__(
         self,
         *,
@@ -2649,7 +2674,7 @@ class XYPanel(Container):
 class DataGrid(Container):
     """A data grid component for displaying tabular data.
 
-    [Anvil Docs](https://anvil.works/docs/client/components/datagrid)"""
+    [Anvil Docs](https://anvil.works/docs/client/components/data-grids)"""
 
     @property
     def visible(self) -> bool: ...
@@ -2725,6 +2750,38 @@ class DataGrid(Container):
     @overload
     def add_component(self, component: Component, /, **layout_props: Any) -> None: ...
 
+    def jump_to_first_page(self) -> None:
+        """Display the first page."""
+        ...
+
+    def jump_to_last_page(self) -> None:
+        """Display the last page."""
+        ...
+
+    def next_page(self) -> None:
+        """Display the next page, if there is one."""
+        ...
+
+    def previous_page(self) -> None:
+        """Display the previous page, if there is one."""
+        ...
+
+    def get_page(self) -> int | None:
+        """Get the zero-based index of the current page."""
+        ...
+
+    def get_first_index_on_page(self) -> int | None:
+        """Get the zero-based item index at the start of the current page."""
+        ...
+
+    def set_page(self, page: int, /) -> None:
+        """Display a page by its zero-based index."""
+        ...
+
+    def repaginate(self) -> None:
+        """Refresh the current page after its contents change."""
+        ...
+
 
     def __init__(
         self,
@@ -2749,7 +2806,7 @@ class DataGrid(Container):
 class DataRowPanel(Container):
     """A row within a DataGrid.
 
-    [Anvil Docs](https://anvil.works/docs/client/components/datagrid)"""
+    [Anvil Docs](https://anvil.works/docs/client/components/data-grids)"""
 
     @property
     def visible(self) -> bool: ...
@@ -2854,7 +2911,7 @@ class DataRowPanel(Container):
 class RepeatingPanel(Container):
     """A panel that repeats a template for each item in a list.
 
-    [Anvil Docs](https://anvil.works/docs/client/components/repeatingpanel)"""
+    [Anvil Docs](https://anvil.works/docs/client/components/repeating-panel)"""
 
     @property
     def visible(self) -> bool: ...
@@ -2905,7 +2962,7 @@ class RepeatingPanel(Container):
     def get_components(self) -> list[Component]:
         """Get all repeated template instances.
 
-        [Anvil Docs](https://anvil.works/docs/client/components/repeatingpanel)"""
+        [Anvil Docs](https://anvil.works/docs/client/components/repeating-panel)"""
         ...
 
 
@@ -2973,7 +3030,7 @@ class HtmlComponent(Container):
 class HtmlTemplate(Container):
     """A container that renders HTML.
 
-    [Anvil Docs](https://anvil.works/docs/client/components/htmlpanel)"""
+    [Anvil Docs](https://anvil.works/docs/client/forms/html-in-forms#legacy-htmltemplate-forms)"""
 
     @property
     def visible(self) -> bool: ...
@@ -3033,6 +3090,12 @@ class HtmlTemplate(Container):
     ) -> None: ...
 
 HtmlPanel = deprecated("HtmlPanel is deprecated. Use HtmlTemplate instead.")(HtmlTemplate)
+
+
+class _CanvasGradient:
+    def add_color_stop(self, offset: int | float, color: str) -> None:
+        """Add a color stop at an offset between 0 and 1."""
+        ...
 
 
 class Canvas(Component):
@@ -3097,10 +3160,202 @@ class Canvas(Component):
     @override
     def raise_event(self, event_name: _CanvasEvents | str, /, **event_args: Any) -> None: ...
 
+    Gradient: type[_CanvasGradient]
+
+    def get_width(self) -> int | float:
+        """Get the canvas width in pixels."""
+        ...
+
+    def get_height(self) -> int | float:
+        """Get the canvas height in pixels."""
+        ...
+
     def get_image(self) -> Media:
         """Get the canvas content as a media object.
 
         [Anvil Docs](https://anvil.works/docs/client/components/canvas)"""
+        ...
+
+    def save(self) -> None:
+        """Save the current drawing state."""
+        ...
+
+    def restore(self) -> None:
+        """Restore the most recently saved drawing state."""
+        ...
+
+    def translate(self, x: int | float, y: int | float) -> None:
+        """Translate subsequent drawing operations."""
+        ...
+
+    def rotate(self, angle: int | float) -> None:
+        """Rotate subsequent drawing operations by an angle in radians."""
+        ...
+
+    def scale(self, x: int | float, y: int | float) -> None:
+        """Scale subsequent drawing operations."""
+        ...
+
+    def transform(
+        self,
+        a: int | float,
+        b: int | float,
+        c: int | float,
+        d: int | float,
+        e: int | float,
+        f: int | float,
+    ) -> None:
+        """Multiply the current transformation matrix."""
+        ...
+
+    def set_transform(
+        self,
+        a: int | float,
+        b: int | float,
+        c: int | float,
+        d: int | float,
+        e: int | float,
+        f: int | float,
+    ) -> None:
+        """Replace the current transformation matrix."""
+        ...
+
+    def reset_transform(self) -> None:
+        """Reset the current transformation matrix."""
+        ...
+
+    def fill_text(self, text: str, x: int | float, y: int | float) -> None:
+        """Draw filled text at the specified position."""
+        ...
+
+    def stroke_text(self, text: str, x: int | float, y: int | float) -> None:
+        """Draw outlined text at the specified position."""
+        ...
+
+    def measure_text(self, text: str) -> int | float:
+        """Get the width of text in the current font."""
+        ...
+
+    def clear_rect(self, x: int | float, y: int | float, width: int | float, height: int | float) -> None:
+        """Clear a rectangle."""
+        ...
+
+    def fill_rect(self, x: int | float, y: int | float, width: int | float, height: int | float) -> None:
+        """Draw a filled rectangle."""
+        ...
+
+    def stroke_rect(self, x: int | float, y: int | float, width: int | float, height: int | float) -> None:
+        """Draw an outlined rectangle."""
+        ...
+
+    def begin_path(self) -> None:
+        """Begin a new path."""
+        ...
+
+    def close_path(self) -> None:
+        """Close the current path."""
+        ...
+
+    def fill(self) -> None:
+        """Fill the current path."""
+        ...
+
+    def stroke(self) -> None:
+        """Draw the current path's outline."""
+        ...
+
+    def clip(self) -> None:
+        """Use the current path as the clipping region."""
+        ...
+
+    def move_to(self, x: int | float, y: int | float) -> None:
+        """Move the current path position without drawing."""
+        ...
+
+    def line_to(self, x: int | float, y: int | float) -> None:
+        """Add a line segment to the current path."""
+        ...
+
+    def quadratic_curve_to(
+        self,
+        cpx: int | float,
+        cpy: int | float,
+        x: int | float,
+        y: int | float,
+    ) -> None:
+        """Add a quadratic curve to the current path."""
+        ...
+
+    def bezier_curve_to(
+        self,
+        cp1x: int | float,
+        cp1y: int | float,
+        cp2x: int | float,
+        cp2y: int | float,
+        x: int | float,
+        y: int | float,
+    ) -> None:
+        """Add a Bezier curve to the current path."""
+        ...
+
+    def arc(
+        self,
+        x: int | float,
+        y: int | float,
+        radius: int | float,
+        start_angle: int | float = 0,
+        end_angle: int | float = ...,
+        anticlockwise: bool = False,
+    ) -> None:
+        """Add an arc to the current path."""
+        ...
+
+    def draw_image(
+        self,
+        media: Media,
+        x: int | float | None = None,
+        y: int | float | None = None,
+        width: int | float | None = None,
+        height: int | float | None = None,
+    ) -> None:
+        """Draw a media image, optionally scaling it."""
+        ...
+
+    def draw_image_part(
+        self,
+        media: Media,
+        sx: int | float | None,
+        sy: int | float | None,
+        s_width: int | float | None,
+        s_height: int | float | None,
+        dx: int | float | None,
+        dy: int | float | None,
+        d_width: int | float | None,
+        d_height: int | float | None,
+    ) -> None:
+        """Draw part of a media image into a destination rectangle."""
+        ...
+
+    def create_linear_gradient(
+        self,
+        x0: int | float,
+        y0: int | float,
+        x1: int | float,
+        y1: int | float,
+    ) -> _CanvasGradient:
+        """Create a linear gradient."""
+        ...
+
+    def create_radial_gradient(
+        self,
+        x0: int | float,
+        y0: int | float,
+        r0: int | float,
+        x1: int | float,
+        y1: int | float,
+        r1: int | float,
+    ) -> _CanvasGradient:
+        """Create a radial gradient."""
         ...
 
     def reset_context(self) -> None:
@@ -3130,7 +3385,7 @@ class Canvas(Component):
 class Plot(Component):
     """A Plotly chart component.
 
-    [Anvil Docs](https://anvil.works/docs/client/components/plot)"""
+    [Anvil Docs](https://anvil.works/docs/client/components/plots)"""
 
     @property
     def visible(self) -> bool: ...
@@ -3189,28 +3444,42 @@ class Plot(Component):
     @override
     def raise_event(self, event_name: _PlotEvents | str, /, **event_args: Any) -> None: ...
 
+    templates: dict[str, Any]
+
     def redraw(self) -> None:
         """Redraw the plot.
 
-        [Anvil Docs](https://anvil.works/docs/client/components/plot)"""
+        [Anvil Docs](https://anvil.works/docs/client/components/plots)"""
         ...
 
-    def to_image(self, **kwargs: Any) -> Media:
+    def to_image(self, options: Mapping[str, Any] | None = None, /) -> Media:
         """Export the plot as an image.
 
-        [Anvil Docs](https://anvil.works/docs/client/components/plot)"""
+        [Anvil Docs](https://anvil.works/docs/client/components/plots)"""
         ...
 
-    def relayout(self, **kwargs: Any) -> None:
+    def relayout(self, update: Mapping[str, Any], /) -> None:
         """Update the plot layout.
 
-        [Anvil Docs](https://anvil.works/docs/client/components/plot)"""
+        [Anvil Docs](https://anvil.works/docs/client/components/plots)"""
         ...
 
-    def extend_traces(self, data: dict[str, Any], traces: list[int]) -> None:
+    def extend_traces(self, data: Mapping[str, Any], traces: list[int], /) -> None:
         """Extend trace data.
 
-        [Anvil Docs](https://anvil.works/docs/client/components/plot)"""
+        [Anvil Docs](https://anvil.works/docs/client/components/plots)"""
+        ...
+
+    def prepend_traces(self, data: Mapping[str, Any], traces: list[int], /) -> None:
+        """Prepend trace data.
+
+        [Anvil Docs](https://anvil.works/docs/client/components/plots)"""
+        ...
+
+    def restyle(self, update: Mapping[str, Any], traces: list[int], /) -> None:
+        """Update attributes on one or more traces.
+
+        [Anvil Docs](https://anvil.works/docs/client/components/plots)"""
         ...
 
 
@@ -3234,7 +3503,7 @@ class Plot(Component):
 class _LatLng:
     """A latitude/longitude pair for GoogleMap.
 
-    [Anvil Docs](https://anvil.works/docs/client/components/googlemap)"""
+    [Anvil Docs](https://anvil.works/docs/client/components/maps)"""
 
     lat: float
     lng: float
@@ -3245,7 +3514,7 @@ class _LatLng:
 class _MapMarker(Component):
     """A marker on a GoogleMap.
 
-    [Anvil Docs](https://anvil.works/docs/client/components/googlemap#markers)"""
+    [Anvil Docs](https://anvil.works/docs/client/components/maps#markers)"""
 
     @property
     def enabled(self) -> bool: ...
@@ -3333,7 +3602,7 @@ class _MapMarker(Component):
 class _MapPolygon(Component):
     """A polygon overlay on a GoogleMap.
 
-    [Anvil Docs](https://anvil.works/docs/client/components/googlemap#polygons)"""
+    [Anvil Docs](https://anvil.works/docs/client/components/maps#polygons)"""
 
     @property
     def enabled(self) -> bool: ...
@@ -3442,7 +3711,7 @@ class _MapPolygon(Component):
 class _MapPolyline(Component):
     """A polyline overlay on a GoogleMap.
 
-    [Anvil Docs](https://anvil.works/docs/client/components/googlemap#polylines)"""
+    [Anvil Docs](https://anvil.works/docs/client/components/maps#polylines)"""
 
     @property
     def enabled(self) -> bool: ...
@@ -3544,7 +3813,7 @@ class _MapPolyline(Component):
 class GoogleMap(Component):
     """A Google Maps component.
 
-    [Anvil Docs](https://anvil.works/docs/client/components/googlemap)"""
+    [Anvil Docs](https://anvil.works/docs/client/components/maps)"""
 
     @property
     def visible(self) -> bool: ...
@@ -3780,7 +4049,7 @@ class GoogleMap(Component):
 class YouTubeVideo(Component):
     """A YouTube video player component.
 
-    [Anvil Docs](https://anvil.works/docs/client/components/youtubevideo)"""
+    [Anvil Docs](https://anvil.works/docs/client/components/basic#youtube-video)"""
 
     @property
     def visible(self) -> bool: ...
@@ -3866,19 +4135,19 @@ class YouTubeVideo(Component):
     def play(self) -> None:
         """Start playing this YouTube video.
 
-        [Anvil Docs](https://anvil.works/docs/client/components/youtubevideo)"""
+        [Anvil Docs](https://anvil.works/docs/client/components/basic#youtube-video)"""
         ...
 
     def pause(self) -> None:
         """Pause this YouTube video.
 
-        [Anvil Docs](https://anvil.works/docs/client/components/youtubevideo)"""
+        [Anvil Docs](https://anvil.works/docs/client/components/basic#youtube-video)"""
         ...
 
     def stop(self) -> None:
         """Stop playing this YouTube video.
 
-        [Anvil Docs](https://anvil.works/docs/client/components/youtubevideo)"""
+        [Anvil Docs](https://anvil.works/docs/client/components/basic#youtube-video)"""
         ...
 
 
@@ -3910,9 +4179,11 @@ class YouTubeVideo(Component):
 # ============================================================================
 
 class Timer(Component):
-    """A timer component for periodic events.
+    """Raise the ``tick`` event repeatedly at the configured interval.
 
-    [Anvil Docs](https://anvil.works/docs/client/components/timer)"""
+    Set ``interval`` to 0 to switch the timer off.
+
+    [Anvil Docs](https://anvil.works/docs/client/components/basic#timer)"""
 
     @property
     def interval(self) -> float: ...
@@ -3927,18 +4198,6 @@ class Timer(Component):
     def set_event_handler(self, event_name: _TimerEvents | str, handler_func: Callable[..., Any] | None, /) -> None: ...
     @override
     def raise_event(self, event_name: _TimerEvents | str, /, **event_args: Any) -> None: ...
-
-    def start(self) -> None:
-        """Start the timer.
-
-        [Anvil Docs](https://anvil.works/docs/client/components/timer)"""
-        ...
-
-    def stop(self) -> None:
-        """Stop the timer.
-
-        [Anvil Docs](https://anvil.works/docs/client/components/timer)"""
-        ...
     def __init__(
         self,
         *,
