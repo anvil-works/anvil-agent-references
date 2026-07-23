@@ -63,3 +63,15 @@ def name_box_change(self, **event_args):
 ```
 
 Do not render repeated app data with `innerHTML`, DOM loops, cloned nodes, or helper functions that return HTML strings.
+
+## Standard Component Writeback Triggers
+
+Writeback happens before the listed component event is processed. It does not happen on every event raised by an editable component.
+
+| Component | Writeback property | Trigger |
+| --- | --- | --- |
+| `CheckBox` | `checked` | Before `change` |
+| `DatePicker` | `date` | Before `change` |
+| `DropDown` | `selected_value` | Before `change` |
+| `TextBox` | `text` | Before `pressed_enter` and `lost_focus`; not before `change` |
+| `TextArea` | `text` | Before `lost_focus`; not before `change` |
