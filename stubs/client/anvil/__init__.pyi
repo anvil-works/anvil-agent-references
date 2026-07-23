@@ -625,7 +625,7 @@ class Component:
 
     def __init__(self, **properties: Any) -> None: ...
 
-    parent: "Container | None"
+    parent: Any
     @property
     def tag(self) -> Any: ...
     @tag.setter

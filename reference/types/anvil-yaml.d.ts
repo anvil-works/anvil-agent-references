@@ -373,7 +373,7 @@ export interface AgentAnvilYaml {
     db_schema?: AgentAppSchema;
     cta?: unknown;
     metadata?: { title?: string; description?: string; logo_img?: string };
-    scheduled_tasks?: AgentScheduledTask[];
+    scheduled_tasks?: AgentScheduledTask[] | null;
     uplink_visible?: boolean;
     /** Existing table-id mapping hints used by schema validation. Do not invent new hints. */
     table_id_hints?: Record<string, unknown>;
