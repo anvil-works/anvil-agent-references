@@ -222,7 +222,7 @@ def alert(
     buttons: list[Any] | None = None,
     large: bool = False,
     dismissible: bool = True,
-    role: str | None = None,
+    role: str | list[str] | None = None,
 ) -> Any:
     """Pop up an alert box.
 
@@ -239,7 +239,7 @@ def confirm(
     buttons: list[Any] | None = None,
     large: bool = False,
     dismissible: bool = False,
-    role: str | None = None,
+    role: str | list[str] | None = None,
 ) -> bool:
     """Pop up a confirmation box.
 
@@ -738,9 +738,9 @@ class Label(Component):
     @tooltip.setter
     def tooltip(self, value: str) -> None: ...
     @property
-    def role(self) -> str | None: ...
+    def role(self) -> str | list[str] | None: ...
     @role.setter
-    def role(self, value: str | None) -> None: ...
+    def role(self, value: str | list[str] | None) -> None: ...
 
     @property
     def text(self) -> str: ...
@@ -811,7 +811,7 @@ class Label(Component):
         tag: Any = ...,
         visible: bool = ...,
         tooltip: str = ...,
-        role: str | None = ...,
+        role: str | list[str] | None = ...,
         text: str = ...,
         icon: str = ...,
         icon_align: str = ...,
@@ -843,9 +843,9 @@ class Link(Component):
     @tooltip.setter
     def tooltip(self, value: str) -> None: ...
     @property
-    def role(self) -> str | None: ...
+    def role(self) -> str | list[str] | None: ...
     @role.setter
-    def role(self, value: str | None) -> None: ...
+    def role(self, value: str | list[str] | None) -> None: ...
 
     @property
     def text(self) -> str: ...
@@ -922,7 +922,7 @@ class Link(Component):
         tag: Any = ...,
         visible: bool = ...,
         tooltip: str = ...,
-        role: str | None = ...,
+        role: str | list[str] | None = ...,
         text: str = ...,
         url: str = ...,
         icon: str = ...,
@@ -953,9 +953,9 @@ class Image(Component):
     @tooltip.setter
     def tooltip(self, value: str) -> None: ...
     @property
-    def role(self) -> str | None: ...
+    def role(self) -> str | list[str] | None: ...
     @role.setter
-    def role(self, value: str | None) -> None: ...
+    def role(self, value: str | list[str] | None) -> None: ...
 
     @property
     def source(self) -> str | Media:
@@ -1035,7 +1035,7 @@ class Image(Component):
         tag: Any = ...,
         visible: bool = ...,
         tooltip: str = ...,
-        role: str | None = ...,
+        role: str | list[str] | None = ...,
         source: str | Media = ...,
         alt_text: str = ...,
         display_mode: str = ...,
@@ -1105,9 +1105,9 @@ class RichText(Component):
     @tooltip.setter
     def tooltip(self, value: str) -> None: ...
     @property
-    def role(self) -> str | None: ...
+    def role(self) -> str | list[str] | None: ...
     @role.setter
-    def role(self, value: str | None) -> None: ...
+    def role(self, value: str | list[str] | None) -> None: ...
 
     @property
     def content(self) -> str: ...
@@ -1190,7 +1190,7 @@ class RichText(Component):
         tag: Any = ...,
         visible: bool = ...,
         tooltip: str = ...,
-        role: str | None = ...,
+        role: str | list[str] | None = ...,
         content: str = ...,
         text: str = ...,
         format: str = ...,
@@ -1232,9 +1232,9 @@ class Button(Component):
     @tooltip.setter
     def tooltip(self, value: str) -> None: ...
     @property
-    def role(self) -> str | None: ...
+    def role(self) -> str | list[str] | None: ...
     @role.setter
-    def role(self, value: str | None) -> None: ...
+    def role(self, value: str | list[str] | None) -> None: ...
 
     @property
     def text(self) -> str: ...
@@ -1316,7 +1316,7 @@ class Button(Component):
         enabled: bool = ...,
         visible: bool = ...,
         tooltip: str = ...,
-        role: str | None = ...,
+        role: str | list[str] | None = ...,
         text: str = ...,
         icon: str = ...,
         icon_align: str = ...,
@@ -1352,9 +1352,9 @@ class TextBox(Component):
     @tooltip.setter
     def tooltip(self, value: str) -> None: ...
     @property
-    def role(self) -> str | None: ...
+    def role(self) -> str | list[str] | None: ...
     @role.setter
-    def role(self, value: str | None) -> None: ...
+    def role(self, value: str | list[str] | None) -> None: ...
 
     @property
     def text(self) -> str: ...
@@ -1452,7 +1452,7 @@ class TextBox(Component):
         enabled: bool = ...,
         visible: bool = ...,
         tooltip: str = ...,
-        role: str | None = ...,
+        role: str | list[str] | None = ...,
         text: str = ...,
         placeholder: str = ...,
         type: str = ...,
@@ -1489,9 +1489,9 @@ class TextArea(Component):
     @tooltip.setter
     def tooltip(self, value: str) -> None: ...
     @property
-    def role(self) -> str | None: ...
+    def role(self) -> str | list[str] | None: ...
     @role.setter
-    def role(self, value: str | None) -> None: ...
+    def role(self, value: str | list[str] | None) -> None: ...
 
     @property
     def text(self) -> str: ...
@@ -1589,7 +1589,7 @@ class TextArea(Component):
         enabled: bool = ...,
         visible: bool = ...,
         tooltip: str = ...,
-        role: str | None = ...,
+        role: str | list[str] | None = ...,
         text: str = ...,
         placeholder: str = ...,
         auto_expand: bool = ...,
@@ -1626,9 +1626,9 @@ class CheckBox(Component):
     @tooltip.setter
     def tooltip(self, value: str) -> None: ...
     @property
-    def role(self) -> str | None: ...
+    def role(self) -> str | list[str] | None: ...
     @role.setter
-    def role(self, value: str | None) -> None: ...
+    def role(self, value: str | list[str] | None) -> None: ...
 
     @property
     def checked(self) -> bool: ...
@@ -1714,7 +1714,7 @@ class CheckBox(Component):
         enabled: bool = ...,
         visible: bool = ...,
         tooltip: str = ...,
-        role: str | None = ...,
+        role: str | list[str] | None = ...,
         checked: bool = ...,
         allow_indeterminate: bool = ...,
         text: str = ...,
@@ -1750,9 +1750,9 @@ class RadioButton(Component):
     @tooltip.setter
     def tooltip(self, value: str) -> None: ...
     @property
-    def role(self) -> str | None: ...
+    def role(self) -> str | list[str] | None: ...
     @role.setter
-    def role(self, value: str | None) -> None: ...
+    def role(self, value: str | list[str] | None) -> None: ...
 
     @property
     def selected(self) -> bool: ...
@@ -1845,7 +1845,7 @@ class RadioButton(Component):
         enabled: bool = ...,
         visible: bool = ...,
         tooltip: str = ...,
-        role: str | None = ...,
+        role: str | list[str] | None = ...,
         selected: bool = ...,
         value: Any = ...,
         group_name: str = ...,
@@ -1882,9 +1882,9 @@ class DropDown(Component):
     @tooltip.setter
     def tooltip(self, value: str) -> None: ...
     @property
-    def role(self) -> str | None: ...
+    def role(self) -> str | list[str] | None: ...
     @role.setter
-    def role(self, value: str | None) -> None: ...
+    def role(self, value: str | list[str] | None) -> None: ...
 
     @property
     def items(self) -> list[Any]: ...
@@ -1974,7 +1974,7 @@ class DropDown(Component):
         enabled: bool = ...,
         visible: bool = ...,
         tooltip: str = ...,
-        role: str | None = ...,
+        role: str | list[str] | None = ...,
         items: list[Any] = ...,
         selected_value: Any = ...,
         include_placeholder: bool = ...,
@@ -2011,9 +2011,9 @@ class DatePicker(Component):
     @tooltip.setter
     def tooltip(self, value: str) -> None: ...
     @property
-    def role(self) -> str | None: ...
+    def role(self) -> str | list[str] | None: ...
     @role.setter
-    def role(self, value: str | None) -> None: ...
+    def role(self, value: str | list[str] | None) -> None: ...
 
     @property
     def date(self) -> Any: ...  # datetime.date | None
@@ -2111,7 +2111,7 @@ class DatePicker(Component):
         enabled: bool = ...,
         visible: bool = ...,
         tooltip: str = ...,
-        role: str | None = ...,
+        role: str | list[str] | None = ...,
         date: Any = ...,
         min_date: Any = ...,
         max_date: Any = ...,
@@ -2150,9 +2150,9 @@ class FileLoader(Component):
     @tooltip.setter
     def tooltip(self, value: str) -> None: ...
     @property
-    def role(self) -> str | None: ...
+    def role(self) -> str | list[str] | None: ...
     @role.setter
-    def role(self, value: str | None) -> None: ...
+    def role(self, value: str | list[str] | None) -> None: ...
 
     @property
     def file(self) -> Media | None: ...
@@ -2270,7 +2270,7 @@ class FileLoader(Component):
         enabled: bool = ...,
         visible: bool = ...,
         tooltip: str = ...,
-        role: str | None = ...,
+        role: str | list[str] | None = ...,
         file: Media | None = ...,
         files: list[Media] = ...,
         multiple: bool = ...,
@@ -2311,9 +2311,9 @@ class ColumnPanel(Container):
     @tooltip.setter
     def tooltip(self, value: str) -> None: ...
     @property
-    def role(self) -> str | None: ...
+    def role(self) -> str | list[str] | None: ...
     @role.setter
-    def role(self, value: str | None) -> None: ...
+    def role(self, value: str | list[str] | None) -> None: ...
 
     @property
     def col_widths(self) -> str: ...
@@ -2365,7 +2365,7 @@ class ColumnPanel(Container):
         tag: Any = ...,
         visible: bool = ...,
         tooltip: str = ...,
-        role: str | None = ...,
+        role: str | list[str] | None = ...,
         col_widths: str = ...,
         col_spacing: str = ...,
         wrap_on: str = ...,
@@ -2391,9 +2391,9 @@ class FlowPanel(Container):
     @tooltip.setter
     def tooltip(self, value: str) -> None: ...
     @property
-    def role(self) -> str | None: ...
+    def role(self) -> str | list[str] | None: ...
     @role.setter
-    def role(self, value: str | None) -> None: ...
+    def role(self, value: str | list[str] | None) -> None: ...
 
     @property
     def align(self) -> str: ...
@@ -2445,7 +2445,7 @@ class FlowPanel(Container):
         tag: Any = ...,
         visible: bool = ...,
         tooltip: str = ...,
-        role: str | None = ...,
+        role: str | list[str] | None = ...,
         align: str = ...,
         spacing: SpacingPropertyValue = ...,
         vertical_align: str = ...,
@@ -2471,9 +2471,9 @@ class LinearPanel(Container):
     @tooltip.setter
     def tooltip(self, value: str) -> None: ...
     @property
-    def role(self) -> str | None: ...
+    def role(self) -> str | list[str] | None: ...
     @role.setter
-    def role(self, value: str | None) -> None: ...
+    def role(self, value: str | list[str] | None) -> None: ...
 
     @property
     def background(self) -> str: ...
@@ -2513,7 +2513,7 @@ class LinearPanel(Container):
         tag: Any = ...,
         visible: bool = ...,
         tooltip: str = ...,
-        role: str | None = ...,
+        role: str | list[str] | None = ...,
         background: str = ...,
         foreground: str = ...,
         border: str = ...,
@@ -2536,9 +2536,9 @@ class GridPanel(Container):
     @tooltip.setter
     def tooltip(self, value: str) -> None: ...
     @property
-    def role(self) -> str | None: ...
+    def role(self) -> str | list[str] | None: ...
     @role.setter
-    def role(self, value: str | None) -> None: ...
+    def role(self, value: str | list[str] | None) -> None: ...
 
     @property
     def background(self) -> str: ...
@@ -2578,7 +2578,7 @@ class GridPanel(Container):
         tag: Any = ...,
         visible: bool = ...,
         tooltip: str = ...,
-        role: str | None = ...,
+        role: str | list[str] | None = ...,
         background: str = ...,
         foreground: str = ...,
         border: str = ...,
@@ -2601,9 +2601,9 @@ class XYPanel(Container):
     @tooltip.setter
     def tooltip(self, value: str) -> None: ...
     @property
-    def role(self) -> str | None: ...
+    def role(self) -> str | list[str] | None: ...
     @role.setter
-    def role(self, value: str | None) -> None: ...
+    def role(self, value: str | list[str] | None) -> None: ...
 
     @property
     def background(self) -> str: ...
@@ -2659,7 +2659,7 @@ class XYPanel(Container):
         tag: Any = ...,
         visible: bool = ...,
         tooltip: str = ...,
-        role: str | None = ...,
+        role: str | list[str] | None = ...,
         background: str = ...,
         foreground: str = ...,
         border: str = ...,
@@ -2685,9 +2685,9 @@ class DataGrid(Container):
     @tooltip.setter
     def tooltip(self, value: str) -> None: ...
     @property
-    def role(self) -> str | None: ...
+    def role(self) -> str | list[str] | None: ...
     @role.setter
-    def role(self, value: str | None) -> None: ...
+    def role(self, value: str | list[str] | None) -> None: ...
 
     @property
     def columns(self) -> list[dict[str, Any]]: ...
@@ -2789,7 +2789,7 @@ class DataGrid(Container):
         tag: Any = ...,
         visible: bool = ...,
         tooltip: str = ...,
-        role: str | None = ...,
+        role: str | list[str] | None = ...,
         columns: list[dict[str, Any]] = ...,
         rows_per_page: int | None = ...,
         show_page_controls: bool = ...,
@@ -2817,9 +2817,9 @@ class DataRowPanel(Container):
     @tooltip.setter
     def tooltip(self, value: str) -> None: ...
     @property
-    def role(self) -> str | None: ...
+    def role(self) -> str | list[str] | None: ...
     @role.setter
-    def role(self, value: str | None) -> None: ...
+    def role(self, value: str | list[str] | None) -> None: ...
 
     @property
     def item(self) -> dict[str, Any]: ...
@@ -2891,7 +2891,7 @@ class DataRowPanel(Container):
         tag: Any = ...,
         visible: bool = ...,
         tooltip: str = ...,
-        role: str | None = ...,
+        role: str | list[str] | None = ...,
         item: dict[str, Any] = ...,
         auto_display_data: bool = ...,
         background: str = ...,
@@ -2922,9 +2922,9 @@ class RepeatingPanel(Container):
     @tooltip.setter
     def tooltip(self, value: str) -> None: ...
     @property
-    def role(self) -> str | None: ...
+    def role(self) -> str | list[str] | None: ...
     @role.setter
-    def role(self, value: str | None) -> None: ...
+    def role(self, value: str | list[str] | None) -> None: ...
 
     @property
     def items(self) -> list[Any] | Iterator[Any]: ...
@@ -2972,7 +2972,7 @@ class RepeatingPanel(Container):
         tag: Any = ...,
         visible: bool = ...,
         tooltip: str = ...,
-        role: str | None = ...,
+        role: str | list[str] | None = ...,
         items: list[Any] | Iterator[Any] = ...,
         background: str = ...,
         foreground: str = ...,
@@ -3041,9 +3041,9 @@ class HtmlTemplate(Container):
     @tooltip.setter
     def tooltip(self, value: str) -> None: ...
     @property
-    def role(self) -> str | None: ...
+    def role(self) -> str | list[str] | None: ...
     @role.setter
-    def role(self, value: str | None) -> None: ...
+    def role(self, value: str | list[str] | None) -> None: ...
 
     @property
     def html(self) -> str: ...
@@ -3082,7 +3082,7 @@ class HtmlTemplate(Container):
         tag: Any = ...,
         visible: bool = ...,
         tooltip: str = ...,
-        role: str | None = ...,
+        role: str | list[str] | None = ...,
         html: str = ...,
         background: str = ...,
         border: str = ...,
@@ -3112,9 +3112,9 @@ class Canvas(Component):
     @tooltip.setter
     def tooltip(self, value: str) -> None: ...
     @property
-    def role(self) -> str | None: ...
+    def role(self) -> str | list[str] | None: ...
     @role.setter
-    def role(self, value: str | None) -> None: ...
+    def role(self, value: str | list[str] | None) -> None: ...
 
     @property
     def width(self) -> int: ...
@@ -3371,7 +3371,7 @@ class Canvas(Component):
         tag: Any = ...,
         visible: bool = ...,
         tooltip: str = ...,
-        role: str | None = ...,
+        role: str | list[str] | None = ...,
         width: int = ...,
         height: int = ...,
         background: str = ...,
@@ -3525,9 +3525,9 @@ class _MapMarker(Component):
     @tooltip.setter
     def tooltip(self, value: str) -> None: ...
     @property
-    def role(self) -> str | None: ...
+    def role(self) -> str | list[str] | None: ...
     @role.setter
-    def role(self, value: str | None) -> None: ...
+    def role(self, value: str | list[str] | None) -> None: ...
 
     @property
     def animation(self) -> Any: ...
@@ -3588,7 +3588,7 @@ class _MapMarker(Component):
         tag: Any = ...,
         enabled: bool = ...,
         tooltip: str = ...,
-        role: str | None = ...,
+        role: str | list[str] | None = ...,
         animation: Any = ...,
         position: _LatLng = ...,
         icon: Any = ...,
@@ -3613,9 +3613,9 @@ class _MapPolygon(Component):
     @tooltip.setter
     def tooltip(self, value: str) -> None: ...
     @property
-    def role(self) -> str | None: ...
+    def role(self) -> str | list[str] | None: ...
     @role.setter
-    def role(self, value: str | None) -> None: ...
+    def role(self, value: str | list[str] | None) -> None: ...
 
     @property
     def path(self) -> list[_LatLng]: ...
@@ -3694,7 +3694,7 @@ class _MapPolygon(Component):
         tag: Any = ...,
         enabled: bool = ...,
         tooltip: str = ...,
-        role: str | None = ...,
+        role: str | list[str] | None = ...,
         path: list[_LatLng] = ...,
         geodesic: bool = ...,
         editable: bool = ...,
@@ -3722,9 +3722,9 @@ class _MapPolyline(Component):
     @tooltip.setter
     def tooltip(self, value: str) -> None: ...
     @property
-    def role(self) -> str | None: ...
+    def role(self) -> str | list[str] | None: ...
     @role.setter
-    def role(self, value: str | None) -> None: ...
+    def role(self, value: str | list[str] | None) -> None: ...
 
     @property
     def icons(self) -> list[Any]: ...
@@ -3797,7 +3797,7 @@ class _MapPolyline(Component):
         tag: Any = ...,
         enabled: bool = ...,
         tooltip: str = ...,
-        role: str | None = ...,
+        role: str | list[str] | None = ...,
         icons: list[Any] = ...,
         path: list[_LatLng] = ...,
         geodesic: bool = ...,
@@ -4056,9 +4056,9 @@ class YouTubeVideo(Component):
     @visible.setter
     def visible(self, value: bool) -> None: ...
     @property
-    def role(self) -> str | None: ...
+    def role(self) -> str | list[str] | None: ...
     @role.setter
-    def role(self, value: str | None) -> None: ...
+    def role(self, value: str | list[str] | None) -> None: ...
 
     @property
     def youtube_id(self) -> str: ...
@@ -4156,7 +4156,7 @@ class YouTubeVideo(Component):
         *,
         tag: Any = ...,
         visible: bool = ...,
-        role: str | None = ...,
+        role: str | list[str] | None = ...,
         youtube_id: str = ...,
         autoplay: bool = ...,
         loop: bool = ...,
