@@ -28,6 +28,11 @@ class AppOfflineError(Exception):
     ...
 
 
+class ScriptExitError(Exception):
+    """Raised when a script exits with a non-zero status."""
+    ...
+
+
 # ============================================================================
 # Capabilities
 # ============================================================================
@@ -185,6 +190,22 @@ def background_task(fn: Callable[_P, _T] | None = None) -> Callable[_P, _T] | Ca
 # Launch a background task
 def launch_background_task(task_name: str, /, *args: Any, **kwargs: Any) -> Any:
     """Launch a background task by name.
+
+    [Anvil Docs](https://anvil.works/docs/background-tasks)"""
+    ...
+
+# Run a script and wait for its result
+def run_script(script_name: str, /, *args: Any) -> Any:
+    """Run one of this app's scripts as a Background Task, wait for it to finish, and
+    return its return value (whatever the script set anvil.script.return_value to).
+
+    Positional arguments are available to the script as sys.argv[1:] and anvil.script.args
+    (Media arguments appear in sys.argv as the names of temporary files containing their
+    content); scripts do not accept keyword arguments.
+
+    If the script raises an exception, exits with a non-zero status (ScriptExitError), or
+    is killed (BackgroundTaskKilled), that error is raised here. To call a script from
+    client code, allow it in the app's script_config.
 
     [Anvil Docs](https://anvil.works/docs/background-tasks)"""
     ...
