@@ -91,6 +91,10 @@ export interface AgentTableSchema {
 
 /**
  * Keys are table Python names, not numeric table ids.
+ *
+ * Changing `db_schema` does not by itself resolve database schema conflicts or
+ * apply live database changes. Users may still need to resolve schema conflicts
+ * manually in the IDE.
  */
 export interface AgentAppSchema {
     [python_name: string]: AgentTableSchema;
@@ -224,6 +228,10 @@ export interface AgentFacebookService extends AgentBaseRuntimeService<"/runtime/
  * Some apps also include service-managed columns such as `last_login`
  * (`datetime`), `n_password_failures` (`number`), or `mfa`
  * (`simpleObject`).
+ *
+ * If you add or change this table in `db_schema`, validation only confirms the
+ * config shape. The user may still need to resolve or apply schema changes in
+ * the Anvil IDE.
  */
 export interface AgentUsersService extends AgentBaseRuntimeService<"/runtime/services/anvil/users.yml"> {
     client_config?: {

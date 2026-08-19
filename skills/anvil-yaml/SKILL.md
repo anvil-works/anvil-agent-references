@@ -55,4 +55,8 @@ Some apps also include service-managed columns such as `last_login` (`datetime`)
 ## User Follow-Up
 
 - Do not link `anvil.yaml` as a navigable IDE path; describe manifest changes in plain language (startup form, services enabled, metadata).
+- When you change `db_schema`, put the required user follow-up in an important callout:
+  > [!IMPORTANT]
+  > Validation does not update the live database. You must resolve or apply schema changes in **[Data Tables schema](db/schema/default)**.
+- When you enable Users or change the Users table in `db_schema`, explicitly say the Users table schema must be resolved or applied in the IDE.
 - For dependency changes, ask the user to update dependencies in the Anvil IDE rather than editing `dependencies` in the manifest.
