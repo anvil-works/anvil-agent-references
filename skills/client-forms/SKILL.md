@@ -44,6 +44,7 @@ Before behavior changes, inspect enough of `anvil.yaml` to identify `startup_for
 ## Do
 
 - Inspect Python and template together before changing component names, handlers, bindings, slots, or container/layout shape.
+- For app-wide themes, rebrands, or palette changes, reconcile the app's browser branding before finishing: make the main brand colour the first entry in `theme/parameters.yaml`, and use `$anvil-yaml` to inspect the app logo. Local component styling does not require this.
 - Identify Layout Form vs Container Form before editing template structure.
 - Use `RepeatingPanel` with an item template Form for repeated rows, cards, list items, search results, order lines, notifications, and similar data-driven UI.
 - Use `@handle(...)` for new Anvil component events, unless preserving existing markup-wired event style.
@@ -85,7 +86,8 @@ Examples are concrete recipes. References are policies and syntax dictionaries.
 | M3 or dependency component specs | inspect `anvil.yaml`, dependency docs/files, then `examples/dependency-component.md` |
 | Form Python class shape, handler signatures, lifecycle, client runtime caveats, or dynamic updates | `references/python.md` |
 | `anvil.js`, `anvil.js.window`, browser APIs, JavaScript proxies, or Promises | `$javascript-interop` |
-| Roles, theme CSS, generated component DOM, or dependency styling internals | `references/styling.md`, `references/styling-examples.md`, and `references/component-dom.md` |
+| App-wide theme, rebrand, or palette change | `references/styling.md`; also use `$anvil-yaml` to reconcile the app logo |
+| Roles, local theme CSS, generated component DOM, or dependency styling internals | `references/styling.md`, `references/styling-examples.md`, and `references/component-dom.md` |
 
 ## Simple Event Edits
 

@@ -1,6 +1,6 @@
 ---
 name: anvil-yaml
-description: Update Anvil app manifest files in `anvil.yaml`, including services, app metadata, and `db_schema`, using the Anvil YAML type reference available to this agent and `anvil --json validate`.
+description: Update Anvil app manifest files in `anvil.yaml`, including services, app metadata, app logo/favicon, and `db_schema`, using the Anvil YAML type reference available to this agent and `anvil --json validate`.
 ---
 
 # Anvil YAML
@@ -20,6 +20,21 @@ Use this workflow when changing app structure or metadata in `anvil.yaml`.
 - Do not update `dependencies`; ask the user to update dependencies in the Anvil IDE.
 - After edits, `anvil.yaml` may be automatically formatted and keys re-ordered.
 - If you enable Users, prefer the standard Users table shape described below.
+
+## App Logo
+
+For app-wide themes or rebrands, inspect `metadata.logo_img` and the existing
+files in `theme/assets`:
+
+- Preserve an existing `logo_img` unless the user requests a logo change.
+- If `logo_img` is missing and a credible existing logo, brand mark, or app icon is available, set it to `asset:<path>`, for example `logo_img: asset:harbor-mark.svg`.
+- Do not use a photo or arbitrary decorative image as the app logo.
+- Do not generate a logo automatically. If no suitable asset exists, leave `logo_img` unset.
+- If you can create images, offer to make a logo. Otherwise, ask the user for an SVG or PNG.
+- Preserve unrelated metadata fields.
+
+When app-wide styling changes both CSS/theme files and `anvil.yaml`, validate the
+complete app with `anvil --json validate .`.
 
 ## Data Tables
 
@@ -51,12 +66,3 @@ The standard Users table includes at least:
 - `remembered_logins` (`simpleObject`)
 
 Some apps also include service-managed columns such as `last_login` (`datetime`), `n_password_failures` (`number`), or `mfa` (`simpleObject`). Do not remove existing service-managed columns.
-
-## User Follow-Up
-
-- Do not link `anvil.yaml` as a navigable IDE path; describe manifest changes in plain language (startup form, services enabled, metadata).
-- When you change `db_schema`, put the required user follow-up in an important callout:
-  > [!IMPORTANT]
-  > Validation does not update the live database. You must resolve or apply schema changes in **[Data Tables schema](db/schema/default)**.
-- When you enable Users or change the Users table in `db_schema`, explicitly say the Users table schema must be resolved or applied in the IDE.
-- For dependency changes, ask the user to update dependencies in the Anvil IDE rather than editing `dependencies` in the manifest.

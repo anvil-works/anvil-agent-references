@@ -22,6 +22,7 @@ the supported API.
 - **Documented dependency API or hook**: styling guidance from M3 docs available to this agent, `.anvil/deps/<package>/docs/`, or the dependency's component files.
 - **Generated component internals**: DOM/CSS classes emitted by an Anvil component implementation rather than authored in the app template. Do not write selectors against these.
 - **Theme-parameter-driven app**: an app whose `theme/assets/theme.css` already uses `%color:<COLOR NAME>%` tokens and whose colors are defined in `theme/parameters.yaml`.
+- **App-wide branding work**: a whole-app theme, rebrand, or palette change. A button-only, role-only, spacing, or other local style edit is not app-wide branding work.
 - **HtmlComponent classes/style helpers**: live Python objects on named plain HTML elements, used as `self.<name>.classes` and `self.<name>.style` for runtime root-element styling.
 
 ## Where Styles Go
@@ -29,26 +30,53 @@ the supported API.
 - Put reusable CSS in `theme/assets/theme.css`.
 - Use stable, domain-specific class names for raw HTML elements and wrapper markup in form templates.
 - For Python-driven class or inline-style state on raw HTML, use `anvil:name` in the template and `self.<name>.classes` / `self.<name>.style` in form code.
-- Use `theme/parameters.yaml` color tokens only in a theme-parameter-driven app.
-- Prefer CSS custom properties in `theme/assets/theme.css` for new app-local styling tokens.
+- Preserve the app's existing colour convention. In a theme-parameter-driven app, keep reusable colours in `theme/parameters.yaml` and reference them with `%color:<COLOR NAME>%`.
+- In a CSS-native theme, keep reusable colours in CSS custom properties. Do not introduce `%color:<COLOR NAME>%` tokens solely to control browser branding.
 - Use component properties, roles, or documented dependency APIs for Anvil component styling.
 - Define new reusable component variants with `prop:role` and `.anvil-role-<role-name>` selectors.
 - Use the Anvil client API stubs available to this agent to confirm component style properties before adding or changing them.
 
-`theme.css` may use `%color:<COLOR NAME>%` tokens in a theme-parameter-driven app. Color definitions are available in
-`theme/parameters.yaml` at `color_scheme.colors`. If the app is not already
-using those tokens, prefer CSS variables instead of introducing new color
-template values.
+`theme.css` may use `%color:<COLOR NAME>%` tokens. Color definitions are available in
+`theme/parameters.yaml` at `color_scheme.colors`. For local styling in an app
+that does not already use those tokens, prefer CSS variables instead of
+introducing new color template values.
+
+## App-Wide Branding
+
+For a whole-app theme, rebrand, or palette change, the first entry in
+`theme/parameters.yaml` under `color_scheme.colors` is significant: Anvil uses
+its colour for the initial spinner and browser theme colour. CSS variables and
+later palette entries do not change that browser branding.
+
+Before finishing app-wide branding work:
+
+1. Inspect `theme/parameters.yaml` and `theme/assets/theme.css` together.
+2. If `theme.css` uses named `%color:<COLOR NAME>%` tokens, identify its main brand role, update it to the requested brand colour, and move that entry to the start of `color_scheme.colors`. Preserve the other named entries and keep CSS references working.
+3. Otherwise, keep the theme CSS-native: define its reusable colours as CSS custom properties, and ensure the main brand value is duplicated exactly in the first `color_scheme.colors` entry. Create that leading entry if no palette exists. Do not convert the CSS to Anvil colour tokens merely to link the two values.
+4. In either case, keep the visible primary colour and the first palette colour synchronized.
+5. Use `$anvil-yaml` to inspect and reconcile `metadata.logo_img`.
+
+Use the existing theme-parameter shape. For example:
+
+```yaml
+color_scheme:
+  colors:
+  - {name: Primary, color: '#176b87'}
+```
+
+Do not reorder or create the app-wide palette for a local control, role, spacing,
+or state-style edit.
 
 ## Workflow
 
-1. Inspect the form HTML template, `theme/assets/theme.css`, `theme/parameters.yaml`, nearby forms, and app dependencies.
+1. Inspect the form HTML template, `theme/assets/theme.css`, `theme/parameters.yaml`, nearby forms, and app dependencies. For app-wide branding work, also inspect `anvil.yaml` and follow the App-Wide Branding workflow above.
 2. Identify whether each styled thing is raw HTML or an Anvil component.
 3. For raw HTML, add or reuse semantic classes and write CSS selectors against those classes.
 4. For Anvil components, use direct component properties when they express the style; otherwise use or add a semantic `prop:role`.
 5. Preserve existing visual conventions for spacing, tokens, typography, and nested component structure unless the user asks for a redesign.
 6. Keep component names, event handlers, DOM node names, and Python references unchanged unless the task requires renaming them.
 7. Re-check changed selectors and component properties against the UI markup and nearby theme rules before finishing.
+8. When changes span CSS, theme parameters, or `anvil.yaml`, validate the complete app with `anvil --json validate .`.
 
 ## Raw HTML
 
