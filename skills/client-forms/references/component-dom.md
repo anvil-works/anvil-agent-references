@@ -27,6 +27,7 @@ Roles are emitted as `.anvil-role-<role-name>` on the component root. Some compo
 | Image | `.anvil-image` root with child `img` | `.anvil-role-avatar img` | `.anvil-image img` |
 | ColumnPanel | `.anvil-column-panel.anvil-container` root | `.anvil-role-summary-card` | `.anvil-column-panel` |
 | FlowPanel | `.anvil-flow-panel.anvil-container` root | `.anvil-role-toolbar` | `.anvil-flow-panel` |
+| RepeatingPanel | `.anvil-repeating-panel` root with a direct child items container; item-template Form roots are children of that container | `.anvil-role-card-grid > div` | `.anvil-repeating-panel > div` |
 | DataGrid | `.anvil-data-grid.anvil-container` root | `.anvil-role-report-grid` | `.anvil-data-grid` |
 
 ## Notes
@@ -35,4 +36,5 @@ Roles are emitted as `.anvil-role-<role-name>` on the component root. Some compo
 - TextBox and TextArea roles are on the native control itself, so prefer `input.anvil-role-*` and `textarea.anvil-role-*`.
 - Button roles are on the wrapper, so prefer `.anvil-role-* > button`.
 - DropDown and DatePicker roles are on wrappers, so target their native controls through the role.
+- To change layout RepeatingPanel items, apply e.g. `display: grid` or `display: flex` to its direct child items container, not to the RepeatingPanel root. Prefer a role selector such as `.anvil-role-card-grid > div` over the broad component selector.
 - Broad selectors such as `.anvil-button > button` change every component of that type in the app. Do not use them for one-off variants.

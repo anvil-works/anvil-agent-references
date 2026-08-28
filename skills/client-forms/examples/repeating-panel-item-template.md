@@ -38,6 +38,26 @@ def open_button_click(self, **event_args):
     self.parent.raise_event("x-open-article", item=self.item)
 ```
 
+## Lay out repeated items as a grid
+
+At runtime, a RepeatingPanel has a component root and a direct child items container. The item-template Form roots are children of that items container. Give the RepeatingPanel a semantic role, then put the grid layout on its items container:
+
+```html
+<anvil-component type="RepeatingPanel" name="articles_panel" prop:item_template="CustomerApp.ArticleCard" prop:role="article-grid"></anvil-component>
+```
+
+```css
+.anvil-role-article-grid > div {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1rem;
+}
+```
+
+Keep card styling in the item template or on an item-template role. Read `references/component-dom.md` before relying on more of a generated component's DOM.
+
+## Edit item fields
+
 For editable item fields, use `writeback:` for the input and refresh bindings when sibling bound UI should update immediately:
 
 ```html

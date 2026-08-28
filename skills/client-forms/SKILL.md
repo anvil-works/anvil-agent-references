@@ -47,6 +47,7 @@ Before behavior changes, inspect enough of `anvil.yaml` to identify `startup_for
 - For app-wide themes, rebrands, or palette changes, reconcile the app's browser branding before finishing: make the main brand colour the first entry in `theme/parameters.yaml`, and use `$anvil-yaml` to inspect the app logo. Local component styling does not require this.
 - Identify Layout Form vs Container Form before editing template structure.
 - Use `RepeatingPanel` with an item template Form for repeated rows, cards, list items, search results, order lines, notifications, and similar data-driven UI.
+  - Caveat: for a small, fixed layout where each position has distinct meaning, a RepeatingPanel may be the wrong choice.
 - Use `@handle(...)` for new Anvil component events, unless preserving existing markup-wired event style.
 - Validate the changed files before finishing.
 
@@ -79,7 +80,7 @@ Examples are concrete recipes. References are policies and syntax dictionaries.
 | Form defining slots with `<anvil-slot>` | `examples/layout-defining-html-form.md` and `references/html-frontmatter.md` if custom properties/events are involved |
 | Root shape, attribute prefixes, bindings, blocks, slots, dropzones, or event signature lookup | `references/cheat-sheet.md` |
 | `anvil:name`, `anvil:dom-node`, native DOM events, direct DOM access, or runtime class/style helpers on plain HTML | `references/html-dom.md`; use `examples/dom-event-vs-component-event.md` for a concrete event recipe |
-| RepeatingPanel item templates, `writeback:`, or item refresh behavior | `examples/repeating-panel-item-template.md` |
+| RepeatingPanel choice, item templates, grid layout, `writeback:`, or item refresh behavior | `examples/repeating-panel-item-template.md`; also `references/component-dom.md` when CSS must target the generated items container |
 | Reusable component Form | `examples/custom-component.md`; also `references/html-frontmatter.md` for custom API metadata |
 | Custom component container or `<anvil-dropzone>` | `examples/custom-component-container.md` and `references/html-frontmatter.md` |
 | Legacy YAML template or converted `HtmlTemplate` | `references/yaml-template.md`, `references/template-shapes.md`, then `examples/yaml-htmltemplate-conversion.md` |
