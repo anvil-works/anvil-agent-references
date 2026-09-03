@@ -1,6 +1,6 @@
 # Form Styling Examples
 
-Use these patterns when styling Anvil form templates. Keep Anvil component styling behind roles, and keep raw HTML styling behind ordinary semantic classes.
+Use these patterns when styling Anvil form templates. Keep Anvil component styling behind roles, and keep raw HTML styling behind ordinary semantic classes. These examples assume their `--app-*` custom properties already exist; follow the Theme Colours workflow in `references/styling.md` when adding new app-wide colours.
 
 ## Button Role
 

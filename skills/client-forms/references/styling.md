@@ -21,7 +21,6 @@ the supported API.
 - **Component property**: a documented Anvil component property, confirmed in the Anvil client API stubs available to this agent or dependency docs.
 - **Documented dependency API or hook**: styling guidance from M3 docs available to this agent, `.anvil/deps/<package>/docs/`, or the dependency's component files.
 - **Generated component internals**: DOM/CSS classes emitted by an Anvil component implementation rather than authored in the app template. Do not write selectors against these.
-- **Theme-parameter-driven app**: an app whose `theme/assets/theme.css` already uses `%color:<COLOR NAME>%` tokens and whose colors are defined in `theme/parameters.yaml`.
 - **App-wide branding work**: a whole-app theme, rebrand, or palette change. A button-only, role-only, spacing, or other local style edit is not app-wide branding work.
 - **HtmlComponent classes/style helpers**: live Python objects on named plain HTML elements, used as `self.<name>.classes` and `self.<name>.style` for runtime root-element styling.
 
@@ -30,16 +29,44 @@ the supported API.
 - Put reusable CSS in `theme/assets/theme.css`.
 - Use stable, domain-specific class names for raw HTML elements and wrapper markup in form templates.
 - For Python-driven class or inline-style state on raw HTML, use `anvil:name` in the template and `self.<name>.classes` / `self.<name>.style` in form code.
-- Preserve the app's existing colour convention. In a theme-parameter-driven app, keep reusable colours in `theme/parameters.yaml` and reference them with `%color:<COLOR NAME>%`.
-- In a CSS-native theme, keep reusable colours in CSS custom properties. Do not introduce `%color:<COLOR NAME>%` tokens solely to control browser branding.
 - Use component properties, roles, or documented dependency APIs for Anvil component styling.
 - Define new reusable component variants with `prop:role` and `.anvil-role-<role-name>` selectors.
 - Use the Anvil client API stubs available to this agent to confirm component style properties before adding or changing them.
 
-`theme.css` may use `%color:<COLOR NAME>%` tokens. Color definitions are available in
-`theme/parameters.yaml` at `color_scheme.colors`. For local styling in an app
-that does not already use those tokens, prefer CSS variables instead of
-introducing new color template values.
+## Theme Colours
+
+Preserve the app's existing colour convention. Do not rewrite existing direct
+`%color:<COLOR NAME>%` references solely to introduce CSS custom properties.
+
+For a new reusable app-wide colour:
+
+1. Add a named entry to `theme/parameters.yaml` at `color_scheme.colors`.
+2. In a `:root` block near the top of `theme/assets/theme.css`, map a semantic custom property to the exact, case-sensitive name: `--app-primary: %color:Primary%;`.
+3. Use the custom property in new CSS. Do not repeat the literal colour value in `theme.css`.
+
+For example:
+
+```yaml
+color_scheme:
+  colors:
+  - {name: Primary, color: '#176b87'}
+  - {name: Surface, color: '#ffffff'}
+```
+
+```css
+:root {
+  --app-primary: %color:Primary%;
+  --app-surface: %color:Surface%;
+}
+
+body {
+  background: var(--app-surface);
+}
+
+.anvil-role-primary-action > button {
+  background: var(--app-primary);
+}
+```
 
 ## App-Wide Branding
 
@@ -51,18 +78,9 @@ later palette entries do not change that browser branding.
 Before finishing app-wide branding work:
 
 1. Inspect `theme/parameters.yaml` and `theme/assets/theme.css` together.
-2. If `theme.css` uses named `%color:<COLOR NAME>%` tokens, identify its main brand role, update it to the requested brand colour, and move that entry to the start of `color_scheme.colors`. Preserve the other named entries and keep CSS references working.
-3. Otherwise, keep the theme CSS-native: define its reusable colours as CSS custom properties, and ensure the main brand value is duplicated exactly in the first `color_scheme.colors` entry. Create that leading entry if no palette exists. Do not convert the CSS to Anvil colour tokens merely to link the two values.
-4. In either case, keep the visible primary colour and the first palette colour synchronized.
-5. Use `$anvil-yaml` to inspect and reconcile `metadata.logo_img`.
-
-Use the existing theme-parameter shape. For example:
-
-```yaml
-color_scheme:
-  colors:
-  - {name: Primary, color: '#176b87'}
-```
+2. Identify or create the main brand colour entry, set it to the requested value, and make it the first entry in `color_scheme.colors`. Preserve the other named entries and existing CSS references.
+3. Follow the Theme Colours workflow above for any new reusable colours.
+4. Use `$anvil-yaml` to inspect and reconcile `metadata.logo_img`.
 
 Do not reorder or create the app-wide palette for a local control, role, spacing,
 or state-style edit.
