@@ -242,7 +242,11 @@ class session:
 
 # HTTP endpoint decorator
 def http_endpoint(path: str, methods: list[str] | None = None, authenticate_users: bool = False, enable_cors: bool = False, cross_site_session: bool = False) -> Callable[[Callable[_P, _T]], Callable[_P, _T]]:
-    """Decorator to create an HTTP endpoint.
+    """Legacy decorator to create an HTTP endpoint.
+
+    For new HTTP endpoints, use anvil.server.route instead: route("/orders") serves /orders, without /_/api.
+    The endpoint URL is the app origin followed by /_/api and path:
+    http_endpoint("/orders") is accessible at /_/api/orders.
 
     [Anvil Docs](https://anvil.works/docs/server/http-endpoints)"""
     ...
