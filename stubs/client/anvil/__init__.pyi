@@ -612,7 +612,7 @@ _GoogleMapEvents = Literal[
 _YouTubeVideoEvents = Literal["show", "hide", "state_change"]
 
 # DataGrid events
-_DataGridEvents = Literal["show", "hide"]
+_DataGridEvents = Literal["show", "hide", "page_changed"]
 
 # ============================================================================
 # Component Base Classes
