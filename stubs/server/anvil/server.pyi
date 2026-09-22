@@ -229,10 +229,10 @@ def call_s(fn_name: str, /, *args: Any, **kwargs: Any) -> Any:
 
 # Callable decorator (server-only - marks functions as callable from client code)
 @overload
-def callable(fn: Callable[_P, _T]) -> Callable[_P, _T]: ...
+def callable(fn: Callable[_P, _T], /) -> Callable[_P, _T]: ...
 @overload
-def callable(*, name: str | None = None, require_user: bool | _UserCheck = False) -> Callable[[Callable[_P, _T]], Callable[_P, _T]]: ...
-def callable(fn: Callable[_P, _T] | None = ..., *, name: str | None = None, require_user: bool | _UserCheck = False) -> Callable[_P, _T] | Callable[[Callable[_P, _T]], Callable[_P, _T]]:
+def callable(name: str | None = None, /, *, require_user: bool | _UserCheck = False) -> Callable[[Callable[_P, _T]], Callable[_P, _T]]: ...
+def callable(fn_or_name: Callable[_P, _T] | str | None = ..., /, *, require_user: bool | _UserCheck = False) -> Callable[_P, _T] | Callable[[Callable[_P, _T]], Callable[_P, _T]]:
     """Mark a function as callable from client code.
 
     [Anvil Docs](https://anvil.works/docs/server/server-modules)"""
