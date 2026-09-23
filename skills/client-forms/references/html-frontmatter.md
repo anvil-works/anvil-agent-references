@@ -17,6 +17,7 @@ Use frontmatter only for:
 - `toolbox_item`: how a custom component appears in the designer toolbox.
 - `layout_metadata`: designer metadata for a layout form.
 - `item_type`: data-table item type metadata.
+- `help_text`: optional plain-text usage guidance for a custom component or layout, displayed in the designer’s properties panel. Use a YAML block scalar (|) for multiline text.
 
 For exact field shapes, consult the form YAML type reference available to this agent.
 
