@@ -38,3 +38,30 @@ Roles are emitted as `.anvil-role-<role-name>` on the component root. Some compo
 - DropDown and DatePicker roles are on wrappers, so target their native controls through the role.
 - To change layout RepeatingPanel items, apply e.g. `display: grid` or `display: flex` to its direct child items container, not to the RepeatingPanel root. Prefer a role selector such as `.anvil-role-card-grid > div` over the broad component selector.
 - Broad selectors such as `.anvil-button > button` change every component of that type in the app. Do not use them for one-off variants.
+
+## Built-in dialogs and notifications
+
+These are supported theme hooks for the runtime's built-in UI. They are outside the app's Form wrapper. Use them for theme defaults alongside the component selectors above.
+
+| Element | Runtime-v3 selector |
+| --- | --- |
+| Dialog surface | `.anvil-modal-content` |
+| Dialog heading area and title | `.anvil-modal-header`, `.anvil-modal-title` |
+| Dialog content | `.anvil-modal-body` |
+| Dialog actions area | `.anvil-modal-footer` |
+| Dialog close button | `.anvil-modal-header .anvil-close` |
+| Notification surface | `.anvil-notification` |
+| Notification title/message | `.anvil-notification-title`, `.anvil-notification-message` |
+| Notification close button | `.anvil-notification .anvil-close` |
+
+`alert()`, `confirm()` and built-in Users forms share the dialog shell. Their content and footer buttons use standard Anvil components; reuse existing Button, TextBox, Label, Link and CheckBox defaults where they apply. A role on dialog content does not style its enclosing shell.
+
+Dialog and notification close buttons share `.anvil-close` in runtime v3; scope it to the relevant container when their styles differ.
+
+The notification container sits inside a wrapper appended to `body`.
+
+Keep modal/backdrop positioning, stacking, visibility and animation under runtime control. Notification container layout is also runtime-managed. Theme CSS should change their appearance without replacing that behavior.
+
+`alert()` and `confirm()` accept `role=None`, a role string, or a list of roles; these apply to the enclosing `.anvil-modal-dialog`. `Notification(..., role="compact")` applies `.anvil-role-compact` to `.anvil-notification` itself. Notification roles also accept a list or `None`. For example, use `.anvil-notification.anvil-role-compact` to style that notification surface.
+
+Style `.anvil-notification` for the default appearance of all notifications. Role selectors apply only when the caller explicitly supplies a role.

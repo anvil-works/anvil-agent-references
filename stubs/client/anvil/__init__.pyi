@@ -253,17 +253,33 @@ def confirm(
 class Notification:
     """Create a popup notification. Call the show() method to display it.
 
+    Set timeout to None or 0 to keep it visible until dismissed.
+    Set role to a theme role name or list of names.
+    The style argument is deprecated; use role and theme CSS instead.
     Can also be used as a context manager.
 
     [Anvil Docs](https://anvil.works/docs/client/python/alerts-and-notifications)"""
 
+    @overload
     def __init__(
         self,
         message: str,
         *,
         title: str = "",
-        style: str = "info",
-        timeout: int | float = 2,
+        timeout: int | float | None = 2,
+        role: str | list[str] | None = None,
+    ) -> None: ...
+
+    @overload
+    @deprecated("Notification's style argument is deprecated. Use role and theme CSS instead.")
+    def __init__(
+        self,
+        message: str,
+        *,
+        title: str = "",
+        style: str,
+        timeout: int | float | None = 2,
+        role: str | list[str] | None = None,
     ) -> None: ...
 
     def show(self) -> "Notification":

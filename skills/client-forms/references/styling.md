@@ -20,7 +20,7 @@ the supported API.
 - **Role**: an Anvil component role set with a component property such as `role` / `prop:role`.
 - **Component property**: a documented Anvil component property, confirmed in the Anvil client API stubs available to this agent or dependency docs.
 - **Documented dependency API or hook**: styling guidance from M3 docs available to this agent, `.anvil/deps/<package>/docs/`, or the dependency's component files.
-- **Generated component internals**: DOM/CSS classes emitted by an Anvil component implementation rather than authored in the app template. Do not write selectors against these.
+- **Generated component internals**: DOM/CSS classes emitted by an Anvil component implementation rather than authored in the app template. Use only the supported hooks documented in `references/component-dom.md`; do not infer additional selectors from generated markup.
 - **App-wide branding work**: a whole-app theme, rebrand, or palette change. A button-only, role-only, spacing, or other local style edit is not app-wide branding work.
 - **HtmlComponent classes/style helpers**: live Python objects on named plain HTML elements, used as `self.<name>.classes` and `self.<name>.style` for runtime root-element styling.
 
@@ -118,6 +118,14 @@ or state-style edit.
 - Add hover and active states when the interaction needs them.
 
 See `references/styling-examples.md` before adding or changing component roles. See `references/component-dom.md` when you need the generated DOM shape or a broad Anvil component selector.
+
+## Built-in dialogs and notifications
+
+For built-in dialog or notification styling, read the hooks in `references/component-dom.md` and check `runtime_options.version` and `runtime_options.legacy_features.class_names` in `anvil.yaml` before choosing selectors. These documented hooks also cover the dialog surrounding built-in Users forms.
+
+Reuse the app's palette, typography, spacing and control styles in `theme/assets/theme.css`. Add missing dialog or notification defaults to existing themes there. Style the surface, heading, body, footer and close control; retain readable text and focus indicators. Standard components inside dialogs use the same component defaults as the page. Use `Notification(..., role="success")` and `.anvil-notification.anvil-role-success` for theme-specific notification styling. Preserve runtime positioning and visibility rules.
+
+Verify that the rules apply to the actual dialog and notification markup. Rules scoped beneath an app's Form wrapper cannot reach these body-level elements. When preview is available, open the affected UI and check narrow layouts and dismissal as well as its appearance.
 
 ## Testing
 

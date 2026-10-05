@@ -88,6 +88,7 @@ Examples are concrete recipes. References are policies and syntax dictionaries.
 | Form Python class shape, handler signatures, lifecycle, client runtime caveats, or dynamic updates | `references/python.md` |
 | `anvil.js`, `anvil.js.window`, browser APIs, JavaScript proxies, or Promises | `$javascript-interop` |
 | App-wide theme, rebrand, or palette change | `references/styling.md`; also use `$anvil-yaml` to reconcile the app logo |
+| Built-in dialogs, login forms, or notifications | `references/styling.md` and `references/component-dom.md` |
 | Roles, local theme CSS, generated component DOM, or dependency styling internals | `references/styling.md`, `references/styling-examples.md`, and `references/component-dom.md` |
 
 ## Simple Event Edits
