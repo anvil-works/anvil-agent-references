@@ -25,8 +25,9 @@ the implementation will use one.
 5. Wire imports so model modules load before affected table rows are used on both client and server.
 6. Update Forms to bind to rows/model objects directly, especially in `RepeatingPanel` item templates.
 7. Validate changed manifest, client Python, server Python, and form templates with the smallest relevant `anvil --json validate ...` commands.
+8. Use `$app-testing` to apply any schema changes to the agent's temporary database and exercise the changed data flow.
 
-Done when the table schema, model classes, server methods, form bindings, and validation evidence all match the chosen data shape.
+Done when the table schema, model classes, server methods, form bindings, and validation and runtime evidence all match the chosen data shape, or a concrete runtime blocker is reported.
 
 ## Defaults
 

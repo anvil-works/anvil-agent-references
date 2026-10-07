@@ -13,6 +13,8 @@ Use this workflow when changing app structure or metadata in `anvil.yaml`.
 2. Make the smallest manifest change that satisfies the task.
 3. Validate with `anvil --json validate anvil.yaml`.
 4. Treat machine-readable validation errors as authoritative.
+5. Whenever `db_schema` changes, including a table added when enabling a service,
+   run `anvil db apply-schema --force`. This updates only the agent's temporary database.
 
 ## Rules
 

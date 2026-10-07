@@ -64,7 +64,7 @@ For a package module, check its `__init__.py`:
 anvil --json validate server_code/<Package>/__init__.py
 ```
 
-- There is no general automated server test path in this template; suggest testing the changed callable or background-task workflow in the app.
+- Use `$app-testing` to exercise changed server behavior in the agent's running environment.
 
 ## Notes
 
