@@ -209,6 +209,37 @@ attrs:
               docString: When the component is clicked.
         helpLink: m3.toggleiconbutton
         clientOnly: true
+        attrInfo:
+          align:
+            name: enum
+            helpLink: m3.toggleiconbutton
+            docString: The position of this component in the available space.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+            options:
+              - left
+              - right
+              - center
+          appearance:
+            name: enum
+            helpLink: m3.toggleiconbutton
+            docString: A predefined style for this component.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+            options:
+              - standard
+              - filled
+              - tonal
+              - outlined
+          icon:
+            name: enum
+            helpLink: m3.toggleiconbutton
+            docString: The icon to display on this component.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
         globals:
           align: *ref_0
           appearance: *ref_1
@@ -452,6 +483,35 @@ attrs:
               docString: When the component is clicked.
         helpLink: m3.interactivecard
         clientOnly: true
+        attrInfo:
+          align:
+            name: enum
+            helpLink: m3.interactivecard
+            docString: The position of this component in the available space.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+          appearance:
+            name: enum
+            helpLink: m3.interactivecard
+            docString: A predefined style for this component.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+            options:
+              - elevated
+              - filled
+              - outlined
+          orientation:
+            name: enum
+            helpLink: m3.interactivecard
+            docString: The orientation of the content in this Card
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+            options:
+              - column
+              - row
         globals:
           visible: *ref_20
           border: *ref_21
@@ -909,6 +969,55 @@ attrs:
               docString: When the user presses enter in this component.
         helpLink: m3.textbox
         clientOnly: true
+        attrInfo:
+          align:
+            name: enum
+            helpLink: m3.textbox
+            docString: The position of this component in the available space.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+            options:
+              - left
+              - right
+              - center
+          appearance:
+            name: enum
+            helpLink: m3.textbox
+            docString: A predefined style for this component.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+            options:
+              - filled
+              - outlined
+          leading_icon:
+            name: enum
+            helpLink: m3.textbox
+            docString: The leading icon to display on this component.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+          trailing_icon:
+            name: enum
+            helpLink: m3.textbox
+            docString: The trailing icon to display on this component.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+          type:
+            name: enum
+            helpLink: m3.textbox
+            docString: The type of data that the user can enter into this box.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+            options:
+              - text
+              - number
+              - email
+              - tel
+              - url
         functions:
           focus: *ref_35
           select: *ref_36
@@ -1428,6 +1537,28 @@ attrs:
               docString: When the component loses focus.
         helpLink: m3.textarea
         clientOnly: true
+        attrInfo:
+          align:
+            name: enum
+            helpLink: m3.textarea
+            docString: The position of this component in the available space.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+            options:
+              - left
+              - right
+              - center
+          appearance:
+            name: enum
+            helpLink: m3.textarea
+            docString: A predefined style for this component.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+            options:
+              - filled
+              - outlined
         functions:
           focus: *ref_78
           select: *ref_79
@@ -1822,6 +1953,55 @@ attrs:
               docString: When the Text is removed from the screen.
         helpLink: m3.text
         clientOnly: true
+        attrInfo:
+          align:
+            name: enum
+            helpLink: m3.text
+            docString: The position of this component in the available space.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+            options:
+              - left
+              - right
+              - center
+              - justify
+          icon:
+            name: enum
+            helpLink: m3.text
+            docString: The icon to display on this component.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+          material_icon:
+            name: enum
+            helpLink: m3.text
+            docString: The icon to display on this component.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+          style:
+            name: enum
+            helpLink: m3.text
+            docString: 'Role of the text component: display, headline or title.'
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+            options:
+              - display
+              - headline
+              - title
+          scale:
+            name: enum
+            helpLink: m3.text
+            docString: The size of the text component.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+            options:
+              - small
+              - medium
+              - large
         globals:
           visible: *ref_115
           underline: *ref_116
@@ -2126,6 +2306,32 @@ attrs:
               docString: When the Switch is removed from the screen.
         helpLink: m3.switch
         clientOnly: true
+        attrInfo:
+          align:
+            name: enum
+            helpLink: m3.switch
+            docString: The position of this component in the available space.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+            options:
+              - left
+              - center
+              - right
+          selected_icon:
+            name: enum
+            helpLink: m3.switch
+            docString: Optional icon to appear on the Switch when toggled on.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+          unselected_icon:
+            name: enum
+            helpLink: m3.switch
+            docString: Optional icon to appear on the Switch when toggled off.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
         globals:
           enabled: *ref_141
           align: *ref_142
@@ -2819,6 +3025,14 @@ attrs:
               docString: When the Radio Button is removed from the screen.
         helpLink: m3.radiobutton
         clientOnly: true
+        attrInfo:
+          align:
+            name: enum
+            helpLink: m3.radiobutton
+            docString: The position of this component in the available space.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
         globals:
           enabled: *ref_186
           visible: *ref_187
@@ -3147,6 +3361,14 @@ attrs:
               docString: When the NavigationLink is removed from the screen.
         helpLink: m3.navigationlink
         clientOnly: true
+        attrInfo:
+          icon:
+            name: enum
+            helpLink: m3.navigationlink
+            docString: The icon to display on this component.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
         globals:
           visible: *ref_208
           text: *ref_209
@@ -3486,6 +3708,21 @@ attrs:
               docString: When the component is clicked.
         helpLink: m3.menuitem
         clientOnly: true
+        attrInfo:
+          leading_icon:
+            name: enum
+            helpLink: m3.menuitem
+            docString: The icon to display on this component.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+          trailing_icon:
+            name: enum
+            helpLink: m3.menuitem
+            docString: The icon to display on this component.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
         globals:
           visible: *ref_233
           enabled: *ref_234
@@ -3820,6 +4057,25 @@ attrs:
               docString: When the Link is removed from the screen.
         helpLink: m3.link
         clientOnly: true
+        attrInfo:
+          align:
+            name: enum
+            helpLink: m3.link
+            docString: The position of this component in the available space.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+            options:
+              - left
+              - center
+              - right
+          icon:
+            name: enum
+            helpLink: m3.link
+            docString: The icon to display on this component.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
         globals:
           text: *ref_259
           align: *ref_260
@@ -4054,6 +4310,20 @@ attrs:
           events: []
         helpLink: m3.linearprogressindicator
         clientOnly: true
+        attrInfo:
+          type:
+            name: enum
+            helpLink: m3.linearprogressindicator
+            docString: >-
+              Display a determinate or indeterminate progress indicator. Use
+              determinate to set the progress with the progress property. Use
+              indeterminate to express an unspecified amount of wait time.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+            options:
+              - determinate
+              - indeterminate
         globals:
           progress_color: *ref_282
           visible: *ref_283
@@ -4300,6 +4570,38 @@ attrs:
               docString: When the IconButton is clicked.
         helpLink: m3.iconbuttonmenu
         clientOnly: true
+        attrInfo:
+          align:
+            name: enum
+            helpLink: m3.iconbuttonmenu
+            docString: The position of this component in the available space.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+            options:
+              - left
+              - right
+              - center
+          appearance:
+            name: enum
+            helpLink: m3.iconbuttonmenu
+            docString: A predefined style for the IconButton.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+            options:
+              - filled
+              - elevated
+              - tonal
+              - outlined
+              - text
+          icon:
+            name: enum
+            helpLink: m3.iconbuttonmenu
+            docString: The icon to display on the IconButton.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
         globals:
           align: *ref_295
           appearance: *ref_296
@@ -4544,6 +4846,33 @@ attrs:
               docString: When the component is clicked.
         helpLink: m3.iconbutton
         clientOnly: true
+        attrInfo:
+          align:
+            name: enum
+            helpLink: m3.iconbutton
+            docString: The position of this component in the available space.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+          appearance:
+            name: enum
+            helpLink: m3.iconbutton
+            docString: A predefined style for this component.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+            options:
+              - standard
+              - filled
+              - tonal
+              - outlined
+          icon:
+            name: enum
+            helpLink: m3.iconbutton
+            docString: The icon to display on this component.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
         globals:
           align: *ref_314
           appearance: *ref_315
@@ -4853,6 +5182,48 @@ attrs:
               docString: When the Heading is removed from the screen.
         helpLink: m3.heading
         clientOnly: true
+        attrInfo:
+          align:
+            name: enum
+            helpLink: m3.heading
+            docString: The position of this component in the available space.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+            options:
+              - left
+              - right
+              - center
+              - justify
+          icon:
+            name: enum
+            helpLink: m3.heading
+            docString: The icon to display on this component.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+          style:
+            name: enum
+            helpLink: m3.heading
+            docString: 'Role of the heading component: display, headline or title.'
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+            options:
+              - display
+              - headline
+              - title
+          scale:
+            name: enum
+            helpLink: m3.heading
+            docString: The size of the heading component.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+            options:
+              - small
+              - medium
+              - large
         globals:
           visible: *ref_330
           italic: *ref_331
@@ -5269,6 +5640,38 @@ attrs:
               docString: When the FileLoader loses focus.
         helpLink: m3.fileloader
         clientOnly: true
+        attrInfo:
+          align:
+            name: enum
+            helpLink: m3.fileloader
+            docString: The position of this component in the available space.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+            options:
+              - left
+              - center
+              - right
+          appearance:
+            name: enum
+            helpLink: m3.fileloader
+            docString: A predefined style for this component.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+            options:
+              - text
+              - filled
+              - elevated
+              - tonal
+              - outlined
+          icon:
+            name: enum
+            helpLink: m3.fileloader
+            docString: The icon to display on this component.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
         functions:
           clear: *ref_355
           focus: *ref_356
@@ -5769,6 +6172,35 @@ attrs:
               docString: When an item is selected.
         helpLink: m3.dropdownmenu
         clientOnly: true
+        attrInfo:
+          align:
+            name: enum
+            helpLink: m3.dropdownmenu
+            docString: The position of this component in the available space.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+            options:
+              - left
+              - right
+              - center
+          appearance:
+            name: enum
+            helpLink: m3.dropdownmenu
+            docString: A predefined style for this component.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+            options:
+              - filled
+              - outlined
+          leading_icon:
+            name: enum
+            helpLink: m3.dropdownmenu
+            docString: The leading icon to display on this component.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
         globals:
           align: *ref_386
           appearance: *ref_387
@@ -6074,6 +6506,19 @@ attrs:
               docString: When the Divider is removed from the screen.
         helpLink: m3.divider
         clientOnly: true
+        attrInfo:
+          type:
+            name: enum
+            helpLink: m3.divider
+            docString: >-
+              Display the Divider across the full width of the container or
+              inset.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+            options:
+              - full_width
+              - inset
         globals:
           type: *ref_431
           visible: *ref_432
@@ -6245,6 +6690,20 @@ attrs:
           events: []
         helpLink: m3.circularprogressindicator
         clientOnly: true
+        attrInfo:
+          type:
+            name: enum
+            helpLink: m3.circularprogressindicator
+            docString: >-
+              Display a determinate or indeterminate progress indicator. Use
+              determinate to set the progress with the progress property. Use
+              indeterminate to express an unspecified amount of wait time.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+            options:
+              - determinate
+              - indeterminate
         globals:
           color: *ref_440
           visible: *ref_441
@@ -6532,6 +6991,14 @@ attrs:
               docString: When the Checkbox is removed from the screen.
         helpLink: m3.checkbox
         clientOnly: true
+        attrInfo:
+          align:
+            name: enum
+            helpLink: m3.checkbox
+            docString: The position of this component in the available space.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
         functions:
           focus: *ref_452
           add_event_handler: *ref_453
@@ -6779,6 +7246,35 @@ attrs:
           events: []
         helpLink: m3.card
         clientOnly: true
+        attrInfo:
+          align:
+            name: enum
+            helpLink: m3.card
+            docString: The position of this component in the available space.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+          appearance:
+            name: enum
+            helpLink: m3.card
+            docString: A predefined style for this component.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+            options:
+              - elevated
+              - filled
+              - outlined
+          orientation:
+            name: enum
+            helpLink: m3.card
+            docString: The orientation of the content in this Card
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+            options:
+              - column
+              - row
         globals:
           visible: *ref_477
           border: *ref_478
@@ -7095,6 +7591,48 @@ attrs:
               docString: When the Button is clicked.
         helpLink: m3.buttonmenu
         clientOnly: true
+        attrInfo:
+          align:
+            name: enum
+            helpLink: m3.buttonmenu
+            docString: The position of this component in the available space.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+            options:
+              - left
+              - right
+              - center
+          appearance:
+            name: enum
+            helpLink: m3.buttonmenu
+            docString: A predefined style for the Button.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+            options:
+              - filled
+              - elevated
+              - tonal
+              - outlined
+              - text
+          icon:
+            name: enum
+            helpLink: m3.buttonmenu
+            docString: The icon to display on the Button.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+          icon_align:
+            name: enum
+            helpLink: m3.buttonmenu
+            docString: The alignment of the icon on this component.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+            options:
+              - left
+              - right
         globals:
           align: *ref_491
           appearance: *ref_492
@@ -7446,6 +7984,48 @@ attrs:
               docString: When the component is clicked.
         helpLink: m3.button
         clientOnly: true
+        attrInfo:
+          align:
+            name: enum
+            helpLink: m3.button
+            docString: The position of this component in the available space.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+            options:
+              - left
+              - right
+              - center
+          appearance:
+            name: enum
+            helpLink: m3.button
+            docString: A predefined style for this component.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+            options:
+              - filled
+              - elevated
+              - tonal
+              - outlined
+              - text
+          icon:
+            name: enum
+            helpLink: m3.button
+            docString: The icon to display on this component.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+          icon_align:
+            name: enum
+            helpLink: m3.button
+            docString: The alignment of the icon on this component.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+            options:
+              - left
+              - right
         globals:
           align: *ref_519
           appearance: *ref_520
@@ -7792,6 +8372,40 @@ attrs:
               docString: When the Avatar is clicked.
         helpLink: m3.avatarmenu
         clientOnly: true
+        attrInfo:
+          align:
+            name: enum
+            helpLink: m3.avatarmenu
+            docString: The position of this component in the available space.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+            options:
+              - left
+              - right
+              - center
+          appearance:
+            name: enum
+            helpLink: m3.avatarmenu
+            docString: A predefined style for this component.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+            options:
+              - filled
+              - elevated
+              - tonal
+              - outlined
+              - text
+          fallback_icon:
+            name: enum
+            helpLink: m3.avatarmenu
+            docString: >-
+              The icon to display on the Avatar if no image or user_name is
+              provided.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
         globals:
           align: *ref_544
           appearance: *ref_545
@@ -8097,6 +8711,32 @@ attrs:
           events: []
         helpLink: m3.avatar
         clientOnly: true
+        attrInfo:
+          align:
+            name: enum
+            helpLink: m3.avatar
+            docString: The position of this component in the available space.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+          appearance:
+            name: enum
+            helpLink: m3.avatar
+            docString: A predefined style for this component.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+            options:
+              - filled
+              - tonal
+              - outlined
+          fallback_icon:
+            name: enum
+            helpLink: m3.avatar
+            docString: The icon to display if no image or user_name is provided.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
         globals:
           align: *ref_569
           appearance: *ref_570
@@ -8350,6 +8990,28 @@ attrs:
               docString: When refresh_data_bindings is called.
         helpLink: m3.navigationraillayout
         clientOnly: true
+        attrInfo:
+          navigation_rail_collapse_to:
+            name: enum
+            helpLink: m3.navigationraillayout
+            docString: The way the side navigation will collapse on mobile.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+            options:
+              - bottom_app_bar
+              - modal_navigation_drawer
+          navigation_rail_vertical_align:
+            name: enum
+            helpLink: m3.navigationraillayout
+            docString: The vertical position of the content in the navigation rail.
+            attrs: {}
+            isBuiltin: true
+            isComponentProperty: true
+            options:
+              - top
+              - center
+              - bottom
         functions:
           open_nav_drawer: *ref_591
           hide_nav_drawer: *ref_592
