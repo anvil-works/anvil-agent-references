@@ -18,6 +18,18 @@ _UserCheck = Callable[[Row | None], bool]
 # Exceptions
 # ============================================================================
 
+class AnvilWrappedError(Exception):
+    """Base class for exceptions transported between client and server."""
+
+    message: Any
+
+    def __init__(self, message: Any = "") -> None: ...
+
+
+# Private compatibility for existing code; portable exceptions will supersede it.
+def _register_exception_type(name: str, cls: type[Exception]) -> None: ...
+
+
 class SerializationError(Exception):
     """Raised when serialization fails."""
     ...
@@ -420,6 +432,9 @@ loading_indicator: _LoadingIndicator
 """Create or control a loading indicator manually.
 
 [Anvil Docs](https://anvil.works/docs/client/adding-ui-elements/loading-indicator)"""
+
+startup_data: Any
+"""Serializable startup data supplied by a server AppResponder."""
 
 
 # ============================================================================

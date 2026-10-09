@@ -18,6 +18,18 @@ _UserCheck = Callable[[Row | None], bool]
 # Exceptions
 # ============================================================================
 
+class AnvilWrappedError(Exception):
+    """Base class for exceptions transported between client and server."""
+
+    message: Any
+
+    def __init__(self, message: Any = "") -> None: ...
+
+
+# Private compatibility for existing code; portable exceptions will supersede it.
+def _register_exception_type(name: str, cls: type[Exception]) -> None: ...
+
+
 class SerializationError(Exception):
     """Raised when serialization fails."""
     ...
@@ -481,6 +493,25 @@ def is_app_online() -> bool:
 # ============================================================================
 # HTTP Response Classes
 # ============================================================================
+
+class _LoadAppResponse:
+    """A response instructing the browser to load an app, form or module."""
+    ...
+
+
+class AppResponder:
+    """Create app-loading responses with startup data and metadata.
+
+    [Anvil Docs](https://anvil.works/docs/http-apis/creating-http-endpoints#appresponder-object)"""
+
+    data: Any
+    meta: dict[str, Any] | None
+
+    def __init__(self, *, data: Any = None, meta: dict[str, Any] | None = None) -> None: ...
+    def load_form(self, form_name: str, *args: Any, **kwargs: Any) -> _LoadAppResponse: ...
+    def load_module(self, module_name: str) -> _LoadAppResponse: ...
+    def load_app(self) -> _LoadAppResponse: ...
+
 
 class HttpResponse:
     """An HTTP response object.
