@@ -2,8 +2,8 @@
 # Edit the source file in doc/anvil-api-stubs/source/ instead, then run:
 #   pnpm -F docs build
 #
-# AUTO-GENERATED from webtypy - https://github.com/pyodide/webtypy
-# Run `npm run generate-anvil-dom-stubs` to regenerate
+# DOM declarations adapted from webtypy - https://github.com/pyodide/webtypy
+# Maintained here; generate the client stubs with doc/anvil-api-stubs/generate-stubs.mjs
 #
 """The anvil.js.window module provides access to the browser's window object.
 
@@ -1449,8 +1449,12 @@ class Navigator(NavigatorBadge, NavigatorDeviceMemory, NavigatorID, NavigatorLan
     windowControlsOverlay: WindowControlsOverlay
 
 class Storage:
+    """Web Storage API interface for localStorage and sessionStorage."""
     length: int
     def key(self, index: int) -> str | None: ...
+    def getItem(self, key: str) -> str | None: ...
+    def setItem(self, key: str, value: str) -> None: ...
+    def removeItem(self, key: str) -> None: ...
     def clear(self) -> None: ...
 
 class ConsoleNamespace:
@@ -2250,16 +2254,6 @@ CSSOMString = str
 # WebIDL numeric types
 short = int
 DOMHighResTimeStamp = float
-
-# Note: webtypy's Storage is incomplete, so we override it here
-class Storage:
-    """Web Storage API interface for localStorage and sessionStorage."""
-    length: int
-    def key(self, index: int) -> str | None: ...
-    def getItem(self, key: str) -> str | None: ...
-    def setItem(self, key: str, value: str) -> None: ...
-    def removeItem(self, key: str) -> None: ...
-    def clear(self) -> None: ...
 
 # Undefined types from webtypy - aliased to Any for compatibility
 # These are WebIDL types not fully implemented in webtypy

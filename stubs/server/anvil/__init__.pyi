@@ -205,7 +205,8 @@ app: AppInfo
 # Utility Functions
 # ============================================================================
 
-def is_server_side() -> bool:
+
+def is_server_side() -> Literal[True]:
     """Check whether Anvil is running server side or not."""
     ...
 
