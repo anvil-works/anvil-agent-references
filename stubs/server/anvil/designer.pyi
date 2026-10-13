@@ -6,8 +6,9 @@
 # Generated files: client/anvil/designer.pyi, server/anvil/designer.pyi
 
 from typing import Any, Callable, Mapping, TypeVar
+from anvil import Component
 
-_T = TypeVar("_T")
+_ComponentClass = TypeVar("_ComponentClass", bound=type[Component])
 
 in_designer: bool
 """True when code is running in the Anvil designer, otherwise False.
@@ -58,7 +59,7 @@ def notify_interactions_changed(component: Any, /) -> None:
     """Notify the designer that available interactions may have changed."""
     ...
 
-def get_design_component(component_class: type[_T], /) -> type[_T]:
+def get_design_component(component_class: _ComponentClass, /) -> _ComponentClass:
     """Get the design-time class for a component class.
 
     [Anvil Docs](https://anvil.works/docs/client/advanced-layouts/component-api/designer-module)"""
