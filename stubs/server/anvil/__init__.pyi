@@ -25,6 +25,8 @@ _StyleScalar = str | int | float
 _StylePropertyValue = _StyleScalar | list[_StyleScalar]
 _StyleUpdatePropertyValue = _StylePropertyValue | None
 _StyleValue = str | Mapping[str, _StylePropertyValue] | None
+_AttrValue = Any
+_AttrsValue = Mapping[str, _AttrValue] | None
 
 class SpacingPropertyValue(TypedDict, total=False):
     margin: MarginPropertyValue
