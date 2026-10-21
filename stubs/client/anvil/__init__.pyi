@@ -5,8 +5,8 @@
 # Type stubs for Anvil
 # Generated files: client/anvil/__init__.pyi, server/anvil/__init__.pyi
 
-from typing import Any, Callable, TypeVar, overload, Iterator, Mapping, Literal, TypedDict
-from typing_extensions import Unpack, deprecated, override
+from typing import Any, Callable, Generic, overload, Iterator, Mapping, Literal, TypedDict
+from typing_extensions import TypeVar, Unpack, deprecated, override
 
 from . import property_utils
 
@@ -743,7 +743,10 @@ class Component:
         ...
 
 
-class Container(Component):
+_ContainerChild = TypeVar("_ContainerChild", bound=Component, default=Component)
+
+
+class Container(Component, Generic[_ContainerChild]):
     """Base class for container components.
 
     [Anvil Docs](https://anvil.works/docs/client/components)"""
@@ -760,7 +763,7 @@ class Container(Component):
         [Anvil Docs](https://anvil.works/docs/client/components)"""
         ...
 
-    def get_components(self) -> list[Component]:
+    def get_components(self) -> list[_ContainerChild]:
         """Get a list of components in this container.
 
         [Anvil Docs](https://anvil.works/docs/client/components)"""
@@ -2310,6 +2313,10 @@ class FileLoader(Component):
     def remove_event_handler(self, event_name: _FileLoaderEvents | str, handler_func: Callable[..., Any] | None = None, /) -> None: ...
     @override
     def set_event_handler(self, event_name: _FileLoaderEvents | str, handler_func: Callable[..., Any] | None, /) -> None: ...
+    @overload
+    @override
+    def raise_event(self, event_name: Literal["change"], /, *, file: Media | None, files: list[Media], **event_args: Any) -> None: ...
+    @overload
     @override
     def raise_event(self, event_name: _FileLoaderEvents | str, /, **event_args: Any) -> None: ...
 
@@ -2975,7 +2982,7 @@ class DataRowPanel(Container):
         spacing_below: Literal["none", "small", "medium", "large"] | None = ...,
     ) -> None: ...
 
-class RepeatingPanel(Container):
+class RepeatingPanel(Container[_ContainerChild]):
     """A panel that repeats a template for each item in a list.
 
     [Anvil Docs](https://anvil.works/docs/client/components/repeating-panel)"""
@@ -3026,7 +3033,7 @@ class RepeatingPanel(Container):
     def spacing_below(self, value: Literal["none", "small", "medium", "large"] | None) -> None: ...
 
     @override
-    def get_components(self) -> list[Component]:
+    def get_components(self) -> list[_ContainerChild]:
         """Get all repeated template instances.
 
         [Anvil Docs](https://anvil.works/docs/client/components/repeating-panel)"""

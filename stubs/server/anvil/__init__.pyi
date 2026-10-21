@@ -5,8 +5,8 @@
 # Type stubs for Anvil
 # Generated files: client/anvil/__init__.pyi, server/anvil/__init__.pyi
 
-from typing import Any, Callable, TypeVar, overload, Iterator, Mapping, Literal, TypedDict
-from typing_extensions import Unpack, deprecated, override
+from typing import Any, Callable, Generic, overload, Iterator, Mapping, Literal, TypedDict
+from typing_extensions import TypeVar, Unpack, deprecated, override
 
 
 _T = TypeVar("_T")
