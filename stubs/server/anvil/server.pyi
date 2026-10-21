@@ -5,12 +5,14 @@
 # Type stubs for anvil.server module
 # Generated files: client/anvil/server.pyi, server/anvil/server.pyi
 
-from typing import Any, Callable, TypeVar, overload, Literal
-from typing_extensions import ParamSpec
+from typing import Any, Callable, TypeVar, overload, Literal, Generic
+from typing_extensions import ParamSpec, TypeVar as TypeVarWithDefault
 from anvil.tables import Row
 
 _T = TypeVar("_T")
 _P = ParamSpec("_P")
+_CallableT = TypeVar("_CallableT", bound=Callable[..., Any])
+_TaskResult = TypeVarWithDefault("_TaskResult", default=Any, covariant=True)
 _UserCheck = Callable[[Row | None], bool]
 
 
@@ -241,10 +243,10 @@ def call_s(fn_name: str, /, *args: Any, **kwargs: Any) -> Any:
 
 # Callable decorator (server-only - marks functions as callable from client code)
 @overload
-def callable(fn: Callable[_P, _T], /) -> Callable[_P, _T]: ...
+def callable(fn: _CallableT, /) -> _CallableT: ...
 @overload
-def callable(name: str | None = None, /, *, require_user: bool | _UserCheck = False) -> Callable[[Callable[_P, _T]], Callable[_P, _T]]: ...
-def callable(fn_or_name: Callable[_P, _T] | str | None = ..., /, *, require_user: bool | _UserCheck = False) -> Callable[_P, _T] | Callable[[Callable[_P, _T]], Callable[_P, _T]]:
+def callable(name: str | None = None, /, *, require_user: bool | _UserCheck = False) -> Callable[[_CallableT], _CallableT]: ...
+def callable(fn_or_name: _CallableT | str | None = ..., /, *, require_user: bool | _UserCheck = False) -> _CallableT | Callable[[_CallableT], _CallableT]:
     """Mark a function as callable from client code.
 
     [Anvil Docs](https://anvil.works/docs/server/server-modules)"""
@@ -270,17 +272,17 @@ def server_method(
 
 # Background task decorator
 @overload
-def background_task(fn: Callable[_P, _T]) -> Callable[_P, _T]: ...
+def background_task(fn: _CallableT) -> _CallableT: ...
 @overload
-def background_task() -> Callable[[Callable[_P, _T]], Callable[_P, _T]]: ...
-def background_task(fn: Callable[_P, _T] | None = None) -> Callable[_P, _T] | Callable[[Callable[_P, _T]], Callable[_P, _T]]:
+def background_task(fn_or_name: str | None = None, /) -> Callable[[_CallableT], _CallableT]: ...
+def background_task(fn_or_name: _CallableT | str | None = None) -> _CallableT | Callable[[_CallableT], _CallableT]:
     """Mark a function as a background task.
 
     [Anvil Docs](https://anvil.works/docs/background-tasks)"""
     ...
 
 # Launch a background task
-def launch_background_task(task_name: str, /, *args: Any, **kwargs: Any) -> Any:
+def launch_background_task(task_name: str, /, *args: Any, **kwargs: Any) -> BackgroundTaskState[Any]:
     """Launch a background task by name.
 
     [Anvil Docs](https://anvil.works/docs/background-tasks)"""
@@ -425,7 +427,7 @@ task_state: dict[str, Any]
 
 [Anvil Docs](https://anvil.works/docs/background-tasks/communicating-back)"""
 
-class BackgroundTaskState:
+class BackgroundTaskState(Generic[_TaskResult]):
     """Information about a background task."""
 
     task_id: str
@@ -445,7 +447,7 @@ class BackgroundTaskState:
         [Anvil Docs](https://anvil.works/docs/background-tasks)"""
         ...
 
-    def get_return_value(self) -> Any:
+    def get_return_value(self) -> _TaskResult:
         """Get the return value of this background task, if completed."""
         ...
 

@@ -57,7 +57,7 @@ def none_of(*query_expressions: Any, **kwargs: Any) -> Any:
     """Match none of the query parameters given as arguments and keyword arguments."""
     ...
 
-def not_(value: Any, /) -> Any:
+def not_(*query_expressions: Any, **kwargs: Any) -> Any:
     """Match none of the query parameters given as arguments and keyword arguments."""
     ...
 
