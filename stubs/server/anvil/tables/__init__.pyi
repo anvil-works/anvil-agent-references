@@ -405,6 +405,22 @@ def in_transaction(function: _F | None = None, *, relaxed: bool = False) -> _F |
     [Anvil Docs](https://anvil.works/docs/data-tables/transactions)"""
     ...
 
+def on_transaction_end(
+    before_commit: Callable[[], Any] | None = None,
+    after_commit: Callable[[], Any] | None = None,
+    after_rollback: Callable[[BaseException | None], Any] | None = None,
+) -> None:
+    """Register callbacks to run when the current data tables transaction ends.
+
+    before_commit callbacks run (with no arguments) just before the transaction attempts to commit;
+    after_commit callbacks run (with no arguments) after it commits successfully;
+    after_rollback callbacks run after the transaction is rolled back, receiving the exception
+    that caused the rollback (or None for an explicit abort()).
+    If no transaction is open, before_commit and then after_commit are called immediately.
+
+    [Anvil Docs](https://anvil.works/docs/data-tables/TODO)"""
+    ...
+
 def get_table_by_id(table_id: str) -> Table[Row]:
     """Get a table by id. Can pass a row id in, and the table the row belongs to will be returned.
 
