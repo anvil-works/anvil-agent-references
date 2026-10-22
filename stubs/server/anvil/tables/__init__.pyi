@@ -387,7 +387,10 @@ class Transaction:
     [Anvil Docs](https://anvil.works/docs/data-tables/transactions)"""
     def __init__(self, relaxed: bool = False) -> None: ...
     def __enter__(self) -> "Transaction":
-        """Begin the transaction
+        """Begin the transaction.
+
+        If a transaction is already open, this block is merged into it:
+        it commits or rolls back with the outermost transaction.
 
         [Anvil Docs](https://anvil.works/docs/data-tables/transactions)"""
         ...
@@ -397,7 +400,10 @@ class Transaction:
         [Anvil Docs](https://anvil.works/docs/data-tables/transactions)"""
         ...
     def abort(self) -> None:
-        """Abort this transaction and roll back all changes.
+        """Abort the transaction this block is part of, and roll back all changes when the outermost transaction ends.
+
+        Raises an error if this block is nested in a transaction opened by a different server call
+        (for example, the server function that called this one), or if this transaction is not open.
 
         [Anvil Docs](https://anvil.works/docs/data-tables/transactions)"""
         ...
