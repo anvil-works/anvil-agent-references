@@ -54,7 +54,7 @@ class ScriptExitError(Exception):
 class Capability:
     """A Capability represents the ability to perform an action.
 
-    [Anvil Docs](https://anvil.works/docs/server/capabilities)"""
+    [Anvil Docs](https://anvil.works/docs/other-concepts/portable-classes/capabilities)"""
 
     ANY: Any
     """Sentinel value for unwrap_capability."""
@@ -123,6 +123,8 @@ class _Location:
 
     city: str | None
     country: str | None
+    country_code: str | None
+    subdivision: str | None
     latitude: float | None
     longitude: float | None
 
@@ -139,6 +141,10 @@ class _StackFrame:
 
 class CallContext:
     """Contains information about what triggered the currently running code."""
+
+    ClientInfo = _ClientInfo
+    StackFrame = _StackFrame
+    Location = _Location
 
     client: _ClientInfo
     """An object that describes the client that initiated the current session."""
@@ -187,7 +193,7 @@ def server_method(
     Methods decorated with @anvil.server.server_method can be called on portable
     class instances from client code, and will execute on the server.
 
-    [Anvil Docs](https://anvil.works/docs/server/portable-classes#server-methods)"""
+    [Anvil Docs](https://anvil.works/docs/other-concepts/portable-classes/server-methods)"""
     ...
 
 # Background task decorator
@@ -198,14 +204,14 @@ def background_task(fn_or_name: str | None = None, /) -> Callable[[_CallableT], 
 def background_task(fn_or_name: _CallableT | str | None = None) -> _CallableT | Callable[[_CallableT], _CallableT]:
     """Mark a function as a background task.
 
-    [Anvil Docs](https://anvil.works/docs/background-tasks)"""
+    [Anvil Docs](https://anvil.works/docs/server/background-tasks)"""
     ...
 
 # Launch a background task
 def launch_background_task(task_name: str, /, *args: Any, **kwargs: Any) -> BackgroundTaskState[Any]:
     """Launch a background task by name.
 
-    [Anvil Docs](https://anvil.works/docs/background-tasks)"""
+    [Anvil Docs](https://anvil.works/docs/server/background-tasks)"""
     ...
 
 # Run a script and wait for its result
@@ -221,32 +227,16 @@ def run_script(script_name: str, /, *args: Any) -> Any:
     is killed (BackgroundTaskKilled), that error is raised here. To call a script from
     client code, allow it in the app's script_config.
 
-    [Anvil Docs](https://anvil.works/docs/background-tasks)"""
+    [Anvil Docs](https://anvil.works/docs/server/background-tasks)"""
     ...
 
-# Request context
-class request:
-    """HTTP request context for http_endpoint handlers.
-
-    [Anvil Docs](https://anvil.works/docs/server/http-endpoints)"""
-    method: str
-    path: str
-    body: bytes
-    body_json: Any | None
-    remote_address: str
-    headers: dict[str, str]
-    query_params: dict[str, str]
-    form_params: dict[str, str]
-    cookies: dict[str, str]
-    user: Any
-    @staticmethod
-    def get_header(name: str) -> str | None: ...
+# Request context (available only inside HTTP endpoint handlers).
 
 # Session handling
 class session:
     """Server-side session storage.
 
-    [Anvil Docs](https://anvil.works/docs/server/sessions)"""
+    [Anvil Docs](https://anvil.works/docs/server/sessions-and-cookies)"""
     @staticmethod
     def get(key: str, default: Any = None) -> Any: ...
     @staticmethod
@@ -262,7 +252,7 @@ def http_endpoint(path: str, methods: list[str] | None = None, authenticate_user
     The endpoint URL is the app origin followed by /_/api and path:
     http_endpoint("/orders") is accessible at /_/api/orders.
 
-    [Anvil Docs](https://anvil.works/docs/server/http-endpoints)"""
+    [Anvil Docs](https://anvil.works/docs/external-resources/http-apis/creating-http-endpoints)"""
     ...
 
 
@@ -270,14 +260,14 @@ def http_endpoint(path: str, methods: list[str] | None = None, authenticate_user
 def connect(url: str, /, **kwargs: Any) -> Any:
     """Connect to an Anvil Uplink server.
 
-    [Anvil Docs](https://anvil.works/docs/uplink)"""
+    [Anvil Docs](https://anvil.works/docs/external-resources/uplink)"""
     ...
 
 # Portable classes
 def portable_class(cls: type[_T], /) -> type[_T]:
     """Decorator to make a class portable across client and server.
 
-    [Anvil Docs](https://anvil.works/docs/server/portable-classes)"""
+    [Anvil Docs](https://anvil.works/docs/other-concepts/portable-classes)"""
     ...
 
 
@@ -292,7 +282,7 @@ def get_app_origin(environment_type: Literal["published"] | None = None) -> str:
     which might be private or temporary. If you want the URL for the published
     branch, pass 'published' as an argument.
 
-    [Anvil Docs](https://anvil.works/docs/http-apis/creating-http-endpoints#getting-the-url-for-your-api)"""
+    [Anvil Docs](https://anvil.works/docs/external-resources/http-apis/creating-http-endpoints#getting-the-url-for-your-api)"""
     ...
 
 
@@ -303,7 +293,7 @@ def get_api_origin(environment_type: Literal["published"] | None = None) -> str:
     which might be private or temporary. If you want the URL for the published
     branch, pass 'published' as an argument.
 
-    [Anvil Docs](https://anvil.works/docs/http-apis/creating-http-endpoints#getting-the-url-for-your-api)"""
+    [Anvil Docs](https://anvil.works/docs/external-resources/http-apis/creating-http-endpoints#getting-the-url-for-your-api)"""
     ...
 
 
@@ -343,7 +333,7 @@ class BackgroundTaskState(Generic[_TaskResult]):
     def get_task_name(self) -> str:
         """Get the registered name of this background task.
 
-        [Anvil Docs](https://anvil.works/docs/background-tasks)"""
+        [Anvil Docs](https://anvil.works/docs/server/background-tasks)"""
         ...
 
     def get_return_value(self) -> _TaskResult:
@@ -372,7 +362,7 @@ def get_background_task(id: str, /) -> BackgroundTaskState:
 
     You can get the task id from task.get_id().
 
-    [Anvil Docs](https://anvil.works/docs/background-tasks/communicating-back)"""
+    [Anvil Docs](https://anvil.works/docs/server/background-tasks/communicating-back)"""
     ...
 
 
@@ -382,7 +372,7 @@ def list_background_tasks(all_environments: bool = False) -> list[BackgroundTask
     If all_environments is True, this function will return all of the app's
     running Tasks regardless of environment.
 
-    [Anvil Docs](https://anvil.works/docs/background-tasks#list-background-tasks-from-code)"""
+    [Anvil Docs](https://anvil.works/docs/server/background-tasks#list-background-tasks-from-code)"""
     ...
 
 
