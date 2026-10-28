@@ -23,6 +23,8 @@ properties:
 </article>
 ```
 
+When rendered, each `<anvil-dropzone>` is replaced by its contents and inserted child components, which become direct children of the surrounding HTML element. The dropzone remains in the saved template.
+
 Caller template:
 
 ```html

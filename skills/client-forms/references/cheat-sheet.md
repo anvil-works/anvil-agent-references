@@ -21,9 +21,9 @@ For the full model, load `template-shapes.md`.
 | `<anvil-component type="...">` | Creates an Anvil component instance. Children are only for components that are valid containers. |
 | `<anvil-block slot="name">` | Fills a named slot on the layout referenced by `<anvil-form layout="...">`. |
 | `<anvil-slot name="name">` | Declares a named slot that child Forms can fill when they use this Form as a layout. |
-| `<anvil-dropzone name="name">` | In a custom component container, marks where caller-supplied child components may be inserted. |
+| `<anvil-dropzone name="name">` | Marks where components can be inserted into HTML, including caller-supplied children in a custom component container. |
 
-Use blocks to fill an existing layout, slots to define a layout, and dropzones only for custom component containers.
+Use blocks to fill an existing layout, slots to define a layout, and dropzones to mark insertion points in HTML.
 
 ## Attribute Prefixes
 
