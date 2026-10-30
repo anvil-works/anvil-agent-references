@@ -80,6 +80,11 @@ class TodoItem(app_tables.todo_items.Row, buffered=True):
 - Treat non-`self` arguments to server methods as untrusted client input.
 - For private data, derive identity and enforce ownership in trusted server code or model hooks.
 
+## Transactions
+
+- Keep `@anvil.tables.in_transaction` blocks as short as possible: wrap only the reads and writes that must be atomic, such as read-check-write on a counter or uniqueness check.
+- Do not make slow calls, such as HTTP requests, email, or AI APIs, inside a transaction. Defer side effects with `anvil.tables.on_transaction_end(after_commit=...)`.
+
 ## When Dicts Are Fine
 
 Use dicts for simple transient UI state, API payloads, form scratch data with no backing row, or values that are naturally document-shaped. Do not use dicts as the default transport for rows that Anvil can pass directly.
