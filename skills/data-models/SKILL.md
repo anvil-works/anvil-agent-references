@@ -34,6 +34,7 @@ Done when the table schema, model classes, server methods, form bindings, and va
 - Prefer live Data Table rows, search iterators, and model classes over dict DTOs passed through server callables.
 - Default tables to `client: none` and return rows/search results from server code. Do not choose direct client table access unless the user requests it; client-side row saves use model `client_*` flags and checked `_do_*` hooks, not `client: full`.
 - When the user asks for a client-readable or client-writable table view, return the `client_readable(...)` or `client_writable(...)` view itself. Use `q.only_cols(...)` as needed to restrict client visibility.
+- When server code returns rows or search results for a view that uses only a few columns, such as a list or summary, add `q.fetch_only(...)` to the search so only those columns are loaded and sent. Reading other columns still works but costs a round trip.
 - Put domain behavior on model classes when it naturally belongs to one table or row type.
 - Use Forms for interaction and presentation logic, not as the main home for data rules.
 - Use ordinary `@anvil.server.callable` functions for cross-model operations, external services, background tasks, bootstrapping, or logic that does not naturally belong to one model.
