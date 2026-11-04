@@ -57,13 +57,13 @@ Use `@handle(...)` for new Anvil component events unless preserving nearby marku
 
 ## Property Values
 
-Property values are parsed from attributes:
+Property values are parsed from attributes as JSON. Values that are not valid JSON are treated as strings.
 
 - Strings: `prop:text="Hello"`
 - Numbers: `prop:count="42"`
 - Floats: `prop:ratio="3.14"`
-- Booleans: `prop:enabled="true"`
-- Null: `prop:maybe="null"`
+- Booleans: `prop:enabled="true"`, `prop:visible="false"`, not `"True"` or `"False"`
+- Null: `prop:maybe="null"`, not `"None"`
 - JSON objects: `prop:config='{"foo":"bar","count":1}'`
 - JSON arrays: `prop:tags='["a","b"]'`
 - JSON-looking strings: wrap the value as a JSON string, such as `prop:text='"{}"'`
