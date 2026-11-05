@@ -72,6 +72,31 @@ class TodoItem(app_tables.todo_items.Row, buffered=True):
 - Use draft rows for create flows. Client-side `save()` requires a client-writable model with permission checks in the corresponding `_do_*` hooks; do not grant table-level `client: full` for it.
 - Avoid copying rows into dicts solely to make editing cancellable; buffering and drafts exist for that.
 
+## Row Caching
+
+When you send a Row instance to a server function and update its columns there, the client's cached column values are updated when the call returns.
+
+```python
+anvil.server.call("increment_counter", counter)  # updates the supplied Row
+number = counter["number"]  # includes the server's update
+```
+
+However, separately fetched Row instances cache values independently, even when they refer to the same database record. Updates made through one instance do not automatically update another instance's cached values.
+
+```python
+from anvil.tables import query as q
+
+counter.refresh(q.fetch_only("number"))
+number = counter["number"]
+increment_counter()  # fetches and updates its own Row instance
+counter["number"] == number  # still the cached value
+counter.refresh(q.fetch_only("number"))
+counter["number"] == number + 1
+```
+
+- Use `row.refresh(q.fetch_only(...))` when you need to read changes made through a separately fetched Row instance. Specify only the columns you need.
+- Prefer passing the Row instance to helpers that update it, or use Model classes with server methods that update the instance.
+
 ## Server Behavior
 
 - Use `@anvil.server.server_method` for privileged operations that belong on a model instance or collection.
