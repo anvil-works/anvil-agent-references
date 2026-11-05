@@ -20,7 +20,7 @@ Server code lives under `server_code/`:
 - Never create `server_code/__init__.py`; `server_code/` is an Anvil code root, not a Python package.
 - Keep imports and package structure consistent with the app.
 - Use the Anvil server API stubs available to this agent for Anvil API references.
-- For protected `@anvil.server.callable` functions, prefer declarative decorator arguments such as `require_user=` when existing server modules in this app already use that style for the same kind of access control.
+- For `@anvil.server.callable` functions that need a user-level permission, use the decorator's `require_user=` argument rather than checking in the function body.
 
 ## Datetimes And Timezones
 
