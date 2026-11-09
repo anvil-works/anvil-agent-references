@@ -47,7 +47,8 @@ def capture_emails() -> AbstractContextManager[list[SentEmail]]:
     """Use in a `with` block to capture the emails the app's code sends, including from background tasks and `Message.reply()`.
 
     Yields a list when the block ends, filled with `SentEmail` objects for the emails sent inside the block.
-    Tests never send real email. Wait inside the block for any background tasks whose emails you want to check.
+    Tests never send real email.
+    To check emails sent from background tasks, call `anvil.testing.server.wait_for_background_tasks_to_finish()` inside the block.
 
     ```python
     with capture_emails() as emails:
