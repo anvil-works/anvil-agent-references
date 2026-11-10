@@ -46,6 +46,7 @@ Before behavior changes, inspect enough of `anvil.yaml` to identify `startup_for
 - Inspect Python and template together before changing component names, handlers, bindings, slots, or container/layout shape.
 - For app-wide themes, rebrands, or palette changes, reconcile the app's browser branding before finishing: make the main brand colour the first entry in `theme/parameters.yaml`, and use `$anvil-yaml` to inspect the app logo. Local component styling does not require this.
 - Identify Layout Form vs Container Form before editing template structure.
+- HTML elements don't self-close with `/>`. Always close Anvil elements explicitly, even when empty. Write `<anvil-component type="Label"></anvil-component>`.
 - Use `RepeatingPanel` with an item template Form for repeated rows, cards, list items, search results, order lines, notifications, and similar data-driven UI.
   - Caveat: for a small, fixed layout where each position has distinct meaning, a RepeatingPanel may be the wrong choice.
 - Use `@handle(...)` for new Anvil component events, unless preserving existing markup-wired event style.
