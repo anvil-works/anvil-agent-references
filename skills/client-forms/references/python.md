@@ -50,11 +50,11 @@ Do not use Form Python to render generated app data by building HTML strings or 
 
 For submit/save handlers, distinguish validation from unexpected failures. Validate client-known fields before `anvil.server.call(...)`.
 
-For expected server-side validation failures in simple form flows, handle an explicit result from the server, such as `{"ok": False, "message": "..."}`. Catch exceptions only when the type is part of the callable's contract and is catchable on the client, such as documented Anvil/service exceptions.
+For expected server-side validation failures, handle either an explicit result from the server, such as `{"ok": False, "message": "..."}`, or catch a documented exception contract such as an Anvil/service exception or shared `anvil.server.PortableException` subclass.
 
 Do not rely on ordinary Python built-in exceptions raised by server callables, such as `ValueError` or `TypeError`, being catchable on the browser client as the same exception type.
 
-Do not wrap the server call or Data Table save path in `except Exception`, `except BaseException`, a bare `except`, or `except anvil.server.AnvilWrappedError`. Unexpected save/server/schema errors should raise. Use `finally` only to restore loading state such as button enabled/text; do not convert unexpected exceptions into labels, alerts, or generic retry messages.
+Never wrap the client/server RPC boundary in bare `except`, `except Exception`, or `except anvil.server.AnvilWrappedError`. Catch only declared expected exceptions. Do not turn unexpected RPC, service, network, or Data Table errors into labels, alerts, status text, or generic retry messages. Use `finally` only to restore loading state such as button enabled/text.
 
 ## Handler Signatures
 

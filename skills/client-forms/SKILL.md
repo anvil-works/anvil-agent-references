@@ -57,7 +57,7 @@ Before behavior changes, inspect enough of `anvil.yaml` to identify `startup_for
 - Do not render repeated app data with raw DOM loops, `innerHTML`, `outerHTML`, `insertAdjacentHTML`, `createElement`, cloned DOM nodes, or helper functions that return HTML strings.
 - Do not guess unfamiliar `anvil.*` symbols, dependency component APIs, component properties, roles, or CSS hooks. Confirm them from stubs, dependency docs/files, or nearby working examples.
 - Do not hand-edit legacy YAML templates by default. Convert to HTML for layout work unless the user explicitly asks to stay on YAML.
-- Do not wrap submit/save/server-call/Data Table paths in broad exception handlers. Let unexpected errors raise; use `finally` only to restore UI state such as button enabled/text.
+- Do not wrap submit/save/server-call/Data Table paths in broad exception handlers. Catch only declared expected exceptions; let unexpected errors raise. Use `finally` only to restore UI state such as button enabled/text.
 - Do not use native DOM event handler signatures for Anvil component events, or Anvil component handler signatures for native DOM events.
 
 ## Gotchas
@@ -65,7 +65,7 @@ Before behavior changes, inspect enough of `anvil.yaml` to identify `startup_for
 - Handler signatures differ by event source: Anvil component events use `def handler(self, **event_args)`; native DOM events use `def handler(self, event)`.
 - `writeback:` mutates the bound target, but it does not refresh sibling Data Bindings. Refresh explicitly when an editable item field must update related bound UI immediately.
 - `anvil --json validate` checks syntax and template generation, but it does not prove runtime Anvil API names or dependency component properties exist.
-- Expected user-fixable validation failures should be handled deliberately; unexpected save/server/schema errors should not be converted into generic labels, alerts, or retry messages.
+- Handle expected user-fixable validation failures with explicit result objects or shared portable exceptions; let unexpected save/server/schema errors raise.
 - Legacy `HtmlTemplate` is not modern `HtmlComponent`; treat it as a conversion/compatibility path.
 
 ## Load By Task

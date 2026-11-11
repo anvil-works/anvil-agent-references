@@ -33,17 +33,16 @@ Server code lives under `server_code/`:
 
 ## Validation And Error Handling
 
-- For expected user-fixable validation failures that client code must display
-  inline, prefer an explicit result object for simple form flows, such as
-  `{"ok": False, "message": "Message is required"}` or `{"ok": True}`.
-  Raise normally for unexpected Data Table, service, schema, or implementation
-  errors; do not encode unexpected failures as `{"ok": False, ...}`.
+- For expected user-fixable validation failures, use an explicit result object
+  such as `{"ok": False, "message": "Message is required"}`, or raise a shared
+  `anvil.server.PortableException` when the caller should catch an exact domain
+  error. Let unexpected Data Table, service, schema, and implementation errors
+  raise normally.
 - Do not rely on ordinary Python built-in exceptions raised by server callables,
   such as `ValueError` or `TypeError`, being catchable on the browser client as
-  the same exception type. Use exceptions across the client/server boundary only
-  when the type is already a documented/catchable Anvil or app domain exception,
-  or when deliberately adding a registered exception contract that matches an
-  existing app/runtime pattern.
+  the same exception type.
+- Portable classes and portable exceptions must be defined in client modules so
+  both sides can import the same class.
 
 ## Workflow
 
@@ -70,4 +69,4 @@ anvil --json validate server_code/<Package>/__init__.py
 
 - Server Python is typically 3.10.
 - External server Python libraries can be added in `server_code/requirements.txt`.
-- Server code can import client modules only when existing server code in this app already does so; otherwise keep shared server logic under `server_code/`.
+- Server code can import client modules for shared portable definitions or when the app already does so; otherwise keep shared server logic under `server_code/`.
