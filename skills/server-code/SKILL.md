@@ -67,6 +67,6 @@ anvil --json validate server_code/<Package>/__init__.py
 
 ## Notes
 
-- Server Python is typically 3.10.
+- The Server Python version can be inferred from the `anvil.yaml` under `runtime_options.server_spec.base`. Don't modify this value directly, instead ask the user to choose a version in the "Python Dependencies" settings in the IDE.
 - External server Python libraries can be added in `server_code/requirements.txt`.
 - Server code can import client modules for shared portable definitions or when the app already does so; otherwise keep shared server logic under `server_code/`.
