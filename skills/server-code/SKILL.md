@@ -1,6 +1,6 @@
 ---
 name: server-code
-description: Edit Anvil server code Python modules under `server_code`, including server-callable functions, background logic, and server packages, while keeping changes isolated to the app workspace.
+description: Edit Anvil server modules, callables, and background logic. Use when typing results of server calls or fixing type diagnostics involving those results.
 ---
 
 # Server Code
@@ -21,6 +21,14 @@ Server code lives under `server_code/`:
 - Keep imports and package structure consistent with the app.
 - Use the Anvil server API stubs available to this agent for Anvil API references.
 - For `@anvil.server.callable` functions that need a user-level permission, use the decorator's `require_user=` argument rather than checking in the function body.
+
+## Server Call Return Types
+
+The client may see `Any` if the callable's return annotation depends on a
+type it cannot resolve, such as a `TypedDict` defined only in a server module.
+
+Define shared types in client modules. From a top-level server module,
+import `client_code/OrderTypes.py` as `from .OrderTypes import OrderSummary`.
 
 ## Datetimes And Timezones
 
@@ -69,4 +77,4 @@ anvil --json validate server_code/<Package>/__init__.py
 
 - The Server Python version can be inferred from the `anvil.yaml` under `runtime_options.server_spec.base`. Don't modify this value directly, instead ask the user to choose a version in the "Python Dependencies" settings in the IDE.
 - External server Python libraries can be added in `server_code/requirements.txt`.
-- Server code can import client modules for shared portable definitions or when the app already does so; otherwise keep shared server logic under `server_code/`.
+- Keep shared server logic under `server_code/`. Client modules can hold definitions used by both runtimes.
