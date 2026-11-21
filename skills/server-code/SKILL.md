@@ -24,11 +24,13 @@ Server code lives under `server_code/`:
 
 ## Server Call Return Types
 
-The client may see `Any` if the callable's return annotation depends on a
-type it cannot resolve, such as a `TypedDict` defined only in a server module.
+Describe the result of `anvil.server.call(...)` in the callable's return
+annotation. Types used only through inference on the client can stay in the
+Server Module. If client code needs to import a type by name, define it in
+a Client Module.
 
-Define shared types in client modules. From a top-level server module,
-import `client_code/OrderTypes.py` as `from .OrderTypes import OrderSummary`.
+For example, a top-level Server Module can import a shared type from
+`client_code/OrderTypes.py` with `from .OrderTypes import OrderSummary`.
 
 ## Datetimes And Timezones
 
